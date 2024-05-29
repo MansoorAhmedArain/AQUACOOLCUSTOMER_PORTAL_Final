@@ -1,0 +1,109 @@
+﻿@using ServiceReference1;
+@model Projects[]
+
+@{
+    ViewData["Title"] = "MoveInRequest";
+}
+
+<div class="bg-container d-none d-md-flex">
+    <div class="left-box "><img src="/images/BG7.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+    <div class="right-box pt-4">
+        <div class="icon-text h4">
+            <span>Move in Request</span>
+        </div>
+        <div class="mt-5 input-style">
+            <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Customer Type</div>
+            <div class="input-group mb-3">
+                <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user-tie"></i></span>
+                <input type="text" class="form-control rounded-start rounded-pill" placeholder="Owner" style="border: 1px solid #8FD2F0;">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user-group"></i></span>
+                <input type="password" class="form-control rounded-start rounded-pill" placeholder="Tenant" style="border: 1px solid #8FD2F0;">
+            </div>
+
+            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
+            <div class="input-group">
+                <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                <select class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;"  id="projectDropdown">
+                    <option value="">Select a project</option>
+                    @{
+                        <option value="">project</option>
+                        <option value="">project</option>
+                        <option value="">project</option>
+                        foreach (var project in Model)
+                        {
+                            <option value="@project.Id">@project.Name</option>
+                        }
+                    }
+                </select>
+                @* <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;"> *@
+                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+
+            <div class="ms-3 mt-2" style="color: #44D62C; font-size: small; font-weight: bolder;">Unit Number</div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control rounded-pill" style="background-color: #cff2c9;">
+            </div>
+            <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">End User Agreement</div>
+            <div class="user-agree">
+                <a class="form-control rounded left-btn" style="background-color: grey; text-decoration: none; color: white;">End user agreement sample preview for the customer</a>
+                <a href="#" class="btn rounded-pill download-btn right-btn ms-1 mt-4">Download</a>
+            </div>
+
+            <a href="#" class="btn rounded-pill btn-style my-4">Next</a>
+        </div>
+    </div>
+</div>
+
+<!--Mobile design-->
+<div class="mb-container d-md-none">
+    <div class="mbimage-style ">
+        <div class="box rounded shadow-lg">
+            <div class="h4 mt-5" style="font-weight: bolder;">Move in Request</div>
+
+            <div class="mbinput-style">
+                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Customer Type</div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user-tie"></i></span>
+                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="Owner" style="border: 1px solid #8FD2F0;">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user-group"></i></span>
+                    <input type="password" class="form-control rounded-start rounded-pill" placeholder="Tenant" style="border: 1px solid #8FD2F0;">
+                </div>
+
+                <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
+                <div class="input-group">
+                    <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
+                    <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+
+                <div class="ms-3 mt-2" style="color: #44D62C; font-size: small; font-weight: bolder;">Unit Number</div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control rounded-pill" style="background-color: #cff2c9;">
+                </div>
+                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">End User Agreement</div>
+                <div class="user-agree">
+                    <a class="form-control rounded left-btn" style="background-color: grey; text-decoration: none; color: white;">End user agreement sample preview for the customer</a>
+                    <a href="#" class="btn rounded-pill download-btn right-btn ms-1 mt-4">Download</a>
+                </div>
+
+                <a href="#" class="btn rounded-pill mbbtn-style mt-2">Next</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

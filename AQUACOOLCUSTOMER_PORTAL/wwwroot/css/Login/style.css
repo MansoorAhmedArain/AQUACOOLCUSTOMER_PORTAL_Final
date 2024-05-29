@@ -1,0 +1,134 @@
+body{
+   font-family: 'Roboto';
+   height: 100%;
+   width: 100%;
+}
+
+
+.logo-style{
+    width: 9vmax;
+}
+
+/* Header Navbar */
+
+.navbar{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navbar-nav{
+    background-color:white;
+}
+
+/* Header Navbar End */
+
+
+
+/* Background Design */
+
+.bg-container{
+    height: calc(100% - 100px);
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+}
+  
+  
+.left-box{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    
+}
+
+.img-style{
+    width: 460px;
+}
+
+.right-box{
+   height: 100%;
+   width: 70%;
+   padding: 80px 270px;
+}
+
+
+
+.card-head{
+    color: #03213d; 
+    font-size: medium; 
+    font-weight: bolder;
+    text-wrap: nowrap;
+}
+
+.card{
+    width: 12vw; 
+    height: 13vh;
+    border-bottom: 2px solid #1D9ADD;
+}
+
+.card-row{
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+.card-text{
+    color: #1D9ADD; 
+    font-size: xx-small; 
+    font-weight: bold;
+ 
+}
+
+
+/*Background Design End  */
+
+
+/* Mobile Design */
+
+.mb-container{
+    height: calc(100% - 100px);
+    width: 100%;
+}
+
+.mbimage-style{
+    width: 100vw;
+    height: 88vh;
+    background-image: url(/images/Stock\ BG6\ Image.jpg); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.box{
+    height: 80vh;
+    width: 80vw;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+   
+}
+
+.mb-btnrow{
+    display: flex;
+    flex-direction: row;
+}
+
+.mbcard-text{
+    color: #1D9ADD; 
+    font-size: 7px; 
+    font-weight: bold;
+ 
+}
+
+
+
+/* Model Design End */

@@ -1,0 +1,367 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="bg-container d-none d-md-flex">
+    <div class="left-box "><img src="/images/BG6.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+    <div class="right-box pt-3">
+
+        <!-- Dashboard -->
+        <div class="ms-1 card-head">Dashboard</div>
+        <div class="card-row gap-2 ">
+            <div>
+                <a href="#" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Account History</div>
+                            <i class="fa-solid fa-clock-rotate-left fa-md mt-2 " style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="#" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Bill Curve</div>
+                            <i class="fa-solid fa-chart-line fa-md mt-2 " style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+        <!-- Requests -->
+        <div class="ms-1 card-head">Requests</div>
+        <div class="card-row gap-2 ">
+            <div>
+                <a href="@Url.Action("MoveinRequest","Admin")" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Move in</div>
+                            <i class="fa-solid fa-house fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="@Url.Action("MoveoutRequest","Admin")" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Move out</div>
+                            <i class="fa-solid fa-house-circle-xmark fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div>
+                <a href="@Url.Action("ReconnectionRequest","Admin")" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Reconnection Request</div>
+                            <i class="fa-solid fa-spinner fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div>
+                <a href="#" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Request Summary</div>
+                            <i class="fa-solid fa-clipboard-list fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Payment -->
+        <div class="ms-1 card-head">Payment</div>
+        <div class="card-row gap-2">
+            <div>
+                <a href="#" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Submit Payment Proof</div>
+                            <i class="fa-solid fa-square-check fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="#" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Transaction History</div>
+                            <i class="fa-solid fa-clock-rotate-left fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div>
+                <a href="StatementofAccount" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Statement of Account</div>
+                            <i class="fa-solid fa-clipboard-user fa-md mt-2 " style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div>
+                <a href="PaymentReceipt" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Bill/Payment Receipt</div>
+                            <i class="fa-solid fa-clipboard-check fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Customer Support -->
+        <div class="ms-1 card-head">Customer Support</div>
+        <div class="card-row gap-2">
+            <div>
+                <a href="#" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Bill Explanation</div>
+                            <i class="fa-solid fa-magnifying-glass fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="#" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Complaint</div>
+                            <i class="fa-solid fa-circle-question fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Manage Profile -->
+        <div class="ms-1 card-head">Manage Profile</div>
+        <div class="card-row gap-2">
+            <div>
+                <a href="@Url.Action("ChangePassword","Account")" style="text-decoration: none; ">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Change Password</div>
+                            <i class="fa-solid fa-lock fa-md mt-2" style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="#" style="text-decoration: none;">
+                    <div class="card text-center shadow">
+                        <div class="card-body rounded">
+                            <div class="card-text">Update Documents</div>
+                            <i class="fa-solid fa-newspaper fa-md mt-2 " style="color: #03213d;"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!--Mobile design-->
+<div class="mb-container d-md-none">
+    <div class="mbimage-style ">
+        <div class="box rounded shadow-lg">
+
+
+            <!-- Dashboard -->
+            <div class="ms-1 card-head">Dashboard</div>
+            <div class="card-row gap-2">
+                <div>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Account History</div>
+                                <i class="fa-solid fa-clock-rotate-left fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Bill Curve</div>
+                                <i class="fa-solid fa-chart-line fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- Requests -->
+            <div class="ms-1 card-head mt-2">Requests</div>
+            <div class="card-row gap-2 ">
+                <div>
+                    <a href="@Url.Action("MoveinRequest","Admin")" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Move in</div>
+                                <i class="fa-solid fa-house fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="@Url.Action("MoveoutRequest","Admin")" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Move out</div>
+                                <i class="fa-solid fa-house-circle-xmark fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="@Url.Action("ReconnectionRequest","Admin")" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Reconnection Request</div>
+                                <i class="fa-solid fa-spinner fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Request Summary</div>
+                                <i class="fa-solid fa-clipboard-list fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Payment -->
+            <div class="ms-1 card-head mt-2">Payment</div>
+            <div class="card-row gap-2">
+                <div>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Submit Payment Proof</div>
+                                <i class="fa-solid fa-square-check fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Transaction History</div>
+                                <i class="fa-solid fa-clock-rotate-left fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="StatementofAccount" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Statement of Account</div>
+                                <i class="fa-solid fa-clipboard-user fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="PaymentReceipt" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Bill/Payment Receipt</div>
+                                <i class="fa-solid fa-clipboard-check fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Customer Support -->
+            <div class="ms-1 card-head mt-2">Customer Support</div>
+            <div class="card-row gap-2">
+                <div>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Bill Explanation</div>
+                                <i class="fa-solid fa-magnifying-glass fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Complaint</div>
+                                <i class="fa-solid fa-circle-question fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Manage Profile -->
+            <div class="ms-1 card-head mt-2">Manage Profile</div>
+            <div class="card-row gap-2">
+                <div>
+                    <a href="@Url.Action("ChangePassword","Account")" style="text-decoration: none; ">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Change Password</div>
+                                <i class="fa-solid fa-lock fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="card text-center shadow" style="width: 18vw; height: 10vh; ">
+                            <div class="card-body rounded">
+                                <div class="mbcard-text">Update Documents</div>
+                                <i class="fa-solid fa-newspaper fa-2xs" style="color: #03213d;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,201 @@
+body{
+   font-family: 'Roboto';
+   height: 100%;
+   width: 100%;
+}
+
+.logo-style{
+    width: 9vmax;
+}
+
+/* Header Navbar */
+
+.navbar{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navbar-nav{
+    background-color:white;
+}
+
+/* Header Navbar End */
+
+/* Background Design */
+
+.bg-container{
+    height: calc(100% - 100px);
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+}
+  
+  
+.left-box{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    
+}
+
+.img-style{
+    width: 460px;
+}
+
+.right-box{
+   height: 100%;
+   width: 70%;
+   padding: 80px 270px;
+  }
+
+.icon-text {
+    display: inline;
+    text-wrap: nowrap;
+}
+  
+.icon-text i {
+    margin-right: 10px;
+}
+
+.f1{
+    border-color: lightblue;
+}
+
+.f2{
+    border-color: lightblue;
+}
+
+.form-style{
+   width: 25vw;
+}
+.btn-style{
+    background-color: #44D62C;
+    color: white;
+    width: 25vw;
+}
+
+.btn-style:hover, .btn-style:active {
+    background-color: #3ec529;
+    border-right: 1px solid #42ad31;
+    color: white;
+ 
+}
+
+/*Background Design End  */
+
+
+/* Model Design */
+  
+.modal-dialog{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content{
+    width: 200%;
+}
+
+.modal-style{
+    font-weight: bolder;
+    display: grid;
+    gap: 15px;
+
+}
+.modal-body{
+    display: flex;
+}
+.modal-leftbox{
+    height: 50vh;
+    width: 60%;
+
+}
+
+.modal-rightbox{
+    height: 50%;
+    width: 80%;
+    background-color: #b7e8ff;
+
+}
+.modal-btn{
+    background-color: #44D62C;
+    color: white;
+    width: 435px;
+}
+.modal-btn:hover, .modal-btn:active {
+    background-color: #3ec529;
+    border-right: 1px solid #42ad31;
+    color: white;
+ 
+}
+.text-style{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 115px;
+}
+
+.bullets{
+    position: relative;
+    top: -15px;
+    left: 13px;
+    font-size: 11px;
+    color: #033059;
+}
+
+/* Model Design End */
+
+
+/* Mobile Design */
+
+.mb-container{
+    height: calc(100% - 100px);
+    width: 100%;
+}
+
+.mbimage-style{
+    width: 100vw;
+    height: 88vh;
+    background-image: url(/images/Stock\ BG1\ Image.jpg); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.box{
+    height: 60vh;
+    width: 40vw;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+}
+
+
+
+.heading i{
+    font-weight: bold;
+}
+
+.heading h3{
+    font-weight: bold;
+}
+
+
+
+.mbbtn-style{
+        background-color: #44D62C;
+        color: white;
+        width: 100%;
+    
+}
+
+/* Model Design End*/
+

@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["Title"] = "Login Page";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/images/fevicon.png" type="">
+
+    <title> Customer Login </title>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/CustomerLogin/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/CustomerLogin/responsive.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light shadow">
+            <div class="container-fluid">
+                <img class="logo-style ms-5" src="/images/Logo.png" alt="">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ms-auto rounded">
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">DASHBOARD</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/Request.html" style="color: #092f57;">REQUEST</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">PAYMENT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">CUSTOMER SUPPORT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">MANAGE PROFILE</a>
+                        </li>
+                        @* <li class="nav-item">
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a>
+                        </li> *@
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="bg-container d-none d-md-flex">
+            <div class="left-box "><img src="/images/BG2.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+            <div class="right-box">
+                <div class="icon-text h3" style="font-weight: bolder;">
+                    <i class="fa-solid fa-arrow-right-to-bracket" style=" color: #092f57;"></i>
+                    <span> Customer Login</span>
+                </div>
+                <form id="loginDesk" method="post" action="/Home/login">
+                <div class="mt-5 input-style">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user"></i></span>
+                        <input type="text" class="form-control rounded-start rounded-pill" name="username" required placeholder="User Name" style="border: 1px solid #8FD2F0;">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" class="form-control rounded-start rounded-pill" name="password" required placeholder="Password" style="border: 1px solid #8FD2F0;">
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center px-3">
+                        <div class="form-check">
+                            <input style="border: 1px solid #8FD2F0;" type="checkbox" class="form-check-input" id="rememberMe">
+                            <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="rememberMe">Remember Me</label>
+                        </div>
+                            <a href=" @Url.Action("ForgotPassword", "Account")" class="text-decoration-none" style="color: #03213d; font-size: small; font-weight: bolder;">Forget Password</a>
+                    </div>
+                        <label class="" style="color:red">@ViewData["ErroMessage"]</label>
+                    <input type="submit" class="btn rounded-pill btn-style my-4" value="Login"/>
+                    @* <a href="/Login.html" class="btn rounded-pill btn-style my-4">Login</a> *@
+                    
+                    <div>
+                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">New Customer</div>
+                        <a href="@Url.Action("Registration","Home")" class="btn rounded-pill cust-btn">Create New Account</a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Mobile design-->
+        <div class="mb-container d-md-none">
+            <div class="mbimage-style ">
+                <div class="box rounded shadow-lg">
+                    <div class="icon-text h3" style="font-weight: bolder;">
+                        <i class="fa-solid fa-arrow-right-to-bracket" style=" color: #092f57;"></i>
+                        <span> Customer Login</span>
+                    </div>
+                    <div class="mt-5 mbinput-style">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" class="form-control rounded-start rounded-pill" placeholder="User Name" style="border: 1px solid #8FD2F0;">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" class="form-control rounded-start rounded-pill" placeholder="Password" style="border: 1px solid #8FD2F0;">
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center px-3">
+                            <div class="form-check ">
+                                <input style="border: 1px solid #8FD2F0;" type="checkbox" class="form-check-input" id="rememberMe">
+                                <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="rememberMe">Remember Me</label>
+                            </div>
+                            <a href="#" class="text-decoration-none" style="color: #03213d; font-size: small; font-weight: bolder;">Forget Password</a>
+                        </div>
+
+                        <a href="@Url.Action("Login","Home")" class="btn rounded-pill mbbtn-style my-4">Login</a>
+                        <div>
+                            <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">New Customer</div>
+                            <a href="@Url.Action("Registration","Home")" class="btn rounded-pill mbcust-btn">Create New Account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/js/bootstrapjs/bootstrap.bundle.js"></script>
+    <script src="https://kit.fontawesome.com/c5b8d1d3fa.js" crossorigin="anonymous"></script>
+</body>
+</html>

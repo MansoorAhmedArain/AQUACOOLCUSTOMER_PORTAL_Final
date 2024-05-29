@@ -1,0 +1,141 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/images/fevicon.png" type="">
+
+    <title> Customer Login </title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/CreateNewCustomer/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/CreateNewCustomer/responsive.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light shadow">
+            <div class="container-fluid">
+                <img class="logo-style ms-5" src="/images/Logo.png" alt="">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ms-auto rounded">
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/Dashboard.html" style="color: #092f57;">DASHBOARD</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/Request.html" style="color: #092f57;">REQUEST</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">PAYMENT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">CUSTOMER SUPPORT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">MANAGE PROFILE</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="bg-container d-none d-md-flex">
+            <div class="left-box "><img src="/images/BG3 .jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+            <div class="right-box">
+                <form role="form" method="get" action="@Url.Action("AccountInfo","Home")">
+                    <div class="icon-text h3" style="font-weight: bolder;">
+                        <i class="fa-solid fa-user-plus" style=" color: #092f57;"></i>
+                        <span>Create New Account</span>
+                    </div>
+                    <div class="mt-5 input-style">
+                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Customer Type</div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text rounded-pill rounded-end" style="background-color: #033059; "><i class="fa-solid fa-user-tie" style="color: white; "></i></span>
+                            <select name="regType" class="form-control rounded-pill rounded-start" style="border: 1px solid #8FD2F0;">
+                               <option>-- Select Registration Type -- </option>
+                                <option>Company</option>
+                                <option>Individual</option>
+                            </select>
+                        </div>
+
+                        @* <div class="input-group mb-3">
+                            <span class="input-group-text rounded-pill rounded-end" style="background-color: #033059;"><i class="fa-solid fa-user " style="color: white;"></i></span>
+                            <input type="text" class="form-control rounded-start rounded-pill" placeholder="Individual" style="border: 1px solid #8FD2F0;">
+                        </div> *@
+
+                        <input= type="submit" class="btn rounded-pill btn-style my-4">Next</input>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Mobile design-->
+        <div class="mb-container d-md-none">
+            <div class="mbimage-style ">
+                <div class="box rounded shadow-lg">
+                    <div class="icon-text h3" style="font-weight: bolder;">
+                        <i class="fa-solid fa-user-plus" style=" color: #092f57;"></i>
+                        <span>Create New Account</span>
+                    </div>
+                    <div class="mt-5 mbinput-style">
+                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Customer Type</div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text rounded-pill rounded-end" style="background-color: #033059; "><i class="fa-solid fa-user-tie" style="color: white; "></i></span>
+                            <input type="text" class="form-control rounded-pill rounded-start" placeholder="Company" style="border: 1px solid #8FD2F0;">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text rounded-pill rounded-end" style="background-color: #033059;"><i class="fa-solid fa-user " style="color: white;"></i></span>
+                            <input type="text" class="form-control rounded-start rounded-pill" placeholder="Individual" style="border: 1px solid #8FD2F0;">
+                        </div>
+
+                        <a href="/Home/Accountinfo" class="btn rounded-pill btn-style my-4">Next</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+
+
+    <script src="/js/bootstrapjs/bootstrap.bundle.js"></script>
+    <script src="https://kit.fontawesome.com/c5b8d1d3fa.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+﻿@using ServiceReference1;
+@model Projects[]
+@{
+    ViewData["Title"] = "MoveOutRequest";
+}
+
+<div class="bg-container d-none d-md-flex">
+        <div class="left-box "><img src="/images/Stock BG11 Image.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+        <div class="right-box pt-4">
+            <div class="icon-text h4">
+                <span>Create Move Out Request</span>
+            </div>
+            <div class="mt-2 input-style">
+                <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
+                <div class="input-group">
+                    <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                    <select class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown">
+                        <option value="">Select a project</option>
+                        @{
+                            <option value="">project</option>
+                            <option value="">project</option>
+                            <option value="">project</option>
+                            foreach (var project in Model)
+                            {
+                                <option value="@project.Id">@project.Name</option>
+                            }
+                        }
+                    </select>
+                    @* <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
+                    <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div> *@
+                </div>
+
+
+                <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">Unit Number</div>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                </div>
+
+
+                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Select Move Out Date</div>
+                <div class="input-group">
+                    <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-calendar-days"></i></span>
+                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
+                </div>
+                <div class="ms-3 mb-3" style="color: #48b4e6; font-size: small; font-weight: 500;">(Note: On the move out date the service will be disconnected)</div>
+
+
+                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bold;">How do you want your refund processed through?</div>
+                <span class="form-check form-check-inline mt-1 ms-3">
+                    <input style="border: 1px solid #8FD2F0;" type="checkbox" class="form-check-input" id="Cheque">
+                    <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="rememberMe">Cheque</label>
+                </span>
+
+                <div class="form-check form-check-inline mt-1 ms-5">
+                    <input style="border: 1px solid #8FD2F0;" type="checkbox" class="form-check-input" id="Cheque">
+                    <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="rememberMe">Bank Transfer</label>
+                </div>
+
+                <div class="input-group mb-3 ">
+                    <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">Bank Name</span>
+                    <input type="text" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                </div>
+
+                <div class="input-group mb-3 ">
+                    <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">IBAN</span>
+                    <input type="text" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                </div>
+
+                <div class="input-group mb-3 ">
+                    <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder;">Account No.</span>
+                    <input type="text" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                </div>
+
+                <div class="input-group mb-3 ">
+                    <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">OTP</span>
+                    <input type="text" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!--Mobile design-->
+    <div class="mb-container d-md-none">
+        <div class="mbimage-style ">
+            <div class="box rounded shadow-lg">
+                <div class="h5 mb-5" style="font-weight: bolder; text-wrap: nowrap;">Create Recconection Request</div>
+
+                <div class="mbinput-style">
+
+                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
+                    <div class="input-group">
+                        <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                        <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
+                        <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+
+
+                    <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                    </div>
+
+
+                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Disconnection Ticket ID</div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                    </div>
+
+
+                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Outstanding Balance</div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                    </div>
+
+
+                    <a href="#" class="btn rounded-pill btn-style mt-3">Submit</a>
+                    <a href="#" class="btn rounded-pill btn-style mt-3">Pay Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

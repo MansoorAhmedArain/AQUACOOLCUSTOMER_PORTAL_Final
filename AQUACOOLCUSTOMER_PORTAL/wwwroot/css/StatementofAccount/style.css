@@ -1,0 +1,144 @@
+body{
+   font-family: 'Roboto';
+   height: 100%;
+   width: 100%;
+}
+
+
+.logo-style{
+    width: 9vmax;
+}
+
+/* Header Navbar */
+
+.navbar{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navbar-nav{
+    background-color:white;
+}
+
+/* Header Navbar End */
+
+
+
+/* Background Design */
+
+.bg-container{
+    height: calc(100% - 100px);
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+}
+  
+  
+.left-box{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    
+}
+
+.img-style{
+    width: 470px;
+}
+
+.right-box{
+   height: 100%;
+   width: 70%;
+   padding: 80px 270px;
+}
+
+
+.icon-text {
+    display: inline;
+    text-wrap: nowrap;
+}
+  
+.icon-text i {
+    margin-right: 10px;
+}
+  
+
+.input-style{
+    width: 28vw;
+}
+
+.h6{
+    text-wrap: nowrap;
+    font-size: 18px;
+}
+
+.btn-style{
+    width: 100%;
+    background-color: #033059;
+    color: white;
+   
+}
+
+.btn-style:hover, .btn-style:active {
+    background-color: #04417a;
+    border-right: 1px solid #04417a;
+    color: white;
+ 
+}
+ 
+
+
+/*Background Design End  */
+
+
+/* Mobile Design */
+
+.mb-container{
+    height: calc(100% - 100px);
+    width: 100%;
+}
+
+.mbimage-style{
+    width: 100vw;
+    height: 88vh;
+    background-image: url(/images/Stock\ BG8\ Image.jpg); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.box{
+    height: 85vh;
+    width: 55vw;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+}
+
+
+
+.heading i{
+    font-weight: bold;
+}
+
+.mbinput-style{
+    width: 45vw;
+}
+
+.mbbtn-style{
+    background-color: #03213d;
+    color: white;
+    width: 100%;
+    text-wrap: nowrap;
+}
+
+
+
+/* Model Design End */
