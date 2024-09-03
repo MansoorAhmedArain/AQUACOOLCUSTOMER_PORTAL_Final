@@ -19,7 +19,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
 
         [HttpGet]
-        public IActionResult ChangePassword()
+        public IActionResult ChangePasswordRequest()
         {
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
@@ -31,7 +31,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        public async Task<IActionResult> ChangePasswordRequest(ChangePasswordModel model)
         {
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");

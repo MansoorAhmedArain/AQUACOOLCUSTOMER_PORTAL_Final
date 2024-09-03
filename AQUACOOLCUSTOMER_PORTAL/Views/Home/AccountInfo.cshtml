@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Account Info";
+    ViewData["Title"] = "AccountInfo";
     Layout = null;
 }
 <!DOCTYPE html>
@@ -65,11 +65,7 @@
                         <li class="nav-item">
                             <a class="nav-link mx-2" href="#" style="color: #092f57;">MANAGE PROFILE</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2" href="#" style="color: #092f57;">
-                                LOGOUT <i class="fa-solid fa-right-from-bracket"></i>
-                            </a>
-                        </li>
+                       
                     </ul>
                 </div>
             </div>
@@ -79,7 +75,7 @@
     <main>
         <div class="bg-container d-none d-md-flex">
             <div class="left-box">
-                <img src="/images/BG4 .jpg" class="rounded-start rounded-pill img-style" alt="">
+                <img src="~/images/BG4 .jpg" class="rounded-start rounded-pill img-style" alt="">
             </div>
             <div class="right-box pt-4">
 
@@ -93,7 +89,7 @@
                 </div>
 
                 <div class="step step-1">
-                    <form role="form" name="AccountInfo" method="post" action="@Url.Action("AccontInfo1","Home")">
+                    <form role="form" name="AccountInfo" method="post" action="@Url.Action("AccountInfo","Home")">
                         <!-- Step 1 form fields here -->
                         <input type="hidden" name="RegType" value="@ViewData["regType"].ToString();" />
                         <div class="input-style">
@@ -141,7 +137,7 @@
                             <div class="input-group">
                                 <input type="password" name="Password" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                             </div>
-                            <input type="submit" class="btn rounded-pill btn-style my-3">Next</input>
+                            <input type="submit" class="btn rounded-pill btn-style my-3" value="Next" />
                         </div>
                     </form>
                 </div>
