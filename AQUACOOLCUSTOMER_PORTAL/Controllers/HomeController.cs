@@ -92,6 +92,11 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
                 return RedirectToAction("AccountAsCompany", "Home", new { _accountInfo = "" });
             }
+            else if(regType.ToLower() == "individual")
+            {
+                return RedirectToAction("AccountAsIndividual", "Home", new { _accountInfo = "" });
+            }
+           
             return View();
         }
 
@@ -124,6 +129,22 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
         [HttpPost]
         public IActionResult AccountAsCompany(AccountInfo info)
+        {
+            //var response =  _service.RegistrationAsync("", "", "", accountInfo.PrimaryEmailAddress, "", "", accountInfo.FullName, "", accountInfo.FullName,
+            //     accountInfo.PrimaryMobileNo, "Pakistani", "passno", "pbox", accountInfo.SecondryEmailAddress, accountInfo.SecondryMobileNo, "", "", "",
+            //     "", "", "", "","").Result;
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AccountAsIndividual()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AccountAsIndividual(AccountInfo info)
         {
             //var response =  _service.RegistrationAsync("", "", "", accountInfo.PrimaryEmailAddress, "", "", accountInfo.FullName, "", accountInfo.FullName,
             //     accountInfo.PrimaryMobileNo, "Pakistani", "passno", "pbox", accountInfo.SecondryEmailAddress, accountInfo.SecondryMobileNo, "", "", "",

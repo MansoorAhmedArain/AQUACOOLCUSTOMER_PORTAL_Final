@@ -86,7 +86,7 @@
                         <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Customer Type</div>
                         <div class="input-group mb-3">
                             <span class="input-group-text rounded-pill rounded-end" style="background-color: #033059; "><i class="fa-solid fa-user-tie" style="color: white; "></i></span>
-                            <select name="regType" class="form-control rounded-pill rounded-start" style="border: 1px solid #8FD2F0;">
+                            <select name="regType" id="options" class="form-control rounded-pill rounded-start" style="border: 1px solid #8FD2F0;">
                                <option>-- Select Registration Type -- </option>
                                 <option>Company</option>
                                 <option>Individual</option>
@@ -98,7 +98,8 @@
                             <input type="text" class="form-control rounded-start rounded-pill" placeholder="Individual" style="border: 1px solid #8FD2F0;">
                         </div> *@
 
-                        <input type="submit" class="btn rounded-pill btn-style my-4" value="Next"/>
+                        <input type="submit" id="submitButton" class="btn rounded-pill btn-style my-4" value="Next"/>
+                        <p id="warningMessage" style="color:red; display:none">Please select an option before proceeding.</p>
                     </div>
                 </form>
             </div>
@@ -136,6 +137,7 @@
 
 
     <script src="/js/bootstrapjs/bootstrap.bundle.js"></script>
+    <script src="/js/Custom.js"></script>
     <script src="https://kit.fontawesome.com/c5b8d1d3fa.js" crossorigin="anonymous"></script>
 </body>
 </html>

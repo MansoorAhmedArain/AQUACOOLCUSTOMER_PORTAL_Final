@@ -74,11 +74,23 @@ body{
     height: 70vh;
     width: 29vw;
  }
- .btn-style{
-     background-color: #44D62C;
-     color: white;
-     width: 100%;
- }
+
+.btn-container {
+    display: flex;
+    gap: 10px;
+}
+.btn-style {
+    background-color: #44D62C;
+    color: white;
+    width: 60%;
+}
+
+.backbtn-style {
+    background-color: #808080;
+    color: white;
+    width: 40%;
+}
+
 
  .btn-style1{
     background-color: #44D62C;
@@ -93,7 +105,13 @@ body{
      color: white;
   
  }
- 
+
+.backbtn-style:hover, .backbtn-style:active {
+    background-color: #9b9a9a;
+    border-right: 1px solid #8d8989;
+    color: white;
+}
+
  
  /*Background Design End  */
  
@@ -163,6 +181,7 @@ body{
  
  .mbinput-style{
      width: 45vw;
+    
  }
  
  .mbbtn-style{

@@ -36,7 +36,13 @@
  .step-container {
     width: 36vw;
  }
-  
+    .step-2 footer {
+        font-size: 13px;
+    }
+
+    .step-2 p {
+        font-size: 15px;
+    }
   
   }
   
