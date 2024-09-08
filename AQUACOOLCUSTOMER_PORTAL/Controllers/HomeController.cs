@@ -125,105 +125,16 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         public IActionResult AccountAsCompany()
         {
 
+            ViewBag.Countries = (from c in _service.GetCountriesAsync().Result
+                                 select new SelectListItem
+                                 {
+                                     Text = HttpUtility.HtmlEncode(c.ShortName),
+                                     Value = HttpUtility.HtmlEncode(c.CountryRegId)
+                                 }).ToList();
             return View();
         }
         [HttpPost]
-        public IActionResult AccountAsCompany(AccountInfo info)
-        {
-            //var response =  _service.RegistrationAsync("", "", "", accountInfo.PrimaryEmailAddress, "", "", accountInfo.FullName, "", accountInfo.FullName,
-            //     accountInfo.PrimaryMobileNo, "Pakistani", "passno", "pbox", accountInfo.SecondryEmailAddress, accountInfo.SecondryMobileNo, "", "", "",
-            //     "", "", "", "","").Result;
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult AccountAsIndividual()
-        {
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult AccountAsIndividual(AccountInfo info)
-        {
-            //var response =  _service.RegistrationAsync("", "", "", accountInfo.PrimaryEmailAddress, "", "", accountInfo.FullName, "", accountInfo.FullName,
-            //     accountInfo.PrimaryMobileNo, "Pakistani", "passno", "pbox", accountInfo.SecondryEmailAddress, accountInfo.SecondryMobileNo, "", "", "",
-            //     "", "", "", "","").Result;
-            return View();
-        }
-        public IActionResult QuickPayment()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// This function will be utilize for posting of the QuickPayment
-        /// form to the server.
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public IActionResult QuickPayment(string username, string password)
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpGet]
-        public IActionResult ForgotPassword()
-        {
-            ViewBag.ErrorMessage = "";
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult ForgotPassword(FormCollection form)
-        {
-            if (form == null)
-            {
-                ViewBag.ErrorMessage = "Unable to change your password.";
-                return View();
-            }
-            var oldPass = form["OldPassword"].ToString();
-            var newPass = form["NewPassword"].ToString();
-            var confirmPass = form["ConfirmPassword"].ToString();
-            if (string.IsNullOrWhiteSpace(oldPass) || string.IsNullOrWhiteSpace(newPass) || string.IsNullOrWhiteSpace(confirmPass))
-            {
-                ViewBag.ErrorMessage = "Please fill all the required fields.";
-                return View();
-            }
-            if (newPass != confirmPass)
-            {
-                ViewBag.ErrorMessage = "Password and confirm password does not match.";
-                return View();
-            }
-          //  var response = _service.forgotPasswordAsync(userId, username, newPass).Result;
-            //if (response == "Success")
-            //{
-            //    // Password has been reset.
-            //}
-            return View();
-        }
-
-        /// <summary>
-        /// Get all the validation data from previously build logic.
-        /// </summary>
-        /// <param name="customer"></param>
-        /// <returns></returns>
-        [AllowAnonymous]
-        [HttpPost]
-        public ActionResult Register(AxCustomer customer)
+        public IActionResult AccountAsCompany(AxCustomer customer)
         {
             int mobile1;
             string validation = string.Empty;
@@ -309,7 +220,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             if (IsValid)
             {
                 ViewBag.Customer = Newtonsoft.Json.JsonConvert.SerializeObject(customer);
-                var result =  _service.RegistrationAsync(HttpUtility.HtmlEncode(customer.Account),
+                var result = _service.RegistrationAsync(HttpUtility.HtmlEncode(customer.Account),
                       HttpUtility.HtmlEncode(customer.Emirate.ToString()),
                       HttpUtility.HtmlEncode(customer.Nationality),
                       HttpUtility.HtmlEncode(customer.EmailAddress1),
@@ -365,6 +276,88 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             return View(customer);
         }
+
+        [HttpGet]
+        public IActionResult AccountAsIndividual()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AccountAsIndividual(AccountInfo info)
+        {
+            //var response =  _service.RegistrationAsync("", "", "", accountInfo.PrimaryEmailAddress, "", "", accountInfo.FullName, "", accountInfo.FullName,
+            //     accountInfo.PrimaryMobileNo, "Pakistani", "passno", "pbox", accountInfo.SecondryEmailAddress, accountInfo.SecondryMobileNo, "", "", "",
+            //     "", "", "", "","").Result;
+            return View();
+        }
+        public IActionResult QuickPayment()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// This function will be utilize for posting of the QuickPayment
+        /// form to the server.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult QuickPayment(string username, string password)
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            ViewBag.ErrorMessage = "";
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ForgotPassword(FormCollection form)
+        {
+            if (form == null)
+            {
+                ViewBag.ErrorMessage = "Unable to change your password.";
+                return View();
+            }
+            var oldPass = form["OldPassword"].ToString();
+            var newPass = form["NewPassword"].ToString();
+            var confirmPass = form["ConfirmPassword"].ToString();
+            if (string.IsNullOrWhiteSpace(oldPass) || string.IsNullOrWhiteSpace(newPass) || string.IsNullOrWhiteSpace(confirmPass))
+            {
+                ViewBag.ErrorMessage = "Please fill all the required fields.";
+                return View();
+            }
+            if (newPass != confirmPass)
+            {
+                ViewBag.ErrorMessage = "Password and confirm password does not match.";
+                return View();
+            }
+          //  var response = _service.forgotPasswordAsync(userId, username, newPass).Result;
+            //if (response == "Success")
+            //{
+            //    // Password has been reset.
+            //}
+            return View();
+        }
+
+        
         private string PerformValidation(AxCustomer AxCustomerObject)
         {
             string Validation = string.Empty;
