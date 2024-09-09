@@ -94,7 +94,7 @@
                     <div class="step-circle" onclick="displayStep(4)">4</div>
                     <div class="step-circle" onclick="displayStep(5)">5</div>
                 </div>
-
+                <form method="post" action="@Url.Action("AccountAsCompany","Home")">
                 <div class="step step-1 ">
                     <!-- Step 1 form fields here -->
                     <div class="input-style">
@@ -237,7 +237,7 @@
                  
                   <div class="btn-container my-3">
                           <button type="button" class="btn rounded-pill backbtn-style prev-step">Back</button>
-                          <button type="button" class="btn rounded-pill btn-style next-step">Next</button>
+                          <button type="submit" class="btn rounded-pill btn-style next-step">Submit</button>
                    </div>
                 </div>
                 </div>
@@ -258,7 +258,7 @@
                     <a type="button" class="btn rounded-pill btn-style1">Move in Request</a>
 
                 </div>
-
+                </form>
             </div>
         </div>
 
