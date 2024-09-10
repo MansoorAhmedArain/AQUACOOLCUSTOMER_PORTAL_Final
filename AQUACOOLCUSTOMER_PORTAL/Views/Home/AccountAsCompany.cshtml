@@ -95,169 +95,180 @@
                     <div class="step-circle" onclick="displayStep(5)">5</div>
                 </div>
                 <form method="post" action="@Url.Action("AccountAsCompany","Home")">
-                <div class="step step-1 ">
-                    <!-- Step 1 form fields here -->
-                    <div class="input-style">
+                    <div class="step step-1 ">
+                        <!-- Step 1 form fields here -->
+                        <div class="input-style">
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Company Name (as per trade license)</span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="Company" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Company Name (as per trade license)</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="Company" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Tax Registration Number (VAT number)</span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="Registration-number" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Tax Registration Number (VAT number)</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="TRN" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Trade License Number</span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="TRN" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Trade License Number</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="TradeLicenseNumber" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Trade License Expiry Date</span>
-                        <div class="input-group">
-                            <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-calendar-days"></i></span>
-                            <input type="text" placeholder="9/5/2024" name="Trade-licenseExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Trade License Expiry Date</span>
+                            <div class="input-group">
+                                <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-calendar-days"></i></span>
+                                <input type="date" placeholder="9/5/2024" name="TradeLicenseExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">First Name</span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="First-name" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">First Name</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="FirstName" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
 
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Last Name</span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="Last-name" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Last Name</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="LastName" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Nationality</span>
-                        <div class="input-group">
-                           @*  <input type="text" name="Nationality" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;"> *@
-                            @Html.DropDownListFor(model => model.Nationality, (IEnumerable<SelectListItem>)ViewBag.Countries, "Select Country", new { @class = "form-control rounded-pill", @style = "border: 1px solid #8FD2F0;" })
-                        </div>
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Nationality</span>
+                            <div class="input-group">
+                                @*  <input type="text" name="Nationality" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;"> *@
+                                @Html.DropDownListFor(model => model.Nationality, (IEnumerable<SelectListItem>)ViewBag.Countries, "Select Country", new { @class = "form-control rounded-pill", @style = "border: 1px solid #8FD2F0;" })
+                            </div>
 
-                         <div class="btn-container my-3">
+                            <div class="btn-container my-3">
                                 <button type="button" class="btn rounded-pill backbtn-style prev-step">Back</button>
                                 <button type="button" class="btn rounded-pill btn-style next-step">Next</button>
-                          </div>
+                            </div>
+                        </div>
+
+
                     </div>
 
 
-                </div>
+                    <div class="step step-2">
+                        <!-- Step 2 form fields here -->
+
+                        <div class="input-style">
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Number</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="PassportNumber" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Expiry Date</span>
+                            <div class="input-group">
+                                <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-calendar-days"></i></span>
+                                <input type="date" placeholder="9/5/2024" name="PassportExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Email Address Primary</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="EmailAddress1" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Create your Password</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="Password" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Confirm your Password</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="ConfirmPassword" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Primary Phone Number</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="MobileNumber1" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Email Address Secondary</span>
+                            <div class="input-group">
+                                <input type="text" name="EmailAddress2" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
 
 
-                <div class="step step-2">
-                    <!-- Step 2 form fields here -->
+                            <div class="btn-container my-3">
+                                <button type="button" class="btn rounded-pill backbtn-style prev-step">Back</button>
+                                <button type="button" class="btn rounded-pill btn-style next-step">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step step-3">
+                        <!-- Step 3 form fields here -->
 
-                 <div class="input-style">
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Number</span>
-                    <div class="input-group">
-                        <input type="text" placeholder="Required" name="Passport-number" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                        <div class="input-style">
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Secondary Phone Number</span>
+                            <div class="input-group">
+                                <input type="text" name="MobileNumber2" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Residency Status</span>
+                            <div class="input-group">
+                                <select name="Resident" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                                    <option value="Resident">Resident</option>
+                                    <option value="Non Resident">Non Resident</option>
+                                </select>
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirates Id Number</span>
+                            <div class="input-group">
+                                <input type="text" name="IdNumber" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirates Id Expiry Date</span>
+                            <div class="input-group">
+                                <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-calendar-days"></i></span>
+                                <input type="date" placeholder="9/5/2024" name="IdExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Address</span>
+                            <div class="input-group">
+                                <input type="text" name="Address" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirate</span>
+                            <div class="input-group">
+                                <select type="text" name="Emirate" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                                    <option value="Dubai">Dubai</option>
+                                    <option value="Abu Dhabi">Abu Dhabi</option>
+                                    <option value="Sharjah">Sharjah</option>
+                                    <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                                    <option value="Ajman">Ajman</option>
+                                    <option value="Umm Al Quwain">Umm Al Quwain</option>
+                                    <option value="Fujairah">Fujairah</option>
+                                </select>
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">P.O. Box</span>
+                            <div class="input-group">
+                                <input type="text" name="PoBox" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+
+                            <div class="btn-container my-3">
+                                <button type="button" class="btn rounded-pill backbtn-style prev-step">Back</button>
+                                <button type="submit" class="btn rounded-pill btn-style next-step">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step step-4 mt-5 pt-5" style=" white-space: nowrap;">
+                        <!-- Step 4 form fields here -->
+                        <p style="color: #03213d; font-weight: bold;">Please check your email for verification link</p>
+                        <div class="ms-3" style="color: #03213d; font-size: small;">Press the click here button for verify</div>
+                        <button type="button" class="btn rounded-pill btn-style1 next-step">Click here</button>
+                        <footer class="pt-5 mt-5 ms-2" style="color: #03213d;">Please close this window. <br> You will be resumed from the resumption link</footer>
                     </div>
 
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Expiry Date</span>
-                    <div class="input-group">
-                        <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-calendar-days"></i></span>
-                        <input type="text" placeholder="9/5/2024" name="Passport-ExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                    <div class="step step-5" style=" white-space: nowrap;">
+                        <!-- Step 5 form fields here -->
+                        <p class="mt-4" style="color: #03213d; font-size: 20px;">Congratulations, your customer ID <br> has been generated.</p>
+                        <button type="button" class="btn rounded-pill btn-style1 next-step">C-XXXX</button>
+
+                        <p class="mt-5" style="color: #03213d; font-size: 20px;">Please proceed with <br> Move in Request to the property.</p>
+                        <a type="button" class="btn rounded-pill btn-style1">Move in Request</a>
+
                     </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Email Address Primary</span>
-                    <div class="input-group">
-                        <input type="text" placeholder="Required" name="Email-address" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Create your Password</span>
-                    <div class="input-group">
-                        <input type="text" placeholder="Required" name="Create-password" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Confirm your Password</span>
-                    <div class="input-group">
-                        <input type="text" placeholder="Required" name="Confirm-password" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Primary Phone Number</span>
-                    <div class="input-group">
-                        <input type="text" placeholder="Required" name="Primary-number" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Email Address Secondary</span>
-                    <div class="input-group">
-                        <input type="text" name="Secondary-email" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                   
-                   <div class="btn-container my-3">
-                          <button type="button" class="btn rounded-pill backbtn-style prev-step">Back</button>
-                          <button type="button" class="btn rounded-pill btn-style next-step">Next</button>
-                    </div>
-                </div>
-               </div>
-                <div class="step step-3">
-                    <!-- Step 3 form fields here -->
-
-                <div class="input-style">
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Secondary Phone Number</span>
-                    <div class="input-group">
-                        <input type="text" name="Secondary-Phoneno" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Residency Status</span>
-                    <div class="input-group">
-                        <input type="text" name="Residency-status" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirates Id Number</span>
-                    <div class="input-group">
-                        <input type="text" name="Emirates-id" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirates Id Expiry Date</span>
-                    <div class="input-group">
-                        <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-calendar-days"></i></span>
-                        <input type="text" placeholder="9/5/2024" name="Emirates-idExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Address</span>
-                    <div class="input-group">
-                        <input type="text" name="Address" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirate</span>
-                    <div class="input-group">
-                        <input type="text" name="Emirate" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">P.O. Box</span>
-                    <div class="input-group">
-                        <input type="text" name="PO-box" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                 
-                  <div class="btn-container my-3">
-                          <button type="button" class="btn rounded-pill backbtn-style prev-step">Back</button>
-                          <button type="submit" class="btn rounded-pill btn-style next-step">Submit</button>
-                   </div>
-                </div>
-                </div>
-                <div class="step step-4 mt-5 pt-5" style=" white-space: nowrap;">
-                    <!-- Step 4 form fields here -->
-                    <p style="color: #03213d; font-weight: bold;">Please check your email for verification link</p>
-                    <div class="ms-3" style="color: #03213d; font-size: small;">Press the click here button for verify</div>
-                    <button type="button" class="btn rounded-pill btn-style1 next-step">Click here</button>
-                    <footer class="pt-5 mt-5 ms-2" style="color: #03213d;">Please close this window. <br> You will be resumed from the resumption link</footer>
-                </div>
-
-                <div class="step step-5" style=" white-space: nowrap;">
-                    <!-- Step 5 form fields here -->
-                    <p class="mt-4" style="color: #03213d; font-size: 20px;">Congratulations, your customer ID <br> has been generated.</p>
-                    <button type="button" class="btn rounded-pill btn-style1 next-step">C-XXXX</button>
-
-                    <p class="mt-5" style="color: #03213d; font-size: 20px;">Please proceed with <br> Move in Request to the property.</p>
-                    <a type="button" class="btn rounded-pill btn-style1">Move in Request</a>
-
-                </div>
                 </form>
             </div>
         </div>
@@ -326,7 +337,7 @@
                             <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Expiry Date</span>
                             <div class="input-group">
                                 <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-calendar-days"></i></span>
-                                <input type="text" placeholder="9/5/2024" name="PassportExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                                <input type="date" placeholder="9/5/2024" name="PassportExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
                             </div>
 
                             <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Email Address Primary</span>
@@ -371,7 +382,7 @@
 
                             <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Residency Status</span>
                             <div class="input-group">
-                                <input type="text" name="Resident" id ="Residency-status" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                                <input type="text" name="Resident" id="Residency-status" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                             </div>
 
                             <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirates Id Number</span>
@@ -429,26 +440,26 @@
             </div>
         </div>
 
-  
- </main>
 
-  <script src="/js/Custom.js"></script>
-        <script src="/js/Custom2.js"></script>
-        <script src="/js/bootstrapjs/bootstrap.bundle.js"></script>
-        <script src="https://kit.fontawesome.com/c5b8d1d3fa.js" crossorigin="anonymous"></script>
+    </main>
 
-    
+    <script src="/js/Custom.js"></script>
+    <script src="/js/Custom2.js"></script>
+    <script src="/js/bootstrapjs/bootstrap.bundle.js"></script>
+    <script src="https://kit.fontawesome.com/c5b8d1d3fa.js" crossorigin="anonymous"></script>
+
+
 </body>
 
 </html>
 @section scripts {
-   @*  @if (ViewBag.Customer != null)
+    @*  @if (ViewBag.Customer != null)
     {
                 <script>
                     window.customer = JSON.parse('@Html.Raw(@ViewBag.Customer)');
                 </script>
     } *@
-@* 
+    @*
         <script src='https://www.google.com/recaptcha/api.js?render=explicit' async defer></script> *@
-          
+
 }

@@ -139,6 +139,9 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             int mobile1;
             string validation = string.Empty;
             bool IsValid = false;
+            customer.Account = "Company";
+            customer.Agreement = true;
+
             var workin = int.TryParse(HttpUtility.HtmlEncode(customer.MobileNumber1), out mobile1);
             ViewBag.Countries = (from c in _service.GetCountriesAsync().Result
                                  select new SelectListItem
@@ -147,11 +150,11 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                                      Value = HttpUtility.HtmlEncode(c.CountryRegId)
                                  }).ToList();
 
-            if (!workin)
-            {
-                TempData["Error"] = "Mobile Number 1 is not valid. Only digits are allowed";
-                return View(customer);
-            }
+            //if (!workin)
+            //{
+            //    TempData["Error"] = "Mobile Number 1 is not valid. Only digits are allowed";
+            //    return View(customer);
+            //}
 
             if (customer.Password != customer.ConfirmPassword)
             {
