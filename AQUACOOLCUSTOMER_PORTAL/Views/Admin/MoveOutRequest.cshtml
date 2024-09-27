@@ -37,14 +37,16 @@
 
                 <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">Unit Number</div>
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                <select type="text" class="form-control rounded-pill" name="UnitNumber" id="unitNumbersDropdown" style="background-color: #cff2c9;">
+                    @* <option value="value">text</option> *@
+                </select>
                 </div>
 
 
                 <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Select Move Out Date</div>
                 <div class="input-group">
                     <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-calendar-days"></i></span>
-                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
+                    <input type="date" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
                 </div>
                 <div class="ms-3 mb-3" style="color: #48b4e6; font-size: small; font-weight: 500;">(Note: On the move out date the service will be disconnected)</div>
 
@@ -131,3 +133,5 @@
     </div>
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/site.js"></script>

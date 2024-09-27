@@ -8,30 +8,32 @@
 <div class="bg-container d-none d-md-flex">
     <div class="left-box "><img src="/images/BG7.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
     <div class="right-box pt-4">
-        <div class="icon-text h4">
+        <form action="@Url.Action("MoveInRequest","Admin")" method="post" name="userForm" id="userForm">
+            <div class="icon-text h4">
             <span>Move in Request</span>
         </div>
         <div class="mt-5 input-style">
             <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Customer Type</div>
             <div class="input-group mb-3">
                 <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user-tie"></i></span>
-                <input type="text" class="form-control rounded-start rounded-pill" placeholder="Owner" style="border: 1px solid #8FD2F0;">
+                    <select class="form-control rounded-start rounded-pill" placeholder="Owner" name="MoveInAs" style="border: 1px solid #8FD2F0;">
+                    <option value="" selected="selected">Select Option</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Tenant">Tenant</option>
+                    </select>
             </div>
 
-            <div class="input-group mb-3">
+            @* <div class="input-group mb-3">
                 <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user-group"></i></span>
                 <input type="password" class="form-control rounded-start rounded-pill" placeholder="Tenant" style="border: 1px solid #8FD2F0;">
-            </div>
+            </div> *@
 
             <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
             <div class="input-group">
                 <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                <select class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;"  id="projectDropdown">
+                    <select class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" name="ProjectId" id="projectDropdown">
                     <option value="">Select a project</option>
                     @{
-                        <option value="">project</option>
-                        <option value="">project</option>
-                        <option value="">project</option>
                         foreach (var project in Model)
                         {
                             <option value="@project.Id">@project.Name</option>
@@ -39,25 +41,35 @@
                     }
                 </select>
                 @* <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;"> *@
-                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+               @*  <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <a class="dropdown-item" href="#">Something else here</a>
-                </div>
+                </div> *@
             </div>
 
             <div class="ms-3 mt-2" style="color: #44D62C; font-size: small; font-weight: bolder;">Unit Number</div>
             <div class="input-group mb-3">
-                <input type="text" class="form-control rounded-pill" style="background-color: #cff2c9;">
+                    <select type="text" class="form-control rounded-pill" name="PropertyId" id="unitNumbersDropdown" style="background-color: #cff2c9;">
+                   @* <option value="value">text</option> *@
+                </select>
             </div>
             <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">End User Agreement</div>
+            <iframe id="pdfViewer" width="500" height="400" style="display:none; border: 1px solid #ccc;"></iframe>
+            
             <div class="user-agree">
-                <a class="form-control rounded left-btn" style="background-color: grey; text-decoration: none; color: white;">End user agreement sample preview for the customer</a>
-                <a href="#" class="btn rounded-pill download-btn right-btn ms-1 mt-4">Download</a>
+                <br />
+                <label>
+                    <input type="checkbox" name="Agreement" id="Agreement" ng-model="vm.data.Agreement" required="required" />
+                    <span>I/We state that, the information provided is verified and accepted by me. I/We hereby agree to the terms and conditions set forth in this Agreement. I/We hereby agree that if an e-signature is used to sign this Agreement, it shall be a valid and true signature of the Signatory.</span>
+                </label>
             </div>
-
-            <a href="#" class="btn rounded-pill btn-style my-4">Next</a>
+                <label id="error" style="color:red">@ViewBag.Error</label>
+                <a href="#" id="downloadButton" class="btn rounded-pill download-btn right-btn ms-1 mt-4">Download</a>
+                <input type="submit" class="btn rounded-pill btn-style my-4" value="Next" />
+                @* <a href="#" class="btn rounded-pill btn-style my-4">Next</a> *@
         </div>
+     </form>
     </div>
 </div>
 
@@ -94,7 +106,12 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control rounded-pill" style="background-color: #cff2c9;">
                 </div>
-                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">End User Agreement</div>
+                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
+                    <!-- PDF viewer -->
+                    <iframe id="pdfViewer" width="600" height="400" style="display:none; border: 1px solid #ccc;"></iframe>
+                    End User Agreement
+                </div>
+               
                 <div class="user-agree">
                     <a class="form-control rounded left-btn" style="background-color: grey; text-decoration: none; color: white;">End user agreement sample preview for the customer</a>
                     <a href="#" class="btn rounded-pill download-btn right-btn ms-1 mt-4">Download</a>
@@ -105,5 +122,5 @@
         </div>
     </div>
 </div>
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/site.js"></script>

@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AQUACOOLCUSTOMER_PORTAL.DTO;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
+using NuGet.Protocol;
 using ServiceReference1;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 {
@@ -22,25 +27,138 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             return View();
         }
-        public async Task<IActionResult> MoveInRequest()
+        public async Task<IActionResult> MoveInRequest(string Id="")
         {
+            
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
+            //if (!string.IsNullOrEmpty(Id))
+            //{
+            //    ViewBag.Id = Id;
+            //    var docs = await _service.getAttachmentsStatusAsync(Id);
+            //    var files = new List<AxDocs>();
+            //    foreach (var d in docs)
+            //    {
+            //        files.Add(new AxDocs()
+            //        {
+            //            FileName = d.FileName,
+            //            Status = d.Verfiy
+            //        });
+            //    }
+
+            //    ViewBag.Status = files;
+            //}
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
                 return RedirectPermanent("/Home/Index");
             }
             Projects[] projects = await LoadProjectSelection();
+            // ViewBag.Projects = projects;
+            // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
-           // var units = LoadUnitSelection("test");
-            ViewBag.Projects = projects;
+            ViewBag.Error = "";
             return View(projects);
         }
 
-        private async Task<string> LoadUnitSelection(string propertyId)
+        /// <summary>
+        /// Registration started.
+        /// </summary>
+        /// <param name="registration"></param>
+        /// <param name="frm"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> MoveInRequest(AxRegistration registration, IFormCollection frm)
         {
-            var units = await _service.GetUnitDLAsync(propertyId);
-            return units;
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            registration.UserId = userId;
+            ModelState.Remove("UserId");
+            ModelState.Remove("RequestId");
+            if (frm["Agreement"] == "on")
+            {
+                registration.Agreement = true;
+                ModelState.Remove("Agreement");
+            }
+            else
+            {
+                ModelState.AddModelError("Agreement", "Please Accept the End User Agreement");
+            }
+            Projects[] projects = await LoadProjectSelection();
+            ViewBag.Projects = projects;
+            if (!ModelState.IsValid)
+            {
+                string error = "";
+                foreach (var e in ModelState)
+                {
+                    foreach (ModelError valueError in e.Value.Errors)
+                    {
+                        error += valueError.ErrorMessage + ",";
+                    }
+                }
+                ViewBag.Error = error;
+                return View(projects);
+            }
+            else
+            {
+                var result = await _service.newRegistrationAsync(
+                    username, // get name of customer from session
+                    registration.ProjectId,
+                    registration.MoveInAs,
+                    registration.PropertyId,
+                    DateTime.Now.Date.ToString("MM/dd/yyyy"),
+                    DateTime.Now.Date.AddDays(365).ToString("MM/dd/yyyy"));
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    TempData["Error"] = "Error Occurred";
+                }
+                else
+                {
+                    var output = result.Split('|');
+                    if (output[0].ToLower() == ("success"))
+                    {
+                        registration.RequestId = output[2];
+                        ViewBag.Id = registration.RequestId;
+                        if (output[1] == "T")
+                        {
+                            TempData["Message"] = $"Ticket Created: Please upload documents for Ticket: {output[2]}";
+                            return RedirectToAction("MoveInTickets");
+                        }
+                        else
+                        {
+                            TempData["Message"] = $"New Request Created: Request ID: {output[2]}";
+
+                            var docs = await _service.getAttachmentsStatusAsync(registration.RequestId);
+                            var files = new List<AxDocs>();
+                            foreach (var d in docs)
+                            {
+                                files.Add(new AxDocs()
+                                {
+                                    FileName = d.FileName,
+                                    Status = d.Verfiy
+                                });
+                            }
+
+                            ViewBag.Status = files;
+                            // redirect to upload documents.
+                        }
+                    }
+                    else
+                    {
+                        TempData["Error"] = output[1];
+                    }
+                }
+            }
+
+            return View(projects);
+        }
+        [HttpGet]
+        public async Task<string> LoadUnitSelection(string propertyId)
+        {
+            var units = await _service.getProjectDetailsAllAsync(propertyId);
+           // var unit = units.Where(x=>x.PropertyID == propertyId).FirstOrDefault();
+            var json = JsonConvert.SerializeObject(units);
+            return json;
         }
 
         /// <summary>
@@ -159,5 +277,129 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public IActionResult UpdateDocuments()
+        {
+            return View();
+        }
+
+        #region Uploads
+
+        [HttpPost]
+        public async Task<IActionResult> Uploads(IEnumerable<IFormFile> files, string id, string type, string expirydate, string isTicket = "no")
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                TempData["Error"] = "Registration does not exist";
+                return RedirectToAction("UserProfile");
+            }
+
+            if (id.ToLower().StartsWith("tkt"))
+                isTicket = "yes";
+
+            if (files != null)
+            {
+                foreach (IFormFile file in files)
+                {
+                    if (file != null && file.Length > 0)
+                    {
+                        var extension = Path.GetExtension(file.FileName);
+
+                        string fileName;
+                        if (!string.IsNullOrEmpty(expirydate))
+                        {
+                            var expDate = Convert.ToDateTime(expirydate);
+                            fileName = $"{type}-{expDate:dd-MMM-yyyy}{extension}";
+                        }
+                        else
+                        {
+                            fileName = $"{type}{extension}";
+                        }
+
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            file.CopyTo(memoryStream);
+                            var byteArray = memoryStream.ToArray();
+                            var data = Convert.ToBase64String(byteArray);
+
+                            // Assuming _client.attachAqcFiles is still valid in your context
+                            var a = await _service.attachAqcFilesAsync(id, fileName, data, isTicket);
+                        }
+                    }
+                }
+            }
+
+            return Json(new { success = true, type });
+        }
+
+
+        public byte[] Data(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
+        #endregion
+
+        #region Complete Registration
+
+        [HttpPost]
+        public async Task<ActionResult> Complete(string Id, string imageData, string isTicket = "no")
+        {
+            if (!string.IsNullOrEmpty(imageData))
+            {
+                if (Id.ToLower().StartsWith("tkt"))
+                    isTicket = "yes";
+
+                var byteArray = Convert.FromBase64String(imageData);
+                System.Drawing.Image image;
+                using (MemoryStream ms = new MemoryStream(byteArray))
+                {
+                    image = System.Drawing.Image.FromStream(ms);
+                }
+
+                var result = await _service.attachAqcFilesAsync(Id, "signature.png", imageData, isTicket);
+                var m = result.Split('|');
+
+                if (m[0].ToLower().StartsWith("error"))
+                    TempData["Error"] = result; // "Request not submitted succesfully";
+                else
+                {
+                    result = await _service.submitReqTicketAsync(Id, isTicket);
+                    if (result.ToLower().StartsWith("error"))
+                    {
+                        TempData["Error"] = result;
+                    }
+                    else
+                    {
+                        if (isTicket == "no")
+                            TempData["Message"] = "Request submitted successfully, You will receive an email in few minutes.";
+                        else
+                            TempData["Message"] = "Request received. It is under reveiew. You will receive an email once completed.";
+                    }
+                }
+            }
+            else
+            {
+                TempData["Error"] = "Signature is required. Request not submitted succesfully";
+            }
+
+            if (isTicket == "yes")
+                return RedirectToAction("MoveInTickets");
+
+            return RedirectToAction("UserProfile");
+        }
+
+        #endregion
+
     }
 }
