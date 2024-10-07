@@ -22,47 +22,78 @@
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="~/css/Login/style.css" rel="stylesheet" />
+    <link href="~/css/Login/responsive.css" rel="stylesheet" />
     <link href="~/css/ReconnectionRequest/style.css" rel="stylesheet" />
+    <link href="~/css/ReconnectionRequest/responsive.css" rel="stylesheet" />
     <link href="~/css/MoveinRequest/style.css" rel="stylesheet" />
+    <link href="~/css/MoveoutRequest/responsive.css" rel="stylesheet" />
     <link href="~/css/MoveoutRequest/style.css" rel="stylesheet" />
+    <link href="~/css/MoveoutRequest/responsive.css" rel="stylesheet" />
     <link href="~/css/StatementofAccount/style.css" rel="stylesheet" />
+    <link href="~/css/StatementofAccount/responsive.css" rel="stylesheet" />
     <link href="~/css/ForgetPassword/style.css" rel="stylesheet" />
+    <link href="~/css/ForgetPage/responsive.css" rel="stylesheet" />
+    <link href="~/css/UpdateDocuments/style.css" rel="stylesheet" />
+    <link href="~/css/UpdateDocuments/responsive.css" rel="stylesheet" />
     
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light shadow">
             <div class="container-fluid">
-                <a href="/Home/index" >
                 <img class="logo-style ms-5" src="/images/Logo.png" alt="">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                        aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto ">
-                        <li class="nav-item ">
-                            <a class="nav-link active mx-2" href="@Url.Action("Index","Admin")" style="color: #092f57;">DASHBOARD</a>
+                    <ul class="navbar-nav ms-auto rounded">
+                        <li class="nav-item">
+                            <div class="input-group">
+                                <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">DASHBOARD</a>
+                                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Account History</a>
+                                    <a class="dropdown-item" href="#">Bill Curve</a>
+                                </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-2" href="Login.html" style="color: #092f57;">REQUEST</a>
+                            <div class="input-group">
+                                <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">REQUEST</a>
+                                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="./MoveinRequest.html">Move in</a>
+                                    <a class="dropdown-item" href="./MoveoutRequest.html">Move out</a>
+                                    <a class="dropdown-item" href="./ReconnectionRequest.html">Reconncection Request</a>
+                                </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-2" href="Login.html" style="color: #092f57;">PAYMENT</a>
+                            <div class="input-group">
+                                <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">PAYMENT</a>
+                                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="./SubmitPaymentProof.html">Submit Payment Proof</a>
+                                    <a class="dropdown-item" href="#">Transaction History</a>
+                                    <a class="dropdown-item" href="./StatementofAccount.html">Statement of Account</a>
+                                    <a class="dropdown-item" href="./PaymentReceipt.html">Bill/Payment Receipt</a>
+                                </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-2" href="Login.html" style="color: #092f57;">CUSTOMER SUPPORT</a>
+                            <div class="input-group">
+                                <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">CUSTOMER SUPPORT</a>
+                                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Bill Explanation</a>
+                                    <a class="dropdown-item" href="./Complaint.html">Complaint</a>
+
+                                </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-2" href="Login.html" style="color: #092f57;">MANAGE PROFILE</a>
+                            <div class="input-group">
+                                <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">MANAGE PROFILE</a>
+                                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="./ChangePassword.html">Change Password</a>
+                                    <a class="dropdown-item" href="./ChangePassword.html">Update Documents</a>
+                                </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-2" href="@Url.Action("Logout","Admin")" style="color: #092f57;">
-                                LOGOUT <i class="fa-solid fa-right-from-bracket"></i>
-                            </a>
+                            <a class="nav-link mx-2" href="#" style="color: #092f57;">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a>
                         </li>
                     </ul>
                 </div>

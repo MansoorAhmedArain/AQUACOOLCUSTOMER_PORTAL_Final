@@ -3,17 +3,17 @@
 }
 
 <div class="bg-container d-none d-md-flex">
-    <div class="left-box "><img src="/images/BG2.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
-    <form method="post" action="@Url.Action("Admin","UpdateDocuments")" role="form">
-        <div class="right-box">
-            <div class="icon-text h3" style="font-weight: bolder;">
-                <i class="fa-solid fa-arrow-right-to-bracket" style=" color: #092f57;"></i>
+    <div class="left-box "><img src="~/images/BG2.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+        <form class="right-box pt-4" method="post" action="@Url.Action("Admin","UpdateDocuments")" role="form">
+            <div class="icon-text h5">Manage Profile <br></div>
+            <div class="h3 mt-3 password-style" style="font-weight: bolder; text-wrap: nowrap; color: #092f57;">
+                <img src="~/Icons/Update-Document.png" alt="" style="width:50px">
                 <span>Update Documents</span>
             </div>
             <div class="mt-5 input-style">
                 <label>Select the documents to upload</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-lock"></i></span>
+                    <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
                     <select class="form-control rounded-start rounded-pill" placeholder="Owner" style="border: 1px solid #8FD2F0;">
                         <option value="" selected="selected">Select Option</option>
                         <option value="1">Emarates Id</option>
@@ -25,55 +25,79 @@
                     </select>
                 </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-lock"></i></span>
-                    <select name="Type" class="form-control rounded-start rounded-pill" placeholder="Owner" style="border: 1px solid #8FD2F0;">
-                        <option value="" selected="selected">Select Option</option>
+                <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">Type Applicable</div>
+                <div class="input-group mb-2">
+                    <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                    <select name="Type" class="form-control rounded-start rounded-pill" placeholder="Tenant (individual or company)" style="border: 1px solid #8FD2F0;">
+                        <option value="" selected="selected">Tenant (individual or company)</option>
                         <option value="Owner">Owner</option>
                         <option value="Tenant">Tenant</option>
                     </select>
                 </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user"></i></span>
-                    <input type="date" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
+           
+                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Expire Date</div>
+                <div class="input-group">
+                    <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" style="width:25px"></span>
+                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
                 </div>
-                <div class="mt-5">
-                    <a href="#" class="btn rounded-pill forget-btn">Upload Document</a>
-                    <a href="#" class="btn rounded-pill forget-btn">Submit</a>
+                <div class="mt-4">
+                    <a href="#" class="btn rounded-pill update-btn mb-3">Update Document</a>
+                    <a href="#" class="btn rounded-pill btn-style">Submit</a>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 </div>
 
 <!--Mobile design-->
 <div class="mb-container d-md-none">
     <div class="mbimage-style ">
-        <div class="box rounded shadow-lg">
-            <div class="icon-text h3" style="font-weight: bolder;">
-                <i class="fa-solid fa-arrow-right-to-bracket" style=" color: #092f57;"></i>
-                <span>Change Password</span>
+         <form class="box rounded shadow-lg" method="post" action="@Url.Action("Admin","UpdateDocuments")" role="form">
+            <div class="icon-text h5 pt-1">Manage Profile <br></div>
+
+            <div class="h3 mt-1 update-style" style="font-weight: bolder; text-wrap: nowrap; color: #092f57;">
+                <i class="fa-regular fa-file"></i>
+                <span>Update Documents</span>
             </div>
-            <div class="mt-5 mbinput-style">
-                <div class="input-group mb-3">
-                    <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-lock"></i></span>
-                    <input type="password" class="form-control rounded-start rounded-pill" required placeholder="Old Password" style="border: 1px solid #8FD2F0;">
+            <div class="mbinput-style mt-5">
+                <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Select the Documents to Upload</span>
+                <div class="input-group">
+                        <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                        <select class="form-control rounded-start rounded-pill" placeholder="Owner" style="border: 1px solid #8FD2F0;">
+                            <option value="" selected="selected">Select Option</option>
+                            <option value="1">Emarates Id</option>
+                            <option value="2">Passport Copy</option>
+                            <option value="3">Visa Copy</option>
+                            <option value="4">Upload Tenancy Contract or Ejari Certificate</option>
+                            <option value="5">Upload Title Deed</option>
+                            <option value="6">Upload Other Documents</option>
+                        </select>
                 </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-lock"></i></span>
-                    <input type="password" class="form-control rounded-start rounded-pill" required placeholder="New Password" style="border: 1px solid #8FD2F0;">
+                <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">Type Applicable</div>
+                <div class="input-group mb-2">
+                        <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                        <select name="Type" class="form-control rounded-start rounded-pill" placeholder="Tenant (individual or company)" style="border: 1px solid #8FD2F0;">
+                            <option value="" selected="selected">Tenant (individual or company)"</option>
+                            <option value="Owner">Owner</option>
+                            <option value="Tenant">Tenant</option>
+                        </select>
                 </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text rounded-pill rounded-end"><i class="fa-solid fa-user"></i></span>
-                    <input type="password" class="form-control rounded-start rounded-pill" required placeholder="Confirm Password" style="border: 1px solid #8FD2F0;">
+
+
+                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Expire Date</div>
+                <div class="input-group">
+                        <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" style="width:25px"></span>
+                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
                 </div>
+
 
                 <div class="mt-4">
-                    <a href="#" class="btn rounded-pill mbforget-btn">Update</a>
+                    <a href="#" class="btn rounded-pill update-btn mb-3">Update Document</a>
+                    <a href="#" class="btn rounded-pill btn-style">Submit</a>
                 </div>
             </div>
-        </div>
+        </form>
+      
     </div>
 </div>
 

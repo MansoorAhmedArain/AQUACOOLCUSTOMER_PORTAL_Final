@@ -45,7 +45,8 @@ body{
 }
 
 .img-style{
-    width: 460px;
+    width: 475px;
+    height: 85vh;
 }
 
 .right-box{
@@ -54,7 +55,13 @@ body{
    padding: 80px 270px;
 }
 
+.icon-image{
+    width: 60px;
+}
 
+.icon-style{
+    width: 25px;
+}
 .icon-text {
     display: inline;
     text-wrap: nowrap;
@@ -63,46 +70,43 @@ body{
 .icon-text i {
     margin-right: 10px;
 }
-
-.icon-img {
-    width: 30px;
-}
-.custicon-style {
-    width: 40px;
-    background-color: #092f57;
-    border-radius: 50px;
-}
+  
 
 .input-style{
     width: 28vw;
 }
-.btn-style{
-    background-color: #44D62C;
-    color: white;
+
+.update-btn{
     width: 100%;
-}
-
-
-.btn-style:hover, .btn-style:active {
-    background-color: #3ec529;
-    border-right: 1px solid #42ad31;
-    color: white;
- 
-}
-
-
-.cust-btn{
     background-color: #033059;
     color: white;
-    width: 100%;
 }
 
-.cust-btn:hover, .cust-btn:active {
+.update-btn:hover, .update-btn:active {
     background-color: #04417a;
     border-right: 1px solid #04417a;
     color: white;
  
 }
+ 
+
+
+.btn-style{
+    width: 100%;
+    background-color: #44D62C;
+    color: white;
+   
+}
+
+.btn-style:hover, .btn-style:active {
+    background-color: #3ec529;
+    border-right: 1px solid #42ad31;
+    color: white;
+   
+ 
+}
+ 
+
 
 /*Background Design End  */
 
@@ -117,7 +121,7 @@ body{
 .mbimage-style{
     width: 100vw;
     height: 88vh;
-    background-image: url(/images/Stock\ BG2\ Image.jpg); 
+    background-image: url(/images/Stock\ BG15\ Image.jpg); 
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -127,8 +131,8 @@ body{
 }
 
 .box{
-    height: 70vh;
-    width: 50vw;
+    height: 85vh;
+    width: 55vw;
     background-color: white;
     display: flex;
     align-items: center;
@@ -142,27 +146,17 @@ body{
     font-weight: bold;
 }
 
-.heading h3{
-    font-weight: bold;
-}
-
-
-
 .mbinput-style{
     width: 45vw;
 }
 
 .mbbtn-style{
-    background-color: #44D62C;
+    background-color: #3ec529;
     color: white;
     width: 100%;
+    text-wrap: nowrap;
 }
 
-.mbcust-btn{
-    background-color: #033059;
-    color: white;
-    width: 100%;
-}
 
 
 /* Model Design End */

@@ -51,6 +51,13 @@ body{
    padding: 80px 270px;
   }
 
+.icon-style {
+    width: 40px;
+    background-color: #092f57;
+    border-radius: 50px;
+}
+
+
 .icon-text {
     display: inline;
     text-wrap: nowrap;

@@ -55,6 +55,7 @@ body{
 }
 
 
+
 .icon-text {
     display: inline;
     text-wrap: nowrap;
@@ -88,20 +89,7 @@ body{
     display: flex;
 }
 
-.download-btn{
-    height: 100%;
-    width: 50%;
-    background-color: #033059;
-    color: white;
-   
-}
 
-.download-btn:hover, .download-btn:active {
-    background-color: #04417a;
-    border-right: 1px solid #04417a;
-    color: white;
- 
-}
 
 .left-btn{
     text-align: center;

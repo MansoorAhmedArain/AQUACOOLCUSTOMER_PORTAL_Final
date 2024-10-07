@@ -45,7 +45,7 @@ body{
  }
 
  .img-style{
-    height: 592px;
+    height: 625px;
     width: 460px;
  }
  
@@ -67,9 +67,13 @@ body{
  .icon-text i {
      margin-right: 10px;
  }
-   
- 
- 
+
+
+
+.icon-image {
+    width: 25px;
+}
+
  .input-style{
     height: 70vh;
     width: 29vw;

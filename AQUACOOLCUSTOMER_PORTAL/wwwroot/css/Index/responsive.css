@@ -22,16 +22,10 @@
     width: 300px;
     gap:22px;
   }
-  
-  .button span {
-    position: absolute;
-    left: 0;
-    top:0;
-    bottom: 0;
-    width: 40px;
-    background-color: #092f57;
-    border-radius: 20px 0 0 20px;
-  }
+
+    .button img {
+        width: 32px;
+    }
   
   .btn{
     font-size: small;
@@ -64,16 +58,10 @@
     width: 280px;
     gap:22px;
   }
-  
-  .button span {
-    position: absolute;
-    left: 0;
-    top:0;
-    bottom: 0;
-    width: 40px;
-    background-color: #092f57;
-    border-radius: 20px 0 0 20px;
-  }
+
+    .button img {
+        width: 27px;
+    }
   
   .btn{
     font-size: x-small;
@@ -106,17 +94,7 @@
     width: 240px;
     gap:22px;
   }
-  
-  .button span {
-    position: absolute;
-    left: 0;
-    top:0;
-    bottom: 0;
-    width: 30px;
-    background-color: #092f57;
-    border-radius: 20px 0 0 20px;
-  }
-  
+ 
   .btn{
     font-size: x-small;
   }
@@ -135,15 +113,6 @@
     gap:22px;
   }
   
-  .button span {
-    position: absolute;
-    left: 0;
-    top:0;
-    bottom: 0;
-    width: 10px;
-    background-color: #092f57;
-    border-radius: 20px 0 0 20px;
-  }
   
   .btn{
     font-size: xx-small;

@@ -69,7 +69,17 @@ body{
     width: 28vw;
 }
 
+.btnnext-style {
+    width: 100%;
+    background-color: #44D62C;
+    color: white;
+}
 
+    .btnnext-style:hover, .btnnext-style:active {
+        background-color: #3ec529;
+        border-right: 1px solid #42ad31;
+        color: white;
+    }
 
 .btn-style{
     width: 100%;

@@ -53,6 +53,13 @@ body{
     width: 70%;
     padding: 80px 270px;
  }
+.icon-style {
+    width: 25px;
+}
+
+.icon-image {
+    width: 50px;
+}
  
  .input-style i{
     padding: 0 20px;

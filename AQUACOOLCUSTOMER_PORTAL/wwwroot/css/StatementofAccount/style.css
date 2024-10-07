@@ -55,6 +55,9 @@ body{
 }
 
 
+.icon-image{
+    width: 25px;
+}
 .icon-text {
     display: inline;
     text-wrap: nowrap;

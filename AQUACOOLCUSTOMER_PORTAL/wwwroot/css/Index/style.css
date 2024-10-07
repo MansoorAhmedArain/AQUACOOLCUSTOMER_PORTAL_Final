@@ -50,14 +50,15 @@ header{
   font-size: 10px;
 }
 
-.button span {
-  position: absolute;
-  left: 0;
-  top:0;
-  bottom: 0;
-  width: 50px;
-  background-color: #092f57;
-  border-radius: 20px 0 0 20px;
+
+.button img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 36px;
+        background-color: #092f57;
+        border-radius: 20px 0 0 20px;        
 }
 
 .btn{

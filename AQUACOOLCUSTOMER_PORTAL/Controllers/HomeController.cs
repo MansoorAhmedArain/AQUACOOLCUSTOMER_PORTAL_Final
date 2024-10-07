@@ -69,6 +69,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
         public IActionResult Registration()
         {
+           
             return View();
         }
 

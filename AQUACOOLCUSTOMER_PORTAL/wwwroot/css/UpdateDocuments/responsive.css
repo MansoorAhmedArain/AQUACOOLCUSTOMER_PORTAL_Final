@@ -1,0 +1,131 @@
+@media (max-width: 991px) {
+
+  .navbar-nav{
+        width: 40%;
+   }
+
+  
+ .left-box{
+     height: 100%;
+     width: 25%;
+ }
+ 
+ .img-style{
+     width: 350px;
+     height: 575px;
+ }
+ 
+ 
+ .right-box{
+    height: 100%;
+    width: 75%;
+   
+ }
+
+ .input-style{
+  width: 35vw;
+}
+
+
+}
+
+@media (max-width: 767px) {
+  
+  .navbar{
+    height: 80px;
+    width: 100%;
+}
+
+.mbinput-style{
+  width: 45vw;
+}
+}
+
+
+
+@media (max-width: 600px) {
+  .box{
+    height: 85vh;
+    width: 60vw;
+}
+
+
+  .logo-style{
+    width: 12vmax;
+  }
+
+.mbinput-style{
+  width: 50vw;
+}
+
+
+.mbbtn-style{
+  font-size: 12px;
+}
+
+}
+
+
+@media (max-width: 500px) {
+
+  .box{
+    height: 85vh;
+    width: 70vw;
+
+}
+
+  .mbinput-style{
+    width: 60vw;
+  }
+}
+  
+@media (max-width: 420px) {
+ 
+  .box{
+    height: 88vh;
+    width: 75vw;
+}
+
+
+.mbinput-style{
+  width: 80vw;
+  padding: 20px;
+}
+
+
+
+.mbbtn-style{
+  font-size: 12px;
+}
+
+.h5{
+  font-size: 5vw;
+}
+
+ 
+}
+
+@media (max-width: 360px) {
+  .box{
+    height: 88vh;
+    width: 75vw;
+  
+}
+
+.mbinput-style{
+  width: 80vw;
+  padding: 20px;
+}
+
+.update-style{
+  font-size: large;
+}
+}
+  
+@media (max-width: 250px) {
+  body{
+    display: none;
+  }
+}
+
+
