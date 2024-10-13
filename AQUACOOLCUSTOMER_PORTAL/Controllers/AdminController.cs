@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using ServiceReference1;
+using System.Web;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AQUACOOLCUSTOMER_PORTAL.Controllers
@@ -36,17 +37,17 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //{
             //    ViewBag.Id = Id;
             //    var docs = await _service.getAttachmentsStatusAsync(Id);
-            //    var files = new List<AxDocs>();
+            //    var file = new List<AxDocs>();
             //    foreach (var d in docs)
             //    {
-            //        files.Add(new AxDocs()
+            //        file.Add(new AxDocs()
             //        {
             //            FileName = d.FileName,
             //            Status = d.Verfiy
             //        });
             //    }
 
-            //    ViewBag.Status = files;
+            //    ViewBag.Status = file;
             //}
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
@@ -56,7 +57,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             // ViewBag.Projects = projects;
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
-            ViewBag.Error = "";
+            //ViewBag.Error = "";
             return View(projects);
         }
 
@@ -110,7 +111,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
                 if (string.IsNullOrEmpty(result))
                 {
-                    TempData["Error"] = "Error Occurred";
+                    //TempData["Error"] = "Error Occurred";
+                    ViewBag.Error = "Error Occurred";
                 }
                 else
                 {
@@ -141,11 +143,12 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
                             ViewBag.Status = files;
                             // redirect to upload documents.
+                            return RedirectToAction("UpdateDocuments", new { id = output[2] });
                         }
                     }
                     else
                     {
-                        TempData["Error"] = output[1];
+                        ViewBag.Error = output[1];
                     }
                 }
             }
@@ -228,6 +231,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("index", "Home");
         }
+        #region Change Password
 
         [HttpGet]
         public IActionResult ChangePassword()
@@ -278,30 +282,36 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             return View();
         }
 
+        #endregion
+
         [HttpGet]
-        public IActionResult UpdateDocuments()
+        public IActionResult UpdateDocuments(string id = "")
         {
+            // ViewBag.tktID = id;
+            ViewBag.tktID = "REGRQ-000001541";
             return View();
         }
 
         #region Uploads
 
         [HttpPost]
-        public async Task<IActionResult> Uploads(IEnumerable<IFormFile> files, string id, string type, string expirydate, string isTicket = "no")
+        public async Task<IActionResult> Uploads(IFormFile file, string id, string type, string expirydate, string isTicket = "no")
         {
-            if (string.IsNullOrEmpty(id))
+            try
             {
-                TempData["Error"] = "Registration does not exist";
-                return RedirectToAction("UserProfile");
-            }
-
-            if (id.ToLower().StartsWith("tkt"))
-                isTicket = "yes";
-
-            if (files != null)
-            {
-                foreach (IFormFile file in files)
+                if (string.IsNullOrEmpty(id))
                 {
+                    TempData["Error"] = "Registration does not exist";
+                    return RedirectToAction("UserProfile");
+                }
+
+                if (id.ToLower().StartsWith("tkt"))
+                    isTicket = "yes";
+
+                if (file != null)
+                {
+                    //foreach (IFormFile file in file)
+                    //{
                     if (file != null && file.Length > 0)
                     {
                         var extension = Path.GetExtension(file.FileName);
@@ -327,10 +337,18 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                             var a = await _service.attachAqcFilesAsync(id, fileName, data, isTicket);
                         }
                     }
+                    //  }
                 }
-            }
 
-            return Json(new { success = true, type });
+                //return Json(new { success = true, type });
+                return View("UpdateDocuments", new { id = id });
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
         }
 
 
@@ -401,5 +419,83 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
         #endregion
 
+        #region User Tickets
+
+        /// <summary>
+        /// This will be list page for all move in tickets 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MoveInTickets()
+        {
+            return View();
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+            var u = _service.getCustomerByUserIDAsync(username).Result;
+            var moveInTickets = _service.getCustTicketsMoveInAsync(u).Result;
+            var mitickets = new List<AxTicketDetails>();
+            //var ccode = _client.getCustomerByUserID(User.Identity.Name);
+
+            foreach (var t in moveInTickets)
+            {
+                var a = new AxTicketDetails
+                {
+                    Id = HttpUtility.HtmlEncode(t.BETicketID),
+                    RequestId = HttpUtility.HtmlEncode(t.MimoRequestID),
+                    Status = HttpUtility.HtmlEncode(t.BETicketStatus),
+                    ContractId = HttpUtility.HtmlEncode(t.EndUserAgreementID),
+                    RequestType = HttpUtility.HtmlEncode(t.RequestType),
+                    PropertyId = HttpUtility.HtmlEncode(t.PropertyID)
+                };
+
+                a.ContractId = _service.CheckNewMovinContractAsync(u, HttpUtility.HtmlEncode(a.PropertyId), a.Id).Result;
+                a.Balance = _service.getCustContractBalanceAsync(u, HttpUtility.HtmlEncode(a.ContractId)).Result;
+
+                mitickets.Add(a);
+            }
+
+            ViewBag.InTickets = mitickets;
+
+            return View();
+        }
+        /// <summary>
+        /// This will be list page for all move out tickets 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MoveOutTickets()
+        {
+            var moveOutTickets = _service.getCustTicketsMoveOutAsync(User.Identity.Name).Result;
+            var motickets = new List<AxTicketDetails>();
+            foreach (var t in moveOutTickets)
+            {
+                var a = new AxTicketDetails
+                {
+                    Id = t.BETicketID,
+                    Status = t.BETicketStatus,
+                    ContractId = t.EndUserAgreementID
+                };
+
+                motickets.Add(a);
+
+                a.Balance = _service.getMoveOutBalanceTicketAsync(t.BETicketID).Result;
+            }
+            ViewBag.OutTickets = motickets;
+
+            return View();
+        }
+
+        #endregion
+
+        public IActionResult TransactionHistory()
+        {
+            return View(); 
+        }
+        public IActionResult AccountHistory()
+        {
+            return View();
+        }
     }
 }

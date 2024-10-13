@@ -4,8 +4,9 @@
 
 <div class="bg-container d-none d-md-flex">
     <div class="left-box "><img src="~/images/BG2.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
-        <form class="right-box pt-4" method="post" action="@Url.Action("Admin","UpdateDocuments")" role="form">
-            <div class="icon-text h5">Manage Profile <br></div>
+    <form class="right-box pt-4" method="post" action="@Url.Action("Uploads","Admin")" role="form" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="@ViewBag.tktID"/>
+        <div class="icon-text h5">Manage Profile <br></div>
             <div class="h3 mt-3 password-style" style="font-weight: bolder; text-wrap: nowrap; color: #092f57;">
                 <img src="~/Icons/Update-Document.png" alt="" style="width:50px">
                 <span>Update Documents</span>
@@ -14,14 +15,14 @@
                 <label>Select the documents to upload</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                    <select class="form-control rounded-start rounded-pill" placeholder="Owner" style="border: 1px solid #8FD2F0;">
-                        <option value="" selected="selected">Select Option</option>
-                        <option value="1">Emarates Id</option>
-                        <option value="2">Passport Copy</option>
-                        <option value="3">Visa Copy</option>
-                        <option value="4">Upload Tenancy Contract or Ejari Certificate</option>
-                        <option value="5">Upload Title Deed</option>
-                        <option value="6">Upload Other Documents</option>
+                <select class="form-control rounded-start rounded-pill" placeholder="Owner" name="type" style="border: 1px solid #8FD2F0;">
+                    <option value="-1" selected="selected">Select Option</option>
+                    <option value="Emarates-Id">Emarates Id</option>
+                    <option value="Passport">Passport Copy</option>
+                    <option value="Visa">Visa Copy</option>
+                    <option value="Tenancy-Contract">Upload Tenancy Contract or Ejari Certificate</option>
+                    <option value="Title-Deed">Upload Title Deed</option>
+                    <option value="Other-Documents">Upload Other Documents</option>
                     </select>
                 </div>
 
@@ -38,11 +39,14 @@
                 <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Expire Date</div>
                 <div class="input-group">
                     <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" style="width:25px"></span>
-                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
+                <input type="date" class="form-control rounded-start rounded-pill" name="expirydate" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
                 </div>
                 <div class="mt-4">
+                    <input type="file" name="file" class="form-control"/>
+
                     <a href="#" class="btn rounded-pill update-btn mb-3">Update Document</a>
-                    <a href="#" class="btn rounded-pill btn-style">Submit</a>
+                    @* <a href="#" class="btn rounded-pill btn-style">Submit</a> *@
+                <input type="submit" class="btn rounded-pill btn-style" />
                 </div>
             </div>
         </form>
