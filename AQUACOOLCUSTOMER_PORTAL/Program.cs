@@ -3,6 +3,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
+// Add appsettings.json as the configuration source
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

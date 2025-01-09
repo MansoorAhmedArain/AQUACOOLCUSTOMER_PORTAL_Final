@@ -1,9 +1,57 @@
-﻿
+﻿@using AQUACOOLCUSTOMER_PORTAL.DTO
 @{
     ViewData["Title"] = "MoveInTickets";
-}
+    var InTickets = (List<AxTicketDetails>)ViewBag.InTickets;
 
-    <main>
+}
+<div class="col-md-12">
+    @if (InTickets.Count > 0)
+    {
+        <table class="table table-bordered table-condensed table-striped">
+            <tr>
+                <th>Ticket Id</th>
+                <th>Status</th>
+                <th>Request Type</th>
+                <th>Balance</th>
+                <th>Contract Id</th>
+                <th>Pay</th>
+                <th>Action</th>
+            </tr>
+
+            @foreach (var m in InTickets)
+            {
+                <tr>
+                    <td>@m.Id</td>
+                    <td>@m.Status</td>
+                    <td>@m.RequestType</td>
+                    <td>@m.Balance</td>
+                    <td>@m.ContractId</td>
+                    <td>
+                        @if (m.Status.ToLower() == "completed" && double.Parse(m.Balance) > 0 && !string.IsNullOrEmpty(m.ContractId))
+                        {
+                            @Html.ActionLink("Pay", "MoveInCharges", "User2", new { Contract = m.ContractId, Ticket = m.Id }, null)
+                        }
+                    </td>
+
+                    <td>
+                        @if (m.Status.ToLower() == "not submitted" || m.Status.ToLower() == "pending under customer")
+                        {
+                            @Html.ActionLink("Upload Files", "NewRegistration", new { Id = m.Id })
+                        }
+
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-success">
+            You do not have any Move In Tickets.
+        </div>
+    }
+</div>
+    @* <main>
         <div class="bg-container d-none d-md-flex">
             <div class="left-box "><img src="/images/BG16.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
             <div class="right-box pt-4">
@@ -208,4 +256,4 @@
         </div>
 
 
-    </main>
+    </main> *@

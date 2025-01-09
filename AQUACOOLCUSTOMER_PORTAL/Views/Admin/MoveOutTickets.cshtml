@@ -1,0 +1,65 @@
+﻿@using AQUACOOLCUSTOMER_PORTAL.DTO
+@{
+    var OutTickets = (List<AxTicketDetails>)ViewBag.OutTickets;
+}
+
+<div class="container about_home">
+    <h5 style="float: right">@User.Identity.Name</h5>
+    <h1 class="page-header">
+        <img src="~/images/icons/transaction.png" style="width: 40px; margin-top: -10px; margin-right: 10px;" />
+        Move Out Tickets
+    </h1>
+
+   @*  <div class="col-md-2">
+        @Html.Partial("_UserMenu")
+    </div> *@
+
+    <div class="col-md-10">
+        @Html.Partial("_MessagesPartial")
+
+        <div class="col-md-12">
+            @if (OutTickets.Count > 0)
+            {
+                <table class="table table-bordered table-condensed table-striped">
+                    <tr>
+                        <th>Ticket Id</th>
+                        <th>Status</th>
+                        <th>Balance</th>
+                        <th>Contract</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var m in OutTickets)
+                    {
+                        <tr>
+                            <td>@m.Id</td>
+                            <td>@m.Status</td>
+                            <td>@m.Balance</td>
+                            <td>@m.ContractId</td>
+                            <td>
+                                @if (m.Status.ToLower() == "not submitted" || m.Status.ToLower() == "pending under customer")
+                                {
+                                    @Html.ActionLink("Upload NOC", "UploadNoC", new { Id = m.Id })
+                                }
+
+                            </td>
+                            <td>
+                                @if (m.Status.ToLower() != "completed" && double.Parse(m.Balance) > 0 && !string.IsNullOrEmpty(m.ContractId))
+                                {
+                                    @Html.ActionLink("Pay", "MoveOutCharges", "User2", new { Contract = m.ContractId, Ticket = m.Id }, null)
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-success">
+                    You do not have any Move Out Requests.
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using ServiceReference1;
+using System.Globalization;
 using System.Web;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -288,7 +289,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         public IActionResult UpdateDocuments(string id = "")
         {
             // ViewBag.tktID = id;
-            ViewBag.tktID = "REGRQ-000001541";
+            ViewBag.tktID = "REGRQ-000001541"; //"REGRQ-000001542"
             return View();
         }
 
@@ -427,7 +428,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// <returns></returns>
         public ActionResult MoveInTickets()
         {
-            return View();
+            //return View();
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
@@ -467,7 +468,13 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// <returns></returns>
         public ActionResult MoveOutTickets()
         {
-            var moveOutTickets = _service.getCustTicketsMoveOutAsync(User.Identity.Name).Result;
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+            var moveOutTickets = _service.getCustTicketsMoveOutAsync(username).Result;
             var motickets = new List<AxTicketDetails>();
             foreach (var t in moveOutTickets)
             {
@@ -489,6 +496,181 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
         #endregion
 
+        #region Invoices
+
+        public bool CheckNotIsSwissOrNakheel(string contractId)
+        {
+            
+            var IsSwissNakheel = false;
+            if (string.IsNullOrEmpty(contractId))
+                throw new Exception("Contract Id cannot be null");
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return false;
+            }
+            var u = _service.getCustomerByUserIDAsync(username).Result;
+            var contracts = _service.getCustContAsync(u, true).Result.ToList();
+            foreach (var c in contracts)
+            {
+                if ((!c.MainAgreement.Equals("MAG-000033")) && (!c.MainAgreement.Equals("MAG-000003")))
+                {
+                    IsSwissNakheel = true;
+                }
+                else
+                {
+                    IsSwissNakheel = false;
+                    break;
+                }
+            }
+            return IsSwissNakheel;
+        }
+
+
+        public ActionResult Invoices(string contractId)
+        {
+            // var IsSwissNakheel = false;
+            if (string.IsNullOrEmpty(contractId))
+                throw new Exception("Contract Id cannot be null");
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+            var u = _service.getCustomerByUserIDAsync(username).Result;
+            var invoices = _service.GetInvoicesAsync(u, contractId).Result; 
+            var contracts = _service.getCustContAsync(u, true).Result.ToList();
+            var contractsList = new List<AxContract>();
+            //foreach (var c in contracts)
+            //{
+            //    if ((!c.MainAgreement.Equals("MAG-000033")) && (!c.MainAgreement.Equals("MAG-000003")))
+            //    {
+            //        IsSwissNakheel = true;                    
+            //    }
+            //    else
+            //    {
+            //        IsSwissNakheel = false;
+            //        break;
+            //    }
+            //}
+            ViewBag.IsSwissNakheel = _service.EnableCCPayOptionAsync(contractId).Result.ToString().Trim().Equals("Yes") ? true : false;
+
+            ViewBag.Balance = _service.getCustContractBalanceAsync(u, contractId).Result;
+
+            TempData["ContractId"] = contractId;
+            ViewData["ContractId"] = contractId;
+            TempData["TicketId"] = contractId;
+
+            var result = new List<AxInvoice>();
+            foreach (var invoice in invoices)
+            {
+                var i = new AxInvoice();
+                i.Id = invoice.Id;
+                i.Description = invoice.description;
+                i.Amount = double.Parse(invoice.Amount);
+                i.InvoiceDate = DateTime.Parse(invoice.InvDate, CultureInfo.GetCultureInfo("en-US"));
+                i.DueDate = DateTime.Parse(invoice.duedate, CultureInfo.GetCultureInfo("en-US"));
+                i.ContractId = contractId;
+                result.Add(i);
+            }
+            return View(result);
+        }
+
+        public ActionResult Payments(string contractId)
+        {
+            if (string.IsNullOrEmpty(contractId))
+                throw new Exception("Contract Id cannot be null");
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+            TempData["ContractId"] = contractId;
+            var u = _service.getCustomerByUserIDAsync(username).Result;
+            var invoices = _service.getCustPaymentsAsync(u, contractId).Result;
+            var result = new List<AxPayments>();
+            foreach (var invoice in invoices)
+            {
+                var i = new AxPayments();
+                i.TransactionNumber = invoice.TransNum;
+                i.Amount = double.Parse(invoice.Amount);
+                i.JournalNumber = invoice.JournalNo;
+                i.Date = DateTime.Parse(invoice.Date, CultureInfo.GetCultureInfo("en-US"));
+                i.ContractId = contractId;
+                i.PayAgainst = invoice.PayAgainst;
+                result.Add(i);
+            }
+            return View(result);
+        }
+        #endregion
+
+        #region Payments
+        public ActionResult MoveInCharges(string Contract, string Ticket)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+            var charges = _service.getContractMoveInChargesAsync(Contract).Result;
+            var Balance = _service.getCustContractBalanceAsync(_service.getCustomerByUserIDAsync(username).Result, Contract).Result;
+            ViewBag.Balance = Balance;
+
+            var axCharges = new List<AxCharges>();
+
+            foreach (var c in charges)
+            {
+                var a = new AxCharges()
+                {
+                    Description = c.Description,
+                    Amount = double.Parse(c.Amount).ToString("N2"),
+                    FeesId = c.FeesId
+                };
+
+                axCharges.Add(a);
+            }
+
+            TempData["TicketId"] = Ticket;
+            TempData["ContractId"] = Contract;
+
+            return View(axCharges);
+        }
+
+        public ActionResult MoveOutCharges(string Contract, string Ticket)
+        {
+            TempData["TicketId"] = Ticket;
+            TempData["ContractId"] = Contract;
+            TempData["amount"] = _service.getMoveOutBalanceTicketAsync(Ticket).Result;
+
+            return RedirectToAction("Index", "Gateway");
+        }
+
+        public ActionResult Pay(string amount)
+        {
+            var contractId = Convert.ToString(TempData["ContractId"].ToString());
+            if (CheckNotIsSwissOrNakheel(contractId))
+            {
+                if (double.Parse(amount) < 100)
+                {
+                    TempData["Error"] = "The minimum amount to be Paid is AED 100";
+                    TempData["ContractId"] = contractId;
+                    return RedirectToAction("Invoices", new { contractId });
+                }
+                TempData["TicketId"] = TempData["TicketId"].ToString();
+                TempData["ContractId"] = TempData["ContractId"].ToString();
+                TempData["amount"] = amount;
+                return RedirectToAction("Index", "Gateway");
+            }
+            else
+            {
+                return RedirectToAction("Invoices", new { contractId });
+            }
+        }
+        #endregion
         public IActionResult TransactionHistory()
         {
             return View(); 

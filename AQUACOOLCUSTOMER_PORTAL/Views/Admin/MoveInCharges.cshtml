@@ -1,0 +1,47 @@
+﻿@using AQUACOOLCUSTOMER_PORTAL.DTO
+@model List<AxCharges>
+
+@{
+    ViewBag.Title = "MoveInCharges";
+}
+
+<div class="container about_home">
+    <h5 style="float: right">@User.Identity.Name</h5>
+    <h2 class="page-header">Move In Payment</h2>
+    <p>@Html.ActionLink("Cancel", "MoveInTickets")</p>
+    <div class="col-md-12">
+        <h2>Payment Schedule</h2>
+        <table class="table table-bordered table-condensed">
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+
+            @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@m.Description</td>
+                    <td>@m.Amount</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <h2>Payment</h2>
+        @{
+            double amount = double.Parse(ViewBag.Balance);
+        }
+        @using (Html.BeginForm("Pay", "User2"))
+        {
+            <table class="table table-bordered table-condensed">
+                <tr>
+                    <th>Amount to Pay</th>
+                    @Html.Hidden("amount", amount)
+                    <td>AED @ViewBag.Balance</td>
+                    <td><input type="submit" class="btn btn-info" value="Pay" /></td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
