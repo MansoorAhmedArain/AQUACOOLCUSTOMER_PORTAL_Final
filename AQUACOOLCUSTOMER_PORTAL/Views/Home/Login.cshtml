@@ -46,7 +46,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav ms-auto rounded">
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link mx-2" href="#" style="color: #092f57;">DASHBOARD</a>
                         </li>
                         <li class="nav-item">
@@ -60,7 +60,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mx-2" href="#" style="color: #092f57;">MANAGE PROFILE</a>
-                        </li>
+                        </li> *@
                         @* <li class="nav-item">
                             <a class="nav-link mx-2" href="#" style="color: #092f57;">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a>
                         </li> *@
@@ -96,7 +96,7 @@
                         </div>
                             <a href=" @Url.Action("ForgotPassword", "Account")" class="text-decoration-none" style="color: #03213d; font-size: small; font-weight: bolder;">Forget Password</a>
                     </div>
-                        <label class="" style="color:red">@ViewData["ErroMessage"]</label>
+                        <label class="" style="color:red">@ViewData["ErrorMessage"] </label>
                     <input type="submit" class="btn rounded-pill btn-style my-4" value="Login"/>
                     @* <a href="/Login.html" class="btn rounded-pill btn-style my-4">Login</a> *@
                     

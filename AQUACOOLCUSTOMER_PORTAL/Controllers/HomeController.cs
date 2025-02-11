@@ -50,6 +50,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     ViewBag.ErroMessage = "username or password can not be empty.";
                     return View();
                 }
+                //AQ000067 // 3WGCSZHU
                 var response = _service.LoginAsync("test", "test").Result;  //Success|C003776|test
                 if (!String.IsNullOrWhiteSpace(response) || response.Contains("Success"))
                 {
