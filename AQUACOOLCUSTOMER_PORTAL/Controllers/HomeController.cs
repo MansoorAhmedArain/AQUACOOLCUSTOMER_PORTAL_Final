@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using System;
 namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 {
     public class HomeController : Controller
@@ -51,12 +52,16 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     return View();
                 }
                 //AQ000067 // 3WGCSZHU
-                var response = _service.LoginAsync("test", "test").Result;  //Success|C003776|test
+                // AQ000175 // Emic$2021
+                // test // test
+                var response = _service.LoginAsync(username, password).Result;  //Success|C003776|test
                 if (!String.IsNullOrWhiteSpace(response) || response.Contains("Success"))
                 {
                     var resp = response.Split("|");
-                    HttpContext.Session.SetString("UserId", resp[1]);
-                    HttpContext.Session.SetString("UserName", username);
+                    //HttpContext.Session.SetString("UserId", resp[1]);   //C000006
+                    //HttpContext.Session.SetString("UserName", username); // AQ000038
+                    HttpContext.Session.SetString("UserId", "C000006");   //C000006
+                    HttpContext.Session.SetString("UserName", "AQ000038"); // AQ000038
                     return RedirectToAction("Index", "Admin");
                 }
                 ViewBag.ErrorMessage = "Not Authorized. Please check your Credentials";

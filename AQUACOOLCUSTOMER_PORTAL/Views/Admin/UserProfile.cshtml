@@ -1,0 +1,94 @@
+﻿@using AQUACOOLCUSTOMER_PORTAL.DTO
+@model  List<AxContract>
+
+<div class="container about_home">
+    <h5 style="float: right">@ViewBag.Username  - @ViewBag.Contract</h5>
+    <h1 class="page-header">
+        <img src="~/images/icons/insider declaration form.png" style="width: 40px; margin-top: -10px; margin-right: 10px;" />
+        Active Contracts
+    </h1>
+
+
+    <div class="col-md-10">
+        @Html.Partial("_Messages")
+
+        <div class="col-md-12">
+
+            @* @(Html.Kendo().Grid<AxContract>
+                ().Name("Grid").Columns(c =>
+                {
+                    c.Bound(x => x.MainAgreement).Hidden();
+                    c.Bound(x => x.ContractID);
+                    c.Bound(x => x.Unit).ClientTemplate("#: Unit #  - #: CustomerType #").Title("Unit Name");
+                    c.Bound(x => x.Project).Filterable(false);
+                    c.Bound(x => x.Balance).Filterable(false);
+                    c.Template(x => { }).ClientTemplate("<a href='Payments?contractId=#:ContractID#'>Receipts</a>").Title("Receipts");
+                    c.Bound(x => x.RequestId).Title("Request Id");
+                    c.Template(x => { }).ClientTemplate("" +
+                    "# if(CustomerType == 'Tenant' || RequestId != '') { #" +
+                    "<a href='InitiateMoveOut?ContractID=#:ContractID#&RequestId=#:RequestId#&CustomerType=#:CustomerType#'>Initiate Move Out</a>" +
+                    "#}#").Title("Action");
+                    //    if (x.CustomerType == "Tenant" || !string.IsNullOrEmpty(x.RequestId))
+                    //        @Html.ActionLink("", "InitiateMoveOut", new { ContractID = x.ContractID, RequestId = x.RequestId, CustomerType = x.CustomerType });
+                    //c.Template(x => { }).ClientTemplate("<a href='Invoices?contractId=#:ContractID#'>Pay</a>").Title("Pay");
+                    c.Template(x => { }).ClientTemplate("" + "# if(MainAgreement != 'MAG-000033' && MainAgreement != 'MAG-000003' ) { # " + "<a href='Invoices?contractId=#:ContractID#'>Pay</a>" + "#}#").Title("Pay");
+                }
+                )
+                .Filterable(x => x.Enabled(true).Mode(GridFilterMode.Menu))
+                .DataSource(d => d
+                .Ajax()
+                .Read(r => r.Action("Contracts_Read", "User2"))
+                )
+                .NoRecords("You do not have any Active Contracts.")
+                ) *@
+
+            <table class="table table-bordered table-condensed table-striped">
+                <tr>
+                    <th>Contract Id</th>
+                    <th>Unit Name</th>
+                    <th>Project</th>
+                    <th>Balance</th>
+                    <th>Receipts</th>
+                    <th>Request Id</th>
+                    <th>Action</th>
+                    <th>Pay</th>
+                </tr>
+
+
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(m.ContractID, "Invoices", new { contractId = m.ContractID })</td>
+                        <td>@m.Unit - @m.CustomerType</td>
+                        <td>@m.Project</td>
+                        <td>@m.Balance</td>
+                        <td>
+                            @Html.ActionLink("Receipts", "Payments", new { contractId = m.ContractID })
+                        </td>
+                        <td>@m.RequestId</td>
+                        <td>
+                            @if (m.CustomerType == "Tenant" || !string.IsNullOrEmpty(m.RequestId))
+                            {
+                                @Html.ActionLink("Initiate Move Out", "InitiateMoveOut", new { ContractID = m.ContractID, RequestId = m.RequestId, CustomerType = m.CustomerType })
+                            }
+                        </td>
+                        <td style="background-color: aliceblue">
+                            @Html.ActionLink("Pay", "Invoices", new { contractId = m.ContractID })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+        <div class="col-md-12">
+            <p><strong>Instructions:</strong></p>
+            <p>If you are moving into a new property, Click on the  @Html.ActionLink("\"Requests\"", "NewRegistration") link to start a new "Request"</p>
+            <p>If you have already registered and are looking to pay your security deposit and admin fees, click on the @Html.ActionLink("\"Move in Tickets\"", "MoveInTickets") link to make the payment.</p>
+            <p>If you are leaving your current property and wish to get your security deposit refund, then click on the <strong>"Initiate move Out"</strong> link next to the corresponding property in the above list</p>
+            <p>If you have already applied for Move Out, click on the @Html.ActionLink("\"Move Out Tickets\"", "MoveOutTickets") link to check the status of your request and pay any outstanding amounts.</p>
+            @*<p>If you are leaving your current property, then @Html.ActionLink("Click Here", "MoveOutTickets") to initiate a move out</p>*@
+            <p>To Update your profile and/or contact details, click on the @Html.ActionLink("Manage Profile", "Manage") link.</p>
+        </div>
+    </div>
+</div>

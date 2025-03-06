@@ -1,0 +1,57 @@
+﻿<div class="row col-md-12 form-group" style="margin: 40px">
+    <p>
+        Once you have uploaded all the documents. Sign in the below box, using mouse.
+    </p>
+
+    <div id="signature-pad" class="m-signature-pad">
+        <div class="m-signature-pad--body">
+            <canvas></canvas>
+        </div>
+        <div class="m-signature-pad--footer">
+            <div class="description">Please sign above</div>
+            <button type="button" class="button clear" data-action="clear">Clear</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="text-right">
+            <input type="submit" value="Complete Registration" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="imageData" name="imageData" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/signature_pad.min.js"></script>
+<script src="~/Scripts/SignaturePadInit.js"></script>
+<script src="~/Scripts/app.js"></script>
+
+<script>
+    $(function () {
+        var theForm = $("form#myForm");
+        theForm.submit(function (e) {
+            if (signaturePad.isEmpty()) {
+                alert("Please provide signature");
+                $("#imageData").val("");
+                e.preventDefault();
+            } else {
+                var s = getSignature();
+                console.log(s);
+                $("#imageData").val(getSignature());
+            }
+        });
+
+    });
+
+    function getSignature() {
+        var sigImg = signaturePad.toDataURL();
+        var myBaseString = sigImg;
+        var block = myBaseString.split(";");
+        var dataType = block[0].split(":")[1];
+        var realData = block[1].split(",")[1];
+
+        //var newdata = "data:" + dataType + ";base64," + escape(realData);
+        var newdata = realData;
+        return newdata;
+    };
+</script>

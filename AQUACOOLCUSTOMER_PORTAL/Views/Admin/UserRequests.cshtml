@@ -1,0 +1,177 @@
+﻿@model IEnumerable<AQUACOOLCUSTOMER_PORTAL.DTO.AxRequests>
+
+@{
+    ViewData["Title"] = "UserRequests";
+}
+
+<main>
+    <div class="bg-container d-none d-md-flex">
+        <div class="left-box "><img src="/images/BG7.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+        <div class="pt-4">
+            <div class="icon-text h4">
+                <span style="white-space: nowrap;">Pending Registration Requests</span>
+            </div>
+            <div class="mt-3 input-style">
+                <div class="table-container mt-4" style="width: 1000px;margin-left: 25px;">
+
+                    <table style="table-layout: fixed;">
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                @* <th>Ticket ID</th> *@
+                                <th>Project</th>
+                                <th>Unit</th>
+                                <th>Type</th>
+                                <th>Status of Req.</th>
+                                <th>Created At</th>
+                                <th>Last Action <br />Created By Customer <br />Service</th>
+                                <th>Remarks</th>
+                                <th>Action for Customer</th>
+                                <th>Ticket Type</th>
+                               
+                            </tr>
+                        </thead>
+                        @foreach (var tickets in Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td style="word-wrap: break-word">@tickets.RequestId</td>
+                                   @*  <td>@tickets.TicketID</td> *@
+                                    <td>@tickets.ProjectName</td>
+                                    <td>@tickets.Unit</td>
+                                    <td>@tickets.MoveInType</td>
+                                    <td>@tickets.Status</td>
+                                    <td>
+                                        @if (DateTime.Parse(tickets.DateTimeAccepted).Year > 2000)
+                                        {
+                                            <span>@(DateTime.Parse(tickets.DateTimeAccepted).ToString("D"))</span>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                        @* @tickets.DateTimeAccepted *@</td>
+                                    <td>
+                                        @if (tickets.Status.ToLower() == "not submitted" || tickets.Status.ToLower() == "pending under customer")
+                                        {
+                                            @Html.ActionLink("Upload Files", "NewRegistration", new { Id = tickets.RequestId })
+                                        }
+                                    </td>
+                                    <td>-</td>
+                                    <td><a href="#">Complete this Req. </a></td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        }
+
+
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!--Mobile design-->
+    <div class="mb-container d-md-none">
+        <div class="mbimage-style ">
+            <div class="box rounded shadow-lg">
+                <div class="h4 mt-5" style="font-weight: bolder;">Transaction History</div>
+                <div class="mbinput-style">
+
+                    <div style="color: #03213d; font-size: small;">You have no outstanding bills</div>
+                    <div style="color: #03213d; font-size: small; font-weight: bolder;">Balance & Latest Bills</div>
+
+                    <table class="mt-2">
+                        <tbody>
+                            <tr>
+                                <td class="table-row">AED 0,000 <br><span style=" font-size: 10px; color: #888;">Balance Due</span></td>
+                                <td class="table-row">AED 20,000 <br><span style=" font-size: 10px; color: #888;">Latest Bill</span></td>
+                                <td class="table-row">25th Jan 2024 <br><span style=" font-size: 10px; color: #888;">Due Date</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="table-container mt-4">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>

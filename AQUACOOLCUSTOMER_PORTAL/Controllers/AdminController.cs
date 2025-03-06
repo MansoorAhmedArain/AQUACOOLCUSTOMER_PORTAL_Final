@@ -29,11 +29,46 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             return View();
         }
+        /// <summary>
+        ///  New landing page to show all of the ongoing requests 
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult RequestsSummary()
+        {
+            return View();
+        }
+
+        public ActionResult NewRegistration(string Id = "")
+        {
+            if (!string.IsNullOrEmpty(Id))
+            {
+                ViewBag.Id = Id;
+                var docs = _service.getAttachmentsStatusAsync(Id).Result;
+                var files = new List<AxDocs>();
+                foreach (var d in docs)
+                {
+                    files.Add(new AxDocs()
+                    {
+                        FileName = d.FileName,
+                        Status = d.Verfiy
+                    });
+                }
+
+                ViewBag.Status = files;
+            }
+
+            return View();
+        }
         public async Task<IActionResult> MoveInRequest(string Id="")
         {
             
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
+            
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
             //if (!string.IsNullOrEmpty(Id))
             //{
             //    ViewBag.Id = Id;
@@ -50,10 +85,6 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             //    ViewBag.Status = file;
             //}
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
-            {
-                return RedirectPermanent("/Home/Index");
-            }
             Projects[] projects = await LoadProjectSelection();
             // ViewBag.Projects = projects;
             // var units = LoadUnitSelection("test");
@@ -288,8 +319,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         [HttpGet]
         public IActionResult UpdateDocuments(string id = "")
         {
-            // ViewBag.tktID = id;
-            ViewBag.tktID = "REGRQ-000001541"; //"REGRQ-000001542"
+             ViewBag.tktID = id;
+            //ViewBag.tktID = "REGRQ-000001541"; //"REGRQ-000001542"
             return View();
         }
 
@@ -342,7 +373,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 }
 
                 //return Json(new { success = true, type });
-                return View("UpdateDocuments", new { id = id });
+                return RedirectToAction("UpdateDocuments", new { id = id });
             }
             catch (Exception ex)
             {
@@ -419,9 +450,87 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
 
         #endregion
+        
+        #region User Request
 
+        public ActionResult UserRequests()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+            var result = _service.getCustRequestsAllAsync(username).Result;
+            List<AxRequests> requests = new List<AxRequests>();
+            foreach (var r in result)
+            {
+                var a = new AxRequests
+                {
+                    ProjectID = HttpUtility.HtmlEncode(r.ProjectID),
+                    ProjectName = HttpUtility.HtmlEncode(r.ProjectName),
+                    Unit = HttpUtility.HtmlEncode(r.Unit),
+                    UnitName = HttpUtility.HtmlEncode(r.UnitName),
+                    MoveInType = HttpUtility.HtmlEncode(r.MoveInType),
+                    CustomerId = HttpUtility.HtmlEncode(r.CustomerUserID),
+                    TicketID = HttpUtility.HtmlEncode(r.TicketID),
+                    Remarks = HttpUtility.HtmlEncode(r.Remarks),
+                    DateTimeAccepted = HttpUtility.HtmlEncode(r.DateTimeAccepted),
+                    RequestId = HttpUtility.HtmlEncode(r.ReqID),
+                    Status = HttpUtility.HtmlEncode(r.WFStatus)
+                };
+
+                requests.Add(a);
+            }
+
+            return View(requests);
+        }
+
+        #endregion
         #region User Tickets
+        public ActionResult AllTickets()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+            var mitickets = GetMoveInTickets(username);
+           
+            return View(mitickets);
+        }
+        public List<AxTicketDetails> GetMoveInTickets(string username)
+        {
+            //return View();
+            
+            var u = _service.getCustomerByUserIDAsync(username).Result;
+            var moveInTickets = _service.getCustTicketsMoveInAsync(u).Result;
+            var mitickets = new List<AxTicketDetails>();
+            //var ccode = _client.getCustomerByUserID(User.Identity.Name);
 
+            foreach (var t in moveInTickets)
+            {
+                var a = new AxTicketDetails
+                {
+                    Id = HttpUtility.HtmlEncode(t.BETicketID),
+                    RequestId = HttpUtility.HtmlEncode(t.MimoRequestID),
+                    Status = HttpUtility.HtmlEncode(t.BETicketStatus),
+                    ContractId = HttpUtility.HtmlEncode(t.EndUserAgreementID),
+                    RequestType = HttpUtility.HtmlEncode(t.RequestType),
+                    PropertyId = HttpUtility.HtmlEncode(t.PropertyID)
+                };
+
+                a.ContractId = _service.CheckNewMovinContractAsync(u, HttpUtility.HtmlEncode(a.PropertyId), a.Id).Result;
+                a.Balance = _service.getCustContractBalanceAsync(u, HttpUtility.HtmlEncode(a.ContractId)).Result;
+
+                mitickets.Add(a);
+            }
+
+            // ViewBag.InTickets = mitickets;
+
+            return mitickets;
+        }
         /// <summary>
         /// This will be list page for all move in tickets 
         /// </summary>
@@ -671,6 +780,55 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
         }
         #endregion
+        #region User Profile
+        public ActionResult UserProfile()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            var cu = _service.getCustomerByUserIDAsync(username).Result;
+            ViewBag.Username = username;
+            ViewBag.Contract = cu;
+            var contracts = Contracts_Read(username);
+
+            return View(contracts);
+        }
+
+        public List<AxContract> Contracts_Read(string username)
+        {
+            var cu = _service.getCustomerByUserIDAsync(username).Result;
+            var contracts = _service.getCustContAsync(cu, true).Result.ToList();
+
+            var contractsList = new List<AxContract>();
+            foreach (var c in contracts)
+            {
+                var a = new AxContract
+                {
+                    ContractID = HttpUtility.HtmlEncode(c.ContractID),
+                    Customer = HttpUtility.HtmlEncode(c.Customer),
+                    PropertyId = HttpUtility.HtmlEncode(c.PropertyId),
+                    MainAgreement = HttpUtility.HtmlEncode(c.MainAgreement),
+                    CustomerType = HttpUtility.HtmlEncode(c.CustType),
+                    Unit = HttpUtility.HtmlEncode(c.UnitName),
+                    Project = HttpUtility.HtmlEncode(c.ProjectName),
+                    RequestId = HttpUtility.HtmlEncode(""),
+                    Balance = _service.getCustContractBalanceAsync(HttpUtility.HtmlEncode(c.Customer), HttpUtility.HtmlEncode(c.ContractID)).Result
+                };
+
+                var propertyRequest = _service.getPropertyPendingRequestsAsync(HttpUtility.HtmlEncode(c.PropertyId)).Result;
+
+                if (propertyRequest.Length > 0)
+                {
+                    a.RequestId = propertyRequest[0].ReqID;
+                }
+
+                contractsList.Add(a);
+            }
+
+            return contractsList;
+        }
+
+        #endregion
+
         public IActionResult TransactionHistory()
         {
             return View(); 

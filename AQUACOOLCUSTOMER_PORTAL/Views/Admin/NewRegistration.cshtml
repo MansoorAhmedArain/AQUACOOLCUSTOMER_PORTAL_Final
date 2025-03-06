@@ -1,0 +1,56 @@
+﻿@model AQUACOOLCUSTOMER_PORTAL.DTO.AxRequests
+@{
+    ViewData["Title"] = "NewRegistration";
+}
+
+<link href="~/Content/signature-pad.css" rel="stylesheet" />
+
+<div class="container about_home">
+    @* <h5 style="float: right">@User.Identity.Name</h5> *@
+
+    <h1 class="page-header">
+        <img src="~/images/icons/status.png" style="width: 40px; margin-top: -10px; margin-right: 10px;" />
+        New Registration Request
+    </h1>
+
+    
+    <div class="col-md-12">
+        @Html.Partial("_Messages")
+
+        @if (ViewBag.Id == null)
+        {
+            <div ng-controller="RegistrationController as vm" ng-init="vm.init()">
+                <div class="section-heading">Property Information</div>
+
+                @using (Html.BeginForm("NewRegistration", "User2", FormMethod.Post, new { id = "userForm", name = "userForm" }))
+                {
+                    @Html.Partial("_NewRegistration", Model)
+                }
+            </div>
+        }
+        else
+        {
+            <div>
+                <div class="section-heading">Upload Documents and Signature</div>
+
+               @*  @Html.Partial("_Documents") *@
+
+                @using (Html.BeginForm("Complete", "Admin", FormMethod.Post, new { id = "myForm", name = "myForm" }))
+                {
+                    <div class="form-group">
+                        <input type="hidden" id="Id" name="Id" value="@ViewData["Id"]" />
+                    </div>
+
+                    @Html.Partial("_Signature")
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/app/newregister.js"></script>
+}
+
+

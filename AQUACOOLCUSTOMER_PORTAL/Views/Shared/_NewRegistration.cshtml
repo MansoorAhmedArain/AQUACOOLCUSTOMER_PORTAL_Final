@@ -1,0 +1,71 @@
+﻿@model AQUACOOLCUSTOMER_PORTAL.DTO.AxRequests
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Move In As</label>
+            <div class="">
+                <select ng-model="vm.data.AccountType" name="MoveInAs" class="form-control" ng-change="vm.accountTypeSelect()">
+                    <option value='' selected="selected">Select Option</option>
+                    <option>Owner</option>
+                    <option>Tenant</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="vm.data.AccountType">
+            <label>Project Name</label>
+            <select required="required" class="form-control" name="ProjectId"
+                    ng-options="option.nameField for option in vm.projects track by option.idField"
+                    ng-model="vm.data.project" ng-change="vm.projectSelect()">
+                <option value=''>Select Project</option>
+                @*                <option ng-repeat="option.ProjectId for option in vm.projects" value="{{option.ProjectId}}">{{option.Name}}</option>*@
+            </select>
+        </div>
+        <div class="form-group" ng-if="vm.data.project.idField">
+            <p>
+                <a ng-href="../EUA/{{vm.data.project.idField}}.pdf" target="_blank">Download End User Agreement</a>
+                <iframe ng-src="{{'../EUA/' + vm.data.project.idField + '.pdf'}}" width="100%" height="500" allowfullscreen webkitallowfullscreen></iframe>
+            </p>
+        </div>
+        <div class="form-group" ng-if="vm.data.project.idField">
+            <label>Unit No.</label>
+
+            @*            <input type="text" value="" class="form-control" placeholder="Filter Units, example: 101" ng-model="vm.filterUnits.UnitNo" />*@
+            <br />
+            <select required="required" id="PropertyId" name="PropertyId"
+                    ng-options="item.unitField for item in vm.units track by item.propertyIDField"
+                    class="form-control" ng-model="vm.data.unit" ng-change="vm.unitSelect()"></select>
+            <div class="help-block"> If you cannot find your unit, please <a href="@Url.Action("Contact", "WebPages", new { inquiryType = "Unit" })">Contact Us</a></div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Security deposit:</label><label id="lblSecurityDeposit"></label>
+            &nbsp; &nbsp; &nbsp;
+            <label>Declare load: </label><label id="lblDeclareLoad"></label>
+        </div>
+
+
+
+        @*<div class="form-group" ng-if="vm.data.unit.propertyIDField">
+        <label>
+        <input type="checkbox" name="Acknowledge" id="Acknowledge" ng-model="vm.data.Acknowledge" required="required" />
+        <span>I hereby confirm that I have read and accepted all the above clauses of the End-User Agreement.</span>
+        </label>
+        </div>*@
+
+        <div class="form-group" ng-if="vm.data.unit.propertyIDField">
+            <label>
+                <input type="checkbox" name="Agreement" id="Agreement" ng-model="vm.data.Agreement" required="required" />
+                <span>I/We state that, the information provided is verified and accepted by me. I/We hereby agree to the terms and conditions set forth in this Agreement. I/We hereby agree that if an e-signature is used to sign this Agreement, it shall be a valid and true signature of the Signatory.</span>
+            </label>
+        </div>
+
+        <div class="form-group" ng-if="vm.data.unit.propertyIDField">
+            <div class="text-right">
+                <input type="submit" value="Next" class="btn btn-default" ng-disabled="userForm.$invalid" />
+            </div>
+        </div>
+    </div>
+</div>
