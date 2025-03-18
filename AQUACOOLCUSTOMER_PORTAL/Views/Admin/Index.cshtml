@@ -9,7 +9,7 @@
         <!-- Dashboard -->
         <div class="ms-1 card-head">Dashboard</div>
         <div class="card-row gap-2 ">
-            <div>
+           @*  <div>
                 <a href="@Url.Action("UserRequests")" style="text-decoration: none;">
                     <div class="card text-center shadow">
                         <div class="card-body rounded">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> *@
             <div>
                 <a href="@Url.Action("AccountHistory")" style="text-decoration: none;">
                     <div class="card text-center shadow">
@@ -88,7 +88,7 @@
             </div>
 
             <div>
-                <a href="#" style="text-decoration: none;">
+                <a href="@Url.Action("UserRequests")" style="text-decoration: none;">
                     <div class="card text-center shadow">
                         <div class="card-body rounded">
                             <div class="card-text">Request Summary</div>
@@ -114,7 +114,7 @@
                 </a>
             </div>
             <div>
-                <a href="" @Url.Action("TransactionHistory")"" style="text-decoration: none;">
+                <a href="@Url.Action("TransactionHistory")" style="text-decoration: none;">
                     <div class="card text-center shadow">
                         <div class="card-body rounded">
                             <div class="card-text">Transaction History</div>

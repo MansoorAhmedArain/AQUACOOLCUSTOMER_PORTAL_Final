@@ -1,4 +1,24 @@
-﻿<div class="row col-md-12 form-group" style="margin: 40px">
+﻿@* <div class="ms-3" style="color: #03213d; font-size: 0.6vw; font-weight: bolder; white-space: nowrap;">Signing Area as per eID</div> *@
+<div class="box-container">
+    <div id="signature-pad" style="width:190px" class="m-signature-pad rounded ">
+        <div class="m-signature-pad--body" style="width:190px">
+            <canvas style="border:1px solid gray ; width:200px!important; border-radius:5px"></canvas>
+        </div>
+        <div class="m-signature-pad--footer" style="width:190px">
+            <div class="description">Please sign above</div>
+            <button type="button" class="button clear form-control" data-action="clear">Clear</button>
+        </div>
+       @*  <div class="form-group">
+            <div class="text-right">
+                <input type="submit" value="Complete Registration" class="btn btn-default" />
+            </div>
+        </div> *@
+    </div>
+</div>
+
+
+
+@* <div class="row col-md-12 form-group" style="margin: 40px">
     <p>
         Once you have uploaded all the documents. Sign in the below box, using mouse.
     </p>
@@ -18,7 +38,7 @@
             <input type="submit" value="Complete Registration" class="btn btn-default" />
         </div>
     </div>
-</div>
+</div> *@
 
 <input type="hidden" id="imageData" name="imageData" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

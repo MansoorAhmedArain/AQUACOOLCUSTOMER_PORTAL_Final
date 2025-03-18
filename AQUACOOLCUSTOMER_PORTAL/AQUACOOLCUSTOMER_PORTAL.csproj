@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\DataController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Admin\RequestsSummary.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.*" />

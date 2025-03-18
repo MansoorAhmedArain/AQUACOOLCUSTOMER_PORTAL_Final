@@ -1,10 +1,14 @@
 ﻿using AQUACOOLCUSTOMER_PORTAL.DTO;
+using AQUACOOLCUSTOMER_PORTAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using ServiceReference1;
+using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Text;
 using System.Web;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -69,22 +73,22 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
-            //if (!string.IsNullOrEmpty(Id))
-            //{
-            //    ViewBag.Id = Id;
-            //    var docs = await _service.getAttachmentsStatusAsync(Id);
-            //    var file = new List<AxDocs>();
-            //    foreach (var d in docs)
-            //    {
-            //        file.Add(new AxDocs()
-            //        {
-            //            FileName = d.FileName,
-            //            Status = d.Verfiy
-            //        });
-            //    }
+            if (!string.IsNullOrEmpty(Id))
+            {
+                ViewBag.Id = Id;
+                var docs = await _service.getAttachmentsStatusAsync(Id);
+                var file = new List<AxDocs>();
+                foreach (var d in docs)
+                {
+                    file.Add(new AxDocs()
+                    {
+                        FileName = d.FileName,
+                        Status = d.Verfiy
+                    });
+                }
 
-            //    ViewBag.Status = file;
-            //}
+                ViewBag.Status = file;
+            }
             Projects[] projects = await LoadProjectSelection();
             // ViewBag.Projects = projects;
             // var units = LoadUnitSelection("test");
@@ -175,7 +179,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
                             ViewBag.Status = files;
                             // redirect to upload documents.
-                            return RedirectToAction("UpdateDocuments", new { id = output[2] });
+                            return RedirectToAction("NewRegistration", new { id = output[2] });
                         }
                     }
                     else
@@ -206,20 +210,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             return projects;
         }
 
-        public async Task<IActionResult> MoveOutRequest()
-        {
-            var userId = HttpContext.Session.GetString("UserId");
-            var username = HttpContext.Session.GetString("UserName");
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
-            {
-                return RedirectPermanent("/Home/Index");
-            }
-            Projects[] projects = await LoadProjectSelection();
-            ViewBag.Projects = projects;
-            // var units = LoadUnitSelection("test");
-            ViewBag.Projects = projects;
-            return View(projects);
-        }
+        
         public async Task<IActionResult> ReconnectionRequest()
         {
             var userId = HttpContext.Session.GetString("UserId");
@@ -367,17 +358,20 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
                             // Assuming _client.attachAqcFiles is still valid in your context
                             var a = await _service.attachAqcFilesAsync(id, fileName, data, isTicket);
+                            if (a.Contains("Error|"))
+                            {
+                                TempData["Error"] = a;
+                            }
                         }
                     }
                     //  }
                 }
 
-                //return Json(new { success = true, type });
-                return RedirectToAction("UpdateDocuments", new { id = id });
+               // return Json(new { success = true, type });
+                return RedirectToAction("NewRegistration", new { id = id });
             }
             catch (Exception ex)
             {
-
                 throw;
             }
            
@@ -402,6 +396,13 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
         #region Complete Registration
 
+        /// <summary>
+        /// This method is calling from signature form
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="imageData"></param>
+        /// <param name="isTicket"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Complete(string Id, string imageData, string isTicket = "no")
         {
@@ -487,6 +488,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
 
         #endregion
+
         #region User Tickets
         public ActionResult AllTickets()
         {
@@ -716,6 +718,333 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
         #endregion
 
+        #region Move Out Requests
+        public async Task<IActionResult> MoveOutRequest()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            Projects[] projects = await LoadProjectSelection();
+            ViewBag.Projects = projects;
+            ViewBag.BankNameList = Getbanks();
+            
+            //var cu = _service.getCustomerByUserIDAsync(username).Result;
+            //ViewBag.Contract = cu;
+            //ViewBag.ContractId = ContractId;
+            ViewBag.OTPReady = false;
+            //TempData["ContractId"] = ContractId;
+            //TempData["RequestId"] = requestId;
+            //TempData["CustomerType"] = customerType;
+            // var units = LoadUnitSelection("test");
+
+            return View(projects);
+        }
+        public ActionResult InitiateMoveOut(string ContractID, string RequestId, string CustomerType)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+            var account = _service.getCustomerByUserIDAsync(username).Result;
+
+            string result = "";
+
+            if (CustomerType.ToLower() == "tenant")
+            {
+                //if (!_client.validateCustBankAcount(User.Identity.Name, ContractID))
+                if (!_service.validateCustBankAcountAsync(account, ContractID).Result)
+                {
+                    return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, requestId = RequestId, customerType = CustomerType });
+                }
+                else
+                {
+                    result = _service.initiateDirectMoveOutAsync(username, ContractID, DateTime.Now.ToString()).Result;
+                }
+            }
+            else
+            {
+                //if (!_client.validateCustBankAcount(User.Identity.Name, ContractID))
+                if (!_service.validateCustBankAcountAsync(account, ContractID).Result)
+                {
+                    return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, requestId = RequestId, customerType = CustomerType });
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(RequestId))
+                        result = _service.initiateRegMoveOutAsync(ContractID, RequestId).Result;
+                }
+            }
+
+            if (string.IsNullOrEmpty(result))
+            {
+                TempData["Error"] = "Result is Empty. Please Contact Customer support";
+                return RedirectToAction("UserProfile");
+            }
+
+            var output = result.Split('|');
+
+            if (output[0] == "Success")
+            {
+                TempData["Message"] = output[1];
+                return RedirectToAction("UploadNoC", new { Id = output[1] });
+            }
+            else
+            {
+                TempData["Error"] = output[1];
+                return RedirectToAction("UserProfile");
+            }
+        }
+
+        public ActionResult UploadNoC(string Id)
+        {
+            ViewBag.Id = Id;
+            return View();
+        }
+
+        [HttpPost]
+        //public ActionResult UploadNoC(HttpPostedFileBase files, string Id)
+        //{
+        //    try
+        //    {
+        //        if (files != null && files.ContentLength > 0)
+        //        {
+        //            var extension = Path.GetExtension(files.FileName);
+        //            string fileName = $"noc{extension}";
+
+        //            var byteArray = Data(files.InputStream);
+        //            var data = Convert.ToBase64String(byteArray);
+
+        //            var ticketId = _service.submitTicketMoveOutAsync(Id, fileName, data).Result;
+        //            var result = _service.attachAqcFilesAsync(ticketId, "noc", data, "yes").Result;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+
+        //    return RedirectToAction("MoveOutTickets");
+        //}
+
+        //public ActionResult UpdateBankingDetails(string ContractId, string requestId, string customerType)
+        //{
+        //    var userId = HttpContext.Session.GetString("UserId");
+        //    var username = HttpContext.Session.GetString("UserName");
+        //    if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+        //    {
+        //        return RedirectToAction("index", "Home");
+        //    }
+
+        //    var cu = _service.getCustomerByUserIDAsync(username).Result;
+        //    ViewBag.Contract = cu;
+        //    ViewBag.ContractId = ContractId;
+        //    ViewBag.OTPReady = false;
+        //    TempData["ContractId"] = ContractId;
+        //    TempData["RequestId"] = requestId;
+        //    TempData["CustomerType"] = customerType;
+        //    Getbanks();
+        //    return View(new BankDetails()
+        //    {
+        //        MoveOutdate = DateTime.Now,
+        //    });
+        //}
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateBankingDetails(IFormCollection formVal, BankDetails bankDetails, string submitButton)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+            var cu = _service.getCustomerByUserIDAsync(username).Result;
+            ViewBag.Contract = cu;
+            bankDetails.CustomerId = cu;
+            //ViewBag.Contract = User.Identity.Name;
+            //bankDetails.CustomerId = User.Identity.Name;
+
+            if (string.IsNullOrWhiteSpace(bankDetails.ContractId))
+            {
+                bankDetails.ContractId = Convert.ToString(TempData["ContractId"]);
+            }
+            if (string.IsNullOrWhiteSpace(bankDetails.RequestId))
+            {
+                bankDetails.RequestId = Convert.ToString(TempData["RequestId"]);
+            }
+            if (string.IsNullOrWhiteSpace(bankDetails.CustomerType))
+            {
+                bankDetails.CustomerType = Convert.ToString(TempData["CustomerType"]);
+            }
+
+            if (submitButton.Equals("getotp") || submitButton.Equals("resendotp"))
+            {
+                if (ValidateBankAccount(bankDetails.IBanNo.Trim()))
+                {
+                    if (string.IsNullOrWhiteSpace(bankDetails.OTP))
+                    {
+                        var bankslist = _service.GetSDRefundBanksListAsync().Result;
+                        foreach (SDRefundBanksList d in bankslist)
+                        {
+                            if (d.BankCode.Equals(bankDetails.ShortName))
+                            {
+                                bankDetails.BankName = d.BankName;
+                            }
+                        }
+                        var returnMessage = await _service.getBankDetailsAsync(HttpUtility.HtmlEncode(bankDetails.CustomerId), HttpUtility.HtmlEncode(bankDetails.ContractId), HttpUtility.HtmlEncode(bankDetails.ShortName), HttpUtility.HtmlEncode(bankDetails.BankName), HttpUtility.HtmlEncode(bankDetails.IBanNo.Trim()), HttpUtility.HtmlEncode(bankDetails.AccountNumber.Trim()), string.Empty);
+
+                        TempData["Message"] = returnMessage;
+                        if (returnMessage.Contains("OTP"))
+                        {
+                            ViewBag.OTPReady = true;
+                        }
+                        else
+                        {
+                            ViewBag.OTPReady = false;
+                        }
+                    }
+                }
+                else
+                {
+                    ViewBag.OTPReady = false;
+                    TempData["Error"] = "Invalid IBAN Number";
+                }
+            }
+            else if (submitButton.Equals("validate"))
+            {
+                ViewBag.OTPReady = false;
+
+                var returnMessage = _service.getBankDetailsAsync(bankDetails.CustomerId, bankDetails.ContractId, string.Empty, string.Empty, string.Empty, string.Empty, bankDetails.OTP.Trim()).Result;
+
+                TempData["Message"] = returnMessage;
+            }
+            else
+            {
+                if (submitButton.Equals("next"))
+                {
+
+                    string result = "";
+
+                    string CustomerType = Convert.ToString(bankDetails.CustomerType);
+
+                    if (CustomerType.ToLower() == "tenant")
+                    {
+
+                        result = _service.initiateDirectMoveOutAsync(username, bankDetails.ContractId, bankDetails.MoveOutdate.ToString()).Result;
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(bankDetails.RequestId))
+                            result = _service.initiateRegMoveOutAsync(bankDetails.ContractId, bankDetails.RequestId).Result;
+                    }
+
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        TempData["Error"] = "Result is Empty. Please Contact Customer support";
+                        return RedirectToAction("UserProfile");
+                    }
+
+                    var output = result.Split('|');
+
+                    if (output[0] == "Success")
+                    {
+                        try
+                        {// commented by MA
+                            if (!string.IsNullOrEmpty(formVal["CheckCheque"]) && Convert.ToBoolean(formVal["CheckCheque"]))
+                            {
+                                if (_service.validateCustBankAcountAsync(bankDetails.CustomerId, bankDetails.ContractId).Result)
+                                {
+                                    await _service.deleteCustBankAccountAsync(bankDetails.CustomerId, bankDetails.ContractId);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.WriteLine("Error occured while processing: " + ex.Message);
+                        }
+
+
+                        TempData["Message"] = output[1];
+                        return RedirectToAction("UploadNoC", new { Id = output[1] });
+                    }
+                    else
+                    {
+                        TempData["Error"] = output[1];
+                        return RedirectToAction("UserProfile");
+                    }
+                }
+            }
+            //ViewBag.ShowOTP = false;
+            Getbanks();
+            return View();
+        }
+
+        public static bool ValidateBankAccount(string bankAccount)
+        {
+            // Praveen Saraf : VALIDATION OF IBAN AND IN ORDER TO COPE WITH THE REGEX BELOW MAKING IT UPPER
+            bankAccount = bankAccount.ToUpper();
+            if (string.IsNullOrEmpty(bankAccount))
+                return false;
+            else if (System.Text.RegularExpressions.Regex.IsMatch(bankAccount, "^[A-Z0-9]"))
+            {
+                bankAccount = bankAccount.Replace(" ", string.Empty);
+                string bank =
+                bankAccount.Substring(4, bankAccount.Length - 4) + bankAccount.Substring(0, 4);
+                int asciiShift = 55;
+                StringBuilder sb = new StringBuilder();
+                foreach (char c in bank)
+                {
+                    int v;
+                    if (Char.IsLetter(c)) v = c - asciiShift;
+                    else v = int.Parse(c.ToString());
+                    sb.Append(v);
+                }
+                string checkSumString = sb.ToString();
+                int checksum = int.Parse(checkSumString.Substring(0, 1));
+                for (int i = 1; i < checkSumString.Length; i++)
+                {
+                    int v = int.Parse(checkSumString.Substring(i, 1));
+                    checksum *= 10;
+                    checksum += v;
+                    checksum %= 97;
+                }
+                return checksum == 1;
+            }
+            else
+                return false;
+        }
+
+        private List<SelectListItem> Getbanks()
+        {
+            var bankslist = _service.GetSDRefundBanksListAsync().Result;
+            List<SelectListItem> newList = new List<SelectListItem>();
+            newList = (from d in bankslist
+                       select new SelectListItem()
+                       {
+                           Text = d.BankName,
+                           Value = d.BankCode
+                       }).ToList();
+            newList.Insert(0, new SelectListItem()
+            {
+                Text = "Please select",
+                Value = "Please Select"
+            });
+            //  ViewBag.Banks = newList;
+            return newList;
+        }
+
+        public ActionResult OTPPOPUP()
+        {
+
+            return View();
+        }
+
+        #endregion
         #region Payments
         public ActionResult MoveInCharges(string Contract, string Ticket)
         {

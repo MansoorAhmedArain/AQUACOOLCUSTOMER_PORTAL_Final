@@ -1,13 +1,13 @@
 ﻿@if (TempData["Message"] != null)
 {
-    <div class="alert alert-success">
+    <div class="alert alert-success elipsis">
         @TempData["Message"]
     </div>
 }
 
 @if (TempData["Error"] != null)
 {
-    <div class="alert alert-danger">
+    <div class="alert alert-danger elipsis">
         @TempData["Error"]
     </div>
 }
@@ -17,5 +17,13 @@
     .alert {
         font-weight: bold;
         font-size: 16px;
+    }
+    .elipsis{
+        width: 200px; /* Set a fixed width */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflowing text */
+        text-overflow: ellipsis; /* Add "..." when text overflows */
+        border: 1px solid #ccc; /* Just for visibility */
+        padding: 5px;
     }
 </style>

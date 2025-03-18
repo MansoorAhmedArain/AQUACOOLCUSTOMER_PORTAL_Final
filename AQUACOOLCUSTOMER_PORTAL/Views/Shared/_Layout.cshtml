@@ -47,7 +47,9 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light shadow">
             <div class="container-fluid">
-                <img class="logo-style ms-5" src="/images/Logo.png" alt="">
+                <a href="@Url.Action("Index","Admin")">
+                    <img class="logo-style ms-5" src="/images/Logo.png" alt="">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -58,7 +60,7 @@
                             <div class="input-group">
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">DASHBOARD</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Account History</a>
+                                    <a class="dropdown-item" href="@Url.Action("AccountHistory","Admin")">Account History</a>
                                     <a class="dropdown-item" href="#">Bill Curve</a>
                                 </div>
                         </li>
@@ -66,9 +68,9 @@
                             <div class="input-group">
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">REQUEST</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="./MoveinRequest.html">Move in</a>
-                                    <a class="dropdown-item" href="./MoveoutRequest.html">Move out</a>
-                                    <a class="dropdown-item" href="./ReconnectionRequest.html">Reconncection Request</a>
+                                    <a class="dropdown-item" href="@Url.Action("MoveInRequest","Admin")">Move in</a>
+                                    <a class="dropdown-item" href="@Url.Action("MoveoutRequest","Admin")">Move out</a>
+                                    <a class="dropdown-item" href="@Url.Action("ReconnectionRequest","Admin")">Reconncection Request</a>
                                 </div>
                         </li>
                         <li class="nav-item">
@@ -76,7 +78,7 @@
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">PAYMENT</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="./SubmitPaymentProof.html">Submit Payment Proof</a>
-                                    <a class="dropdown-item" href="#">Transaction History</a>
+                                    <a class="dropdown-item" href="@Url.Action("TransactionHistory")">Transaction History</a>
                                     <a class="dropdown-item" href="./StatementofAccount.html">Statement of Account</a>
                                     <a class="dropdown-item" href="./PaymentReceipt.html">Bill/Payment Receipt</a>
                                 </div>
@@ -94,12 +96,12 @@
                             <div class="input-group">
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">MANAGE PROFILE</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="./ChangePassword.html">Change Password</a>
-                                    <a class="dropdown-item" href="./ChangePassword.html">Update Documents</a>
+                                    <a class="dropdown-item" href="@Url.Action("ChangePasswordRequest","Admin")">Change Password</a>
+                                    <a class="dropdown-item" href="@Url.Action("UpdateDocuments","Admin")">Update Documents</a>
                                 </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-2" href="#" style="color: #092f57;">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a>
+                            <a class="nav-link mx-2" href="@Url.Action("Logout","Admin")" style="color: #092f57;">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a>
                         </li>
                     </ul>
                 </div>
