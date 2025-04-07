@@ -32,20 +32,59 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
   <link rel="stylesheet" href="/css/ionicons.min.css">
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin-top: 20%;
+        }
+
+  </style>
 </head>
 
 <body>
   <header>
         <image src="/Images/Logo.png" class="img-style my-5"></image>
   </header>
-
+    <video autoplay muted loop id="background-video">
+        <source src="Videos/Fan movie.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
   <main>
     <div class="container-fluid" >
       <div class="row bg-style">
         <div class="col left-box">
-          <video class="col vd-style p-5 " controls muted autoplay>
+          <video class="col vd-style p-5 " controls muted >
             <source src="Videos/Technology Background Video Loop For Website.mp4" />
           </video>
+                    
         </div>
         <div class="col right-box" >
           <div class="d-grid btn-size p-4 m-5" >
