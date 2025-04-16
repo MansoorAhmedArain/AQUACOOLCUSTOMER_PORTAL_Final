@@ -90,7 +90,6 @@
                                 <th>Type Applicable</th>
                                 <th>Expiry Date</th>
                                 <th></th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -146,50 +145,190 @@
                         <tbody>
                             <tr>
                                 <td>Passport</td>
-                                <td>Individual(owner or tenant)</td>
-                                <td>xx/xx/xxx</td>
-                                <td><input type="file" id="uploadFile" /></td>
+                               @if (eid == null || eid.Status != showStatus)
+                                {
+                                    <td>Individual(owner or tenant)</td>
+                                    <td>
+                                        <input type="date" id="expirydate" name="expirydate"
+                                               class="form-control expirydate" style=""
+                                               value="@DateTime.Today.AddDays(30).ToString("yyyy-MM-dd")"
+                                               min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+                                    </td>
+                                    <td>
+                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                               class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
+                                        @if (pas != null && pas.Status == "Change")
+                                        {
+                                            <span><strong style="color:red;">Please re upload the document</strong></span>
+                                        }
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="status"><strong>Emirates Id is @eid.Status</strong></td>
+                                }
                             </tr>
                         </tbody>
 
                         <tbody>
                             <tr>
                                 <td>Visa</td>
-                                <td>Individual(owner or tenant)</td>
-                                <td>xx/xx/xxx</td>
-                                <td><input type="file" id="uploadFile" /></td>
+                                @if (vis == null || vis.Status != showStatus)
+                                {
+                                    <td>Individual(owner or tenant)</td>
+                                    <td>
+                                        <input type="date" id="expirydate" name="expirydate"
+                                               class="form-control expirydate" style=""
+                                               value="@DateTime.Today.AddDays(30).ToString("yyyy-MM-dd")"
+                                               min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+                                    </td>
+                                    <td>
+                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                               class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
+                                        @if (vis != null && vis.Status == "Change")
+                                        {
+                                            <span><strong style="color:red;">Please re upload the document</strong></span>
+                                        }
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="status"><strong>Visa is @vis.Status</strong></td>
+                                }
                             </tr>
                         </tbody>
 
                         <tbody>
                             <tr>
                                 <td>Tenancy Contract</td>
-                                <td>Individual(owner or tenant)</td>
-                                <td>xx/xx/xxx</td>
+                               @if (ten == null || ten.Status != showStatus)
+                                {
+                                    <td>Individual(owner or tenant)</td>
+                                    <td>
+                                        <input type="date" id="expirydate" name="expirydate"
+                                               class="form-control expirydate" style=""
+                                               value="@DateTime.Today.AddDays(30).ToString("yyyy-MM-dd")"
+                                               min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+                                    </td>
+                                    <td>
+                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                               class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
+                                        @if (ten != null && ten.Status == "Change")
+                                        {
+                                            <span><strong style="color:red;">Please re upload the document</strong></span>
+                                        }
+                                    </td>
+                                        
+                                        @* <div class="form-group">
+                                            @(Html.Kendo().Upload().Name("emiratesid").Messages(m =>
+                                                {
+                                                    m.Select("Upload Emirates Id");
+                                                    m.InvalidMaxFileSize("File size should be less than 3 MB.");
+                                                    m.InvalidFileExtension("Only pdf files are allowed");
+                                                }).Multiple(true).Events(e =>
+                                                {
+                                                    e.Upload("upload");
+                                                }).Validation(v =>
+                                                {
+                                                    v.AllowedExtensions(new[] { ".pdf", ".jpg", ".jpeg", ".png" });
+                                                    v.MaxFileSize(3145728);
+                                                }).Async(a =>
+                                                {
+                                                    a.Save("Uploads", "User2");
+                                                    a.AutoUpload(true);
+                                                    a.SaveField("files");
+                                                }))
+                                        </div> *@
+                                }
+                                else
+                                {
+                                    <td class="status"><strong>Tentacy Id is @ten.Status</strong></td>
+                                }
                             </tr>
                         </tbody>
 
                         <tbody>
                             <tr>
                                 <td>Title Deed</td>
-                                <td>Individual(owner or tenant)</td>
-                                <td>xx/xx/xxx</td>
+                                @if (tde == null || tde.Status != showStatus)
+                                {
+                                    <td>Individual(owner or tenant)</td>
+                                    <td>
+                                        <input type="date" id="expirydate" name="expirydate"
+                                               class="form-control expirydate" style=""
+                                               value="@DateTime.Today.AddDays(30).ToString("yyyy-MM-dd")"
+                                               min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+                                    </td>
+                                    <td>
+                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                               class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
+                                        @if (tde != null && tde.Status == "Change")
+                                        {
+                                            <span><strong style="color:red;">Please re upload the document</strong></span>
+                                        }
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="status"><strong>Title Dead is @tde.Status</strong></td>
+                                }
                             </tr>
                         </tbody>
 
                         <tbody>
                             <tr>
                                 <td>Trade License</td>
-                                <td>Individual(owner or tenant)</td>
-                                <td>xx/xx/xxx</td>
+                                @if (eid == null || eid.Status != showStatus)
+                                {
+                                    <td>Individual(owner or tenant)</td>
+                                    <td>
+                                        <input type="date" id="expirydate" name="expirydate"
+                                               class="form-control expirydate" style=""
+                                               value="@DateTime.Today.AddDays(30).ToString("yyyy-MM-dd")"
+                                               min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+                                    </td>
+                                    <td>
+                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                               class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
+                                        @if (eid != null && eid.Status == "Change")
+                                        {
+                                            <span><strong style="color:red;">Please re upload the document</strong></span>
+                                        }
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="status"><strong>Emirates Id is @eid.Status</strong></td>
+                                }
                             </tr>
                         </tbody>
 
                         <tbody>
                             <tr>
                                 <td>Power of Attorney</td>
-                                <td>Individual(owner or tenant)</td>
-                                <td>xx/xx/xxx</td>
+                               @if (eid == null || eid.Status != showStatus)
+                                {
+                                    <td>Individual(owner or tenant)</td>
+                                    <td>
+                                        <input type="date" id="expirydate" name="expirydate"
+                                               class="form-control expirydate" style=""
+                                               value="@DateTime.Today.AddDays(30).ToString("yyyy-MM-dd")"
+                                               min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+                                    </td>
+                                    <td>
+                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                               class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
+                                        @if (eid != null && eid.Status == "Change")
+                                        {
+                                            <span><strong style="color:red;">Please re upload the document</strong></span>
+                                        }
+                                    </td>
+                                       
+                                }
+                                else
+                                {
+                                    <td class="status"><strong>Emirates Id is @eid.Status</strong></td>
+                                }
                             </tr>
                         </tbody>
                     </table>

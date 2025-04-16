@@ -1087,26 +1087,27 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             return RedirectToAction("Index", "Gateway");
         }
 
-        public ActionResult Pay(string amount)
+        public ActionResult Pay(string payAmount)
         {
-            var contractId = Convert.ToString(TempData["ContractId"].ToString());
+            var contractId = "EAG-032457";
+          //  var contractId = Convert.ToString(TempData["ContractId"].ToString());
             if (CheckNotIsSwissOrNakheel(contractId))
-            {
-                if (double.Parse(amount) < 100)
-                {
-                    TempData["Error"] = "The minimum amount to be Paid is AED 100";
-                    TempData["ContractId"] = contractId;
-                    return RedirectToAction("Invoices", new { contractId });
-                }
-                TempData["TicketId"] = TempData["TicketId"].ToString();
-                TempData["ContractId"] = TempData["ContractId"].ToString();
-                TempData["amount"] = amount;
+            //{
+            //    if (double.Parse(payAmount) < 100)
+            //    {
+                  //  TempData["Error"] = "The minimum amount to be Paid is AED 100";
+                   // TempData["ContractId"] = contractId;
+                   // return RedirectToAction("Invoices", new { contractId });
+                //}
+                TempData["TicketId"] = TempData["TicketId"]?.ToString();
+                 TempData["ContractId"] = contractId;
+                TempData["amount"] = payAmount;
                 return RedirectToAction("Index", "Gateway");
-            }
-            else
-            {
-                return RedirectToAction("Invoices", new { contractId });
-            }
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Invoices", new { contractId });
+            //}
         }
         #endregion
         #region User Profile

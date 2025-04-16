@@ -1,0 +1,23 @@
+﻿<div class=" container about_home">
+    <div>
+        @Html.Raw(ViewBag.DebugData)
+    </div>
+
+    <div>
+        @Html.Raw(ViewBag.Url)
+    </div>
+
+    <div>
+        <table>
+            <tr>
+                <td align="right"><strong><i>Message: </i></strong></td>
+                <td>
+                    @if (ViewBag.Error != null)
+                    {
+                        <div>@ViewBag.Error</div>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

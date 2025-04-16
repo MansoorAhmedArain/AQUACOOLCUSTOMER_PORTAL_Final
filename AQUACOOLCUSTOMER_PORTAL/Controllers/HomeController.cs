@@ -10,6 +10,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System;
+using System.Diagnostics.Contracts;
 namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 {
     public class HomeController : Controller
@@ -320,6 +321,44 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult GetCustomerDetails(string eagNumber, string payAmount)
+        {
+            if(string.IsNullOrWhiteSpace(eagNumber))
+            {
+                var customerT = new
+                {
+                    CustomerName = "",
+                    UnitNumber = 0,
+                    MobileNumber = "",
+                    Email = "",
+                    AmountDue = "",
+                    PayAmount = ""
+                };
+                return Json(customerT);
+            }
+            var u = _service.getCustomerByUserIDAsync("ryankakoon@gmail.com").Result;
+            var cust = _service.getCustomerRegDetailsAsync(eagNumber).Result;
+            var contracts = _service.getCustContAsync(u, true).Result.ToList();
+            var contractsList = new List<AxContract>();
+            
+            //ViewBag.IsSwissNakheel = _client.EnableCCPayOption(contractId).ToString().Trim().Equals("Yes") ? true : false;
+
+            var balance = _service.getCustContractBalanceAsync(u, eagNumber).Result;
+            // Dummy data for example
+            var customer = new
+            {
+                CustomerName = "John Doe",
+                UnitNumber = 123,
+                MobileNumber = "1234567890",
+                Email = "john@example.com",
+                AmountDue = balance,
+                PayAmount = payAmount,
+
+            };
+
+            return Json(customer);
+        }
         public IActionResult Privacy()
         {
             return View();

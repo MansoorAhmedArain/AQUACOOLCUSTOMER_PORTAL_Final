@@ -1,0 +1,47 @@
+﻿
+
+<div class="container about_home">
+    @*<input type="hidden" name="Title" value="ASP VPC 3-Party" />
+        <input type="hidden" name="vpc_OrderInfo" value="1001" />
+        <input type="hidden" name="virtualPaymentClientURL" value="https://.mastercard.com.au/vpcpay" />*@
+    @using (Html.BeginForm("Disclaimer", "Gateway", FormMethod.Post, new { id = "userForm", name = "userForm" }))
+    {
+            <input type="hidden" name="vpc_Version" value="1" />
+            <input type="hidden" name="vpc_Command" value="pay" />
+            <input type="hidden" name="vpc_AccessCode" value="46961C37" />
+            <input type="hidden" name="vpc_Merchant" value="833202000" />
+            <input type="hidden" name="vpc_Currency" value="AED" />
+            <input type="hidden" name="vpc_Locale" value="en_AE" />
+        @*<input type="hidden" name="vpc_ReturnURL" value="https://test.aquacool.me/Gateway/VPC_DR" />*@
+            <input type="hidden" name="vpc_ReturnURL" value="https://localhost:44304/Gateway/VPC_DR" />
+            <input type="hidden" name="vpc_TicketNo" value="" />
+            <input type="hidden" name="vpc_Amount" id="vpc_Amount" runat="server" value="@ViewBag.Amount" />
+            <input type="hidden" name="vpc_MerchTxnRef" id="vpc_MerchTxnRef" runat="server" value="@ViewBag.Id" />
+            <input type="hidden" name="Contract" id="Contract" value="@ViewBag.Contract" />
+
+            <div style="text-align: center; width: 100%;">
+                <h1>General Disclaimer</h1>
+                <h3>Use of Credit Card for online payment</h3>
+            </div>
+            <p style="text-align: justify">
+                This website is administered by Network International. By using this website you agree to be bound by this disclaimer. If you do not accept this disclaimer, please do not use the website.
+                We make every effort to protect our systems from loss of data, irregularities and the unlawful use by third parties. However, we provide no guarantee of any kind and accept no liability with respect to the availability of the website, the presence of errors or defects, or abuse or unlawful use by third parties.
+                The information we provide on this website is not meant as advice and should not be interpreted as such either. The information on this website is provided for informative purposes only and no rights may be derived from it.
+            </p>
+            <p>
+                We shall not be liable for any damage resulting from information, whether incorrect or otherwise, found on this website by those accessing it.
+            </p>
+
+            <p>
+                AQUACOOL LLC , @DateTime.Now.Year
+                <br />
+                <a href="http://aquacool.me/">aquacool.me/</a>
+            </p>
+
+
+            <p style="text-align: center; width: 100%;">
+                <input type="submit" value="I Agree" name="submit" class="btn btn-info" />
+                <input type="submit" value="Denied" name="submit" class="btn btn-danger" />
+            </p>
+    }
+</div>

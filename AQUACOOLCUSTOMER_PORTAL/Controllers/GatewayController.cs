@@ -22,7 +22,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         SortedList transactionData = new SortedList(new VPCStringComparer());
         private readonly ILogger<AdminController> _logger;
         private ServiceReference1.Service1SoapClient _service;
-        private static readonly HttpClient client = new HttpClient();
+        //private static readonly HttpClient client = new HttpClient();
         private static  IConfiguration _configurations;
         public GatewayController(ILogger<AdminController> logger, IConfiguration configuration)
         {
@@ -50,20 +50,20 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             else
             {
-                return RedirectToAction("UserProfile", "User2");
+                return RedirectToAction("UserProfile", "Admin");
             }
         }
 
         [HttpPost]
-        public ActionResult Disclaimer(FormCollection form, string submit)
+        public ActionResult Disclaimer(PaymentRequestModel form, string submit)
         {
             if (submit == "Denied")
             {
                 return RedirectToAction("UserProfile", "User2");
             }
 
-            TempData["Form"] = form;
-            return RedirectToAction("VPC_DO");
+            //TempData["Form"] = form;
+            return RedirectToAction("VPC_DO",form);
         }
         #endregion
 
@@ -75,28 +75,29 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             // var client = new RestClient("https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token");
             //request.AddHeader("Authorization", "Basic OWI5NTk4NzUtN2UzZi00NTFiLTlkOTEtOTExY2I4MTk2MWE3OmRlYzFmZDAwLTQ4NWMtNGM0OS1iZTlmLWIyYzNmODNkZmFlMA==");
             //request.AddParameter("application/vnd.ni-identity.v1+json", "{\"realmName\":\"ni\"}", "application/vnd.ni-identity.v1+json", ParameterType.RequestBody);
+           //var  client = new HttpClient();
 
+           // //string url = "https://api-gateway.ngenius-payments.com/identity/auth/access-token"; // live
+             string accessToken = string.Empty;
 
-            string url = "https://api-gateway.ngenius-payments.com/identity/auth/access-token";
-            string accessToken = string.Empty;
-
-            // Request headers
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Add("Accept", "application/vnd.ni-identity.v1+json");
-            client.DefaultRequestHeaders.Add("Content-Type", "application/vnd.ni-identity.v1+json");
-            client.DefaultRequestHeaders.Add("Authorization", "Basic OTgzYzMzNjEtNzRiMi00Zjk0LTgyYzEtYTM2MGJjYTQ2Yzc4OmI2OGY1ZWJmLTQ5OWQtNGVlNi1hYjE5LTA0NjE1ODAzZWFiYQ==");
-
-            // Request body
-            var jsonBody = "{\"realmName\":\"networkinternational\"}";
-            var content = new StringContent(jsonBody, Encoding.UTF8, "application/vnd.ni-identity.v1+json");
-
+           // // Request body
+           // var jsonBody = "{\"realmName\":\"networkinternational\"}";
+           // var content = new StringContent(jsonBody, Encoding.UTF8, "application/vnd.ni-identity.v1+json");
+            
             try
             {
-                // Send the POST request
-                var response = await client.PostAsync(url, content);
-
-                // Ensure the response status is OK (200)
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://api-gateway.sandbox.enbd.ngenius-payments.com/identity/auth/access-token");
+                request.Headers.Add("Authorization", "Basic YmM4NjU5NDgtZGJlZS00YzI1LTkxZWYtNTQ5NjJiOWU0MTNjOmI5NDQ3YjhkLWJkNWItNGYwYi1iNGExLTc1ODlhZmNhZTk1MQ==");
+                var content = new StringContent("", null, "application/vnd.ni-identity.v1+json");
+                request.Content = content;
+                var response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
+                //// Send the POST request
+                //var response = await client.PostAsync(url, content);
+
+                //// Ensure the response status is OK (200)
+                //response.EnsureSuccessStatusCode();
 
                 // Read the response content
                 var responseBody = await response.Content.ReadAsStringAsync();
@@ -137,13 +138,14 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
         public async Task<string> SetPaymentLinkAsync(string accessToken, int paramAmount, string refNumber, string email, string firstName, string lastName, string address, string city)
         {
-            string url = "https://api-gateway.ngenius-payments.com/transactions/outlets/e8a2bb33-73cb-4a98-b2f5-9bb6b0e9b683/orders";
+            // string url = "https://api-gateway.ngenius-payments.com/transactions/outlets/e8a2bb33-73cb-4a98-b2f5-9bb6b0e9b683/orders"; // live
+            string url = "https://api-gateway.sandbox.ngenius-payments.com/transactions/outlets/4fbfb037-de3d-4956-b4ec-482418c01b57/orders";
             string returnURL = "";
             string paymentLink = "";
 
             try
             {
-                returnURL = _configurations["ngenius_ReturnURL"];
+                returnURL = _configurations["AppSettings:ngenius_ReturnURL"];
             }
             catch (Exception)
             {
@@ -178,7 +180,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             };
 
             string jsonData = JsonConvert.SerializeObject(data);
-
+            var client = new HttpClient();
             // Set up the HTTP request
             var requestContent = new StringContent(jsonData, Encoding.UTF8, "application/vnd.ni-payment.v2+json");
             client.DefaultRequestHeaders.Clear();
@@ -214,16 +216,24 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         #endregion
 
         #region VPC_DO
-        public ActionResult VPC_DO()
+        
+        //[HttpGet]
+        //public ActionResult VPC_DO(string response= "")
+        //{
+        //    ViewBag.Url = response;
+        //    return View();
+        //}
+        
+        public ActionResult VPC_DO(PaymentRequestModel form)
         {
 
-            FormCollection form = TempData["Form"] as FormCollection;
+           // IFormCollection form = TempData["Form"] as IFormCollection;
             if (form == null)
-                return RedirectToAction("UserProfile", "User2");
+                return RedirectToAction("UserProfile", "Admin");
 
             string message = "No Messages";
-            string ticketId = form["vpc_MerchTxnRef"];
-            double amount = double.Parse(form["vpc_Amount"].ToString());
+            string ticketId = form.Vpc_MerchTxnRef; // form["vpc_MerchTxnRef"].ToString();
+            double amount = double.Parse(form.Vpc_Amount.ToString());
             //var amount = double.Parse(client.getMoveOutBalanceTicket(ticketId));
             //if (amount == 0)
             //    amount = double.Parse(client.getBalancebyInvoiceID(ticketId));
@@ -233,7 +243,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             var account = _service.getCustomerByUserIDAsync(User.Identity.Name).Result;
 
-            var contract = form["Contract"];
+            var contract = form.Contract;
 
             var logMessage = "Payment Started:  DateTime    ticket  amount  contract" + Environment.NewLine;
             //Log.WriteLine(logMessage);
@@ -306,7 +316,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 string email = ""; string firstname = ""; string lastname = ""; string address = ""; string city = "";
                 try
                 {
-                    ReturnURL = _configurations["ngenius_ReturnURL"];
+                    ReturnURL = _configurations["AppSettings:ngenius_ReturnURL"];
                     var existing = _service.getCustomerRegDetailsAsync(User.Identity.Name).Result;
                     if (existing.Length > 0 && existing[0].ERROR.ToLower() != "yes")
                     {
@@ -361,7 +371,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             debugData += "<br/><br/><u>Final QueryString Data String</u><br/>";
 
             ViewBag.DebugData = debugData;
-            return View();
+            return View(form);
         }
 
         private string CreateSHA256Signature(bool useRequest)
