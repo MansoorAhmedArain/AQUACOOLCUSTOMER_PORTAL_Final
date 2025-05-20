@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\MoveinRequest2\" />
+    <Folder Include="wwwroot\css\Complaint\" />
     <Folder Include="wwwroot\Scripts\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>

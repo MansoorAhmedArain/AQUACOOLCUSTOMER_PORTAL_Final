@@ -1087,20 +1087,26 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             return RedirectToAction("Index", "Gateway");
         }
 
+        /// <summary>
+        /// Call from quick payment popup dialouge.
+        /// </summary>
+        /// <param name="payAmount"></param>
+        /// <returns></returns>
         public ActionResult Pay(string payAmount)
         {
-            var contractId = "EAG-032457";
-          //  var contractId = Convert.ToString(TempData["ContractId"].ToString());
+            //var contractId = "EAG-032457";
+            var contractId = Convert.ToString(TempData["ContractId"]?.ToString());
             if (CheckNotIsSwissOrNakheel(contractId))
-            //{
-            //    if (double.Parse(payAmount) < 100)
-            //    {
-                  //  TempData["Error"] = "The minimum amount to be Paid is AED 100";
-                   // TempData["ContractId"] = contractId;
-                   // return RedirectToAction("Invoices", new { contractId });
-                //}
+                //{
+                if (double.Parse(payAmount) < 100)
+                {
+                    TempData["Error"] = "The minimum amount to be Paid is AED 100";
+                    TempData["ContractId"] = contractId;
+                    //return RedirectToAction("Invoices", new { contractId });
+                    return RedirectToAction("QuickPayment","Home");
+                }
                 TempData["TicketId"] = TempData["TicketId"]?.ToString();
-                 TempData["ContractId"] = contractId;
+                TempData["ContractId"] = contractId;
                 TempData["amount"] = payAmount;
                 return RedirectToAction("Index", "Gateway");
             //}
@@ -1127,7 +1133,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         {
             var cu = _service.getCustomerByUserIDAsync(username).Result;
             var contracts = _service.getCustContAsync(cu, true).Result.ToList();
-
+            
             var contractsList = new List<AxContract>();
             foreach (var c in contracts)
             {
@@ -1159,13 +1165,132 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Displays the transaction history for a specific contract.
+        /// </summary>
+        /// <returns>
+        /// Returns a view containing a list of payment transactions associated with the specified contract.
+        /// </returns>
+        /// <remarks>
+        /// This method retrieves the current user's session data, fetches payment records for a hardcoded contract ID,
+        /// constructs a list of transaction objects, and passes them to the view for display.
+        /// </remarks>
+        /// <exception cref="Exception">
+        /// Thrown when the contract ID is null or empty.
+        /// </exception>
         public IActionResult TransactionHistory()
         {
-            return View(); 
+            var contractId = "EAG-032457";
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrEmpty(contractId))
+                throw new Exception("Contract Id cannot be null");
+
+            TempData["ContractId"] = contractId;
+            var u = _service.getCustomerByUserIDAsync(username).Result;
+            var invoices = _service.getCustPaymentsAsync(u, contractId).Result;
+            var result = new List<AxPayments>();
+            foreach (var invoice in invoices)
+            {
+                var i = new AxPayments();
+                i.TransactionNumber = invoice.TransNum;
+                i.Amount = double.Parse(invoice.Amount);
+                i.JournalNumber = invoice.JournalNo;
+                i.Date = DateTime.Parse(invoice.Date, CultureInfo.GetCultureInfo("en-US"));
+                i.ContractId = contractId;
+                i.PayAgainst = invoice.PayAgainst;
+                result.Add(i);
+            }
+            return View(result);
         }
+
+        /// <summary>
+        /// Displays the account history view for the currently logged-in user.
+        /// </summary>
+        /// <returns>
+        /// Returns a view containing a list of the user's contracts with details such as balance and pending requests.
+        /// </returns>
+        /// <remarks>
+        /// This method retrieves the current user's session data, fetches the associated customer record and related contracts,
+        /// then prepares a list of contract details with encoded values and any associated pending property requests.
+        /// </remarks>
         public IActionResult AccountHistory()
         {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            var cu = _service.getCustomerByUserIDAsync(username).Result;
+            ViewBag.Contract = cu;
+            var contracts = _service.getCustContAsync(cu, true).Result.ToList();
+
+            var contractsList = new List<AxContract>();
+            foreach (var c in contracts)
+            {
+                var a = new AxContract
+                {
+                    ContractID = HttpUtility.HtmlEncode(c.ContractID),
+                    Customer = HttpUtility.HtmlEncode(c.Customer),
+                    PropertyId = HttpUtility.HtmlEncode(c.PropertyId),
+                    MainAgreement = HttpUtility.HtmlEncode(c.MainAgreement),
+                    CustomerType = HttpUtility.HtmlEncode(c.CustType),
+                    Unit = HttpUtility.HtmlEncode(c.UnitName),
+                    Project = HttpUtility.HtmlEncode(c.ProjectName),
+                    RequestId = HttpUtility.HtmlEncode(""),
+                    Balance = _service.getCustContractBalanceAsync(HttpUtility.HtmlEncode(c.Customer), HttpUtility.HtmlEncode(c.ContractID)).Result
+                };
+
+                var propertyRequest = _service.getPropertyPendingRequestsAsync(HttpUtility.HtmlEncode(c.PropertyId)).Result;
+
+                if (propertyRequest.Length > 0)
+                {
+                    a.RequestId = propertyRequest[0].ReqID;
+                }
+
+                contractsList.Add(a);
+            }
+            return View(contractsList);
+        }
+
+        /// <summary>
+        /// Displays the Complaint form page if the user session is valid.
+        /// </summary>
+        /// <returns>
+        /// Returns the Complaint view if the user is authenticated; otherwise, redirects to the Home page.
+        /// </returns>
+        public IActionResult Complaint()
+        {
+            //var userId = HttpContext.Session.GetString("UserId");
+            //var username = HttpContext.Session.GetString("UserName");
+            //if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            //{
+            //    return RedirectPermanent("/Home/Index");
+            //}
+            
             return View();
+        }
+
+        /// <summary>
+        /// Handles the submission of the Complaint form.
+        /// </summary>
+        /// <param name="complaint">The complaint data submitted by the user.</param>
+        /// <returns>
+        /// Returns the Complaint view with the submitted data if model validation fails; 
+        /// otherwise, processes the complaint and returns the view.
+        /// Redirects to Home page if the session is invalid.
+        /// </returns>
+        [HttpPost]
+        public IActionResult Complaint(Complaint complaint)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            if (ModelState.IsValid)
+            {
+                // call the complaint api to post the data.
+            }
+            return View(complaint);
         }
     }
 }

@@ -61,8 +61,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     var resp = response.Split("|");
                     //HttpContext.Session.SetString("UserId", resp[1]);   //C000006
                     //HttpContext.Session.SetString("UserName", username); // AQ000038
-                    HttpContext.Session.SetString("UserId", "C000006");   //C000006
-                    HttpContext.Session.SetString("UserName", "AQ000038"); // AQ000038
+                    HttpContext.Session.SetString("UserId", "C014843");   //C000006
+                    HttpContext.Session.SetString("UserName", "ryankakoon@gmail.com"); // AQ000038
                     return RedirectToAction("Index", "Admin");
                 }
                 ViewBag.ErrorMessage = "Not Authorized. Please check your Credentials";
@@ -356,7 +356,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 PayAmount = payAmount,
 
             };
-
+            TempData["ContractId"] = eagNumber;
             return Json(customer);
         }
         public IActionResult Privacy()

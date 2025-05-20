@@ -1,10 +1,11 @@
-﻿@{
+﻿@model IEnumerable<AQUACOOLCUSTOMER_PORTAL.DTO.AxContract>
+@{
     ViewData["Title"] = "AccountHistory";
 }
 <main>
     <div class="bg-container d-none d-md-flex">
         <div class="left-box "><img src="/images/BG3.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
-        <div class="right-box pt-4">
+        <div class="right-box pt-4 rightGrid">
             <div class="icon-text h4">
                 <span style="white-space: nowrap;">Account History</span>
             </div>
@@ -24,107 +25,39 @@
                                 <th>Last Payment Date</th>
                             </tr>
                         </thead>
-
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>Payment Links</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        @foreach (var m in Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@Html.ActionLink(m.ContractID, "Invoices", new { contractId = m.ContractID })</td>
+                                    <td>N/A</td>
+                                    <td>@m.Project</td>
+                                    <td>@m.Balance</td>
+                                    <td>@Html.ActionLink("Pay", "Invoices", new { contractId = m.ContractID })</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                </tr>
+                            
+                            @* <td>@m.Unit - @m.CustomerType</td>
+                           
+                            <td>@m.Balance</td>
+                            <td>
+                                    @Html.ActionLink("Receipts", "Payments", new { contractId = m.ContractID })
+                            </td>
+                            <td>@m.RequestId</td>
+                            <td>
+                                    @if (m.CustomerType == "Tenant" || !string.IsNullOrEmpty(m.RequestId))
+                                    {
+                                        @Html.ActionLink("Initiate Move Out", "InitiateMoveOut", new { ContractID = m.ContractID, RequestId = m.RequestId, CustomerType = m.CustomerType })
+                                    }
+                            </td>
+                            <td style="background-color: aliceblue">
+                                    @Html.ActionLink("Pay", "Invoices", new { contractId = m.ContractID })
+                            </td> *@
+                            </tbody>
+                        }
+                        </table>
                 </div>
-
-
-
             </div>
         </div>
     </div>

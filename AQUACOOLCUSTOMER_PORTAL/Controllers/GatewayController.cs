@@ -87,8 +87,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             try
             {
                 var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Post, "https://api-gateway.sandbox.enbd.ngenius-payments.com/identity/auth/access-token");
-                request.Headers.Add("Authorization", "Basic YmM4NjU5NDgtZGJlZS00YzI1LTkxZWYtNTQ5NjJiOWU0MTNjOmI5NDQ3YjhkLWJkNWItNGYwYi1iNGExLTc1ODlhZmNhZTk1MQ==");
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token");
+                request.Headers.Add("Authorization", "Basic OWI5NTk4NzUtN2UzZi00NTFiLTlkOTEtOTExY2I4MTk2MWE3OmRlYzFmZDAwLTQ4NWMtNGM0OS1iZTlmLWIyYzNmODNkZmFlMA==");
                 var content = new StringContent("", null, "application/vnd.ni-identity.v1+json");
                 request.Content = content;
                 var response = await client.SendAsync(request);
@@ -139,6 +139,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         public async Task<string> SetPaymentLinkAsync(string accessToken, int paramAmount, string refNumber, string email, string firstName, string lastName, string address, string city)
         {
             // string url = "https://api-gateway.ngenius-payments.com/transactions/outlets/e8a2bb33-73cb-4a98-b2f5-9bb6b0e9b683/orders"; // live
+            //string url = "https://api-gateway.sandbox.ngenius-payments.com/transactions/outlets/4fbfb037-de3d-4956-b4ec-482418c01b57/orders";
             string url = "https://api-gateway.sandbox.ngenius-payments.com/transactions/outlets/4fbfb037-de3d-4956-b4ec-482418c01b57/orders";
             string returnURL = "";
             string paymentLink = "";
@@ -226,8 +227,10 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         
         public ActionResult VPC_DO(PaymentRequestModel form)
         {
-
-           // IFormCollection form = TempData["Form"] as IFormCollection;
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = "ryankakoon@gmail.com";//HttpContext.Session.GetString("UserName");
+            
+            // IFormCollection form = TempData["Form"] as IFormCollection;
             if (form == null)
                 return RedirectToAction("UserProfile", "Admin");
 
@@ -240,8 +243,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             //if (amount == 0)
             //    throw new Exception("Amount cannot be zero");
-
-            var account = _service.getCustomerByUserIDAsync(User.Identity.Name).Result;
+            var account = _service.getCustomerByUserIDAsync(username).Result;
 
             var contract = form.Contract;
 
@@ -250,7 +252,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             logMessage = $"Payment Started:  {DateTime.Now.ToString(CultureInfo.InvariantCulture)}    {ticketId}  {amount}  {contract}" + Environment.NewLine;
             //Log.WriteLine(logMessage);
 
-            var result = _service.InsertPaymentAsync(account, contract, User.Identity.Name,
+            var result = _service.InsertPaymentAsync(account, contract, username,
                 amount.ToString(), "", "", "", "", ""
                 , "", "", "", "", DateTime.Now.ToString("dd/mm/yyyy"), "", ticketId, "Monthly Bill").Result;
 
@@ -317,7 +319,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 try
                 {
                     ReturnURL = _configurations["AppSettings:ngenius_ReturnURL"];
-                    var existing = _service.getCustomerRegDetailsAsync(User.Identity.Name).Result;
+                    var existing = _service.getCustomerRegDetailsAsync(username).Result;
                     if (existing.Length > 0 && existing[0].ERROR.ToLower() != "yes")
                     {
                         var customer = ConvertAxCustomer(existing);

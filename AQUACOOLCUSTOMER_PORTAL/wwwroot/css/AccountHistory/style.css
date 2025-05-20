@@ -24,11 +24,8 @@ body{
 
 /* Header Navbar End */
 
-
-
 /* Background Design */
-
-.bg-container{
+.bg-container {
     height: calc(100% - 100px);
     width: 100%;
     position: absolute;
@@ -58,7 +55,9 @@ body{
    width: 70%;
    padding: 80px 270px;
 }
-
+.rightGrid {
+    padding-left: 10% !important;
+}
 table {
     border-collapse: collapse;
     background-color: white;
