@@ -90,8 +90,8 @@
                     <div class="step-circle" onclick="displayStep(1)">1</div>
                     <div class="step-circle" onclick="displayStep(2)">2</div>
                     <div class="step-circle" onclick="displayStep(3)">3</div>
-                    <div class="step-circle" onclick="displayStep(4)">4</div>
-                    <div class="step-circle" onclick="displayStep(5)">5</div>
+                    @* <div class="step-circle" onclick="displayStep(4)">4</div>
+                    <div class="step-circle" onclick="displayStep(5)">5</div> *@
                 </div>
 
                 <div class="step step-1 ">
@@ -113,7 +113,7 @@
                             <input type="text" name="Nationality" re class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                         </div>
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Number</span>
+                       @*  <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Number</span>
                         <div class="input-group">
                             <input type="text" placeholder="Required" name="Passport-number" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                         </div>
@@ -122,6 +122,19 @@
                         <div class="input-group">
                             <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" class="icon-image"></span>
                             <input type="text" placeholder="9/5/2024" name="Passport-ExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                        </div> *@
+                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
+                            Primary Phone Number
+                        </span>
+                        <div class="input-group">
+                            <input type="text" placeholder="Required" name="Primary-phoneNumber" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                        </div>
+
+                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
+                            Secondary Phone Number
+                        </span>
+                        <div class="input-group">
+                            <input type="text" name="Secondary-phoneNumber" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                         </div>
 
                         <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Email Address Primary</span>
@@ -129,6 +142,18 @@
                             <input type="text" placeholder="Required" name="Email-addressPrimary" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                         </div>
 
+                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
+                            Email Address Secondary
+                        </span>
+                        <div class="input-group">
+                            <input type="text" placeholder="Alternate Email Address" name="Email-addressSecondary" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                        </div>
+                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
+                            Create your Password
+                        </span>
+                        <div class="input-group">
+                            <input type="text" placeholder="Required" name="Create-password" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                        </div>
 
                         <div class="btn-container my-3">
                             <button type="button" class="btn rounded-pill backbtn-style prev-step">Back</button>
@@ -140,37 +165,37 @@
                 </div>
 
 
-                <div class="step step-2">
+                @* <div class="step step-2">
                     <!-- Step 2 form fields here -->
 
                     <div class="input-style">
 
                         <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                            Create your Password<span>
+                            Create your Password</span>
                                 <div class="input-group">
                                     <input type="text" placeholder="Required" name="Create-password" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                                 </div>
 
                                 <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                    Confirm your Password<span>
+                                    Confirm your Password</span>
                                         <div class="input-group">
                                             <input type="text" placeholder="Required" name="Confirm-password" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                                         </div>
 
                                         <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                            Primary Phone Number<span>
+                                            Primary Phone Number</span>
                                                 <div class="input-group">
                                                     <input type="text" placeholder="Required" name="Primary-phoneNumber" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                                                 </div>
 
                                                 <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                                    Email Address Secondary<span>
+                                                    Email Address Secondary</span>
                                                         <div class="input-group">
                                                             <input type="text" placeholder="Alternate Email Address" name="Email-addressSecondary" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                                                         </div>
 
                                                         <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                                            Secondary Phone Number<span>
+                                                            Secondary Phone Number</span>
                                                                 <div class="input-group">
                                                                     <input type="text" name="Secondary-phoneNumber" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
                                                                 </div>
@@ -228,8 +253,8 @@
                                     <button type="button" class="btn rounded-pill btn-style next-step">Next</button>
                                 </div>
                     </div>
-                </div>
-                <div class="step step-4 mt-5 pt-5" style=" white-space: nowrap;">
+                </div> *@
+                <div class="step step-2 mt-5 pt-5" style=" white-space: nowrap;">
                     <!-- Step 4 form fields here -->
                     <p style="color: #03213d; font-weight: bold;">Please check your email for verification link</p>
                     <div class="ms-3" style="color: #03213d; font-size: small;">Press the click here button for verify</div>
@@ -237,7 +262,7 @@
                     <footer class="pt-5 mt-5 ms-2" style="color: #03213d;">Please close this window. <br> You will be resumed from the resumption link</footer>
                 </div>
 
-                <div class="step step-5" style=" white-space: nowrap;">
+                <div class="step step-3" style=" white-space: nowrap;">
                     <!-- Step 5 form fields here -->
                     <p class="mt-4" style="color: #03213d; font-size: 20px;">Congratulations, your customer ID <br> has been generated.</p>
                     <button type="button" class="btn rounded-pill btn-style1 next-step">C-XXXX</button>
