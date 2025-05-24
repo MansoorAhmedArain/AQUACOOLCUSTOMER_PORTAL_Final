@@ -6,15 +6,15 @@
 
 <main>
     <div class="bg-container d-none d-md-flex">
-        <div class="left-box "><img src="/images/BG7.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+        <div class="left-box" style="width:25% !important;"><img src="/images/BG7.jpg" class="rounded-start rounded-pill img-style" alt="" style="width: 370px;"></div>
         <div class="pt-4">
             <div class="icon-text h4">
                 <span style="white-space: nowrap;">Pending Registration Requests</span>
             </div>
             <div class="mt-3 input-style">
-                <div class="table-container mt-4" style="width: 1000px;margin-left: 25px;">
+                <div class="table-container mt-4" style="margin-left: 25px;">
 
-                    <table style="table-layout: fixed;">
+                    <table style="" class="table-responsive">
                         <thead>
                             <tr>
                                 <th>Request ID</th>
@@ -27,7 +27,7 @@
                                 <th>Last Action <br />Created By Customer <br />Service</th>
                                 <th>Remarks</th>
                                 <th>Action for Customer</th>
-                                <th>Ticket Type</th>
+                                @* <th>Ticket Type</th> *@
                                
                             </tr>
                         </thead>
@@ -37,7 +37,7 @@
                                 <tr>
                                     <td style="word-wrap: break-word">@tickets.RequestId</td>
                                    @*  <td>@tickets.TicketID</td> *@
-                                    <td>@tickets.ProjectName</td>
+                                    <td style="overflow-x:auto;column-width: 160px;">@tickets.ProjectName</td>
                                     <td>@tickets.Unit</td>
                                     <td>@tickets.MoveInType</td>
                                     <td>@tickets.Status</td>
@@ -59,7 +59,7 @@
                                     </td>
                                     <td>-</td>
                                     <td><a href="#">Complete this Req. </a></td>
-                                    <td>-</td>
+                                  @*   <td>-</td> *@
                                 </tr>
                             </tbody>
                         }

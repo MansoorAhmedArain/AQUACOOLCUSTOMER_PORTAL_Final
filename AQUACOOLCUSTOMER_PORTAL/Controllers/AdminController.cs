@@ -1258,14 +1258,28 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// </returns>
         public IActionResult Complaint()
         {
-            //var userId = HttpContext.Session.GetString("UserId");
-            //var username = HttpContext.Session.GetString("UserName");
-            //if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
-            //{
-            //    return RedirectPermanent("/Home/Index");
-            //}
-            
-            return View();
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            var complainTypes = _service.GetrequestIDAsync().Result;
+            var contracts = _service.getCustContAsync(userId, true).Result;
+            var complaintHistory = _service.GetComplainTicketHistoryAsync(contracts[0].PropertyId).Result;
+            if (complaintHistory == null || complaintHistory.Count() == 0)
+            {
+                complaintHistory = new ComplaintHistory[0];
+            }
+            ViewBag.SuccessMessage = "";
+            var viewModal = new ComplaintViewModal()
+            {
+                Complaint = new Complaint(),
+                SubTypes = complainTypes,
+                ComplaintHistory = complaintHistory
+            };
+
+            return View(viewModal);
         }
 
         /// <summary>
@@ -1286,11 +1300,28 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            var contracts = _service.getCustContAsync(userId, true).Result;
+           
+
+            // call the complaint api to post the data.
+            var response = _service.CreateComplainTicketAsync(contracts[0].PropertyId, complaint.SubType, complaint.Comments).Result;
+            ViewBag.SuccessMessage = response;
+            var complainTypes = _service.GetrequestIDAsync().Result;
+            var complaintHistory = _service.GetComplainTicketHistoryAsync(contracts[0].PropertyId).Result;
+            if (complaintHistory == null || complaintHistory.Count() == 0)
             {
-                // call the complaint api to post the data.
+                complaintHistory = new ComplaintHistory[0];
             }
-            return View(complaint);
+            var viewModal = new ComplaintViewModal()
+            {
+                SubTypes = complainTypes,
+                Complaint = complaint,
+                ComplaintHistory = complaintHistory
+            };
+            // }
+            return View(viewModal);
         }
     }
 }

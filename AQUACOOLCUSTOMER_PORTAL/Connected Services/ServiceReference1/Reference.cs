@@ -315,6 +315,10 @@ namespace ServiceReference1
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.SDRefundBanksList[]> GetSDRefundBanksListAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/CreateComplainTicket", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> CreateComplainTicketAsync(string _propertyId, string _ticketSubType, string _comments);
+        
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/deleteCustBankAccount", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> deleteCustBankAccountAsync(string _Customer_id, string _ContractId);
@@ -330,6 +334,18 @@ namespace ServiceReference1
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetUnitDL", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> GetUnitDLAsync(string _propertyId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetCustomerDetails", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetCustomerDetailsAsync(string contractId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetrequestID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.SubTypes[]> GetrequestIDAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetComplainTicketHistory", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.ComplaintHistory[]> GetComplainTicketHistoryAsync(string _property);
     }
     
     /// <remarks/>
@@ -368,6 +384,222 @@ namespace ServiceReference1
             set
             {
                 this.nameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="AQC AX")]
+    public partial class ComplaintHistory
+    {
+        
+        private string complaintIDField;
+        
+        private string typeField;
+        
+        private string statusField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string ComplaintID
+        {
+            get
+            {
+                return this.complaintIDField;
+            }
+            set
+            {
+                this.complaintIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Type
+        {
+            get
+            {
+                return this.typeField;
+            }
+            set
+            {
+                this.typeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string Status
+        {
+            get
+            {
+                return this.statusField;
+            }
+            set
+            {
+                this.statusField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="AQC AX")]
+    public partial class SubTypes
+    {
+        
+        private string requestIDField;
+        
+        private string descriptionField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string RequestID
+        {
+            get
+            {
+                return this.requestIDField;
+            }
+            set
+            {
+                this.requestIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Description
+        {
+            get
+            {
+                return this.descriptionField;
+            }
+            set
+            {
+                this.descriptionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="AQC AX")]
+    public partial class CustomerDetails
+    {
+        
+        private string nameField;
+        
+        private string unit_Field;
+        
+        private string phoneField;
+        
+        private string emailField;
+        
+        private decimal amountDueField;
+        
+        private string userIDField;
+        
+        private string unitField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Unit_
+        {
+            get
+            {
+                return this.unit_Field;
+            }
+            set
+            {
+                this.unit_Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string Phone
+        {
+            get
+            {
+                return this.phoneField;
+            }
+            set
+            {
+                this.phoneField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string Email
+        {
+            get
+            {
+                return this.emailField;
+            }
+            set
+            {
+                this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public decimal AmountDue
+        {
+            get
+            {
+                return this.amountDueField;
+            }
+            set
+            {
+                this.amountDueField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string UserID
+        {
+            get
+            {
+                return this.userIDField;
+            }
+            set
+            {
+                this.userIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string Unit
+        {
+            get
+            {
+                return this.unitField;
+            }
+            set
+            {
+                this.unitField = value;
             }
         }
     }
@@ -3285,6 +3517,11 @@ namespace ServiceReference1
             return base.Channel.GetSDRefundBanksListAsync();
         }
         
+        public System.Threading.Tasks.Task<string> CreateComplainTicketAsync(string _propertyId, string _ticketSubType, string _comments)
+        {
+            return base.Channel.CreateComplainTicketAsync(_propertyId, _ticketSubType, _comments);
+        }
+        
         public System.Threading.Tasks.Task<string> deleteCustBankAccountAsync(string _Customer_id, string _ContractId)
         {
             return base.Channel.deleteCustBankAccountAsync(_Customer_id, _ContractId);
@@ -3303,6 +3540,21 @@ namespace ServiceReference1
         public System.Threading.Tasks.Task<string> GetUnitDLAsync(string _propertyId)
         {
             return base.Channel.GetUnitDLAsync(_propertyId);
+        }
+        
+        public System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetCustomerDetailsAsync(string contractId)
+        {
+            return base.Channel.GetCustomerDetailsAsync(contractId);
+        }
+        
+        public System.Threading.Tasks.Task<ServiceReference1.SubTypes[]> GetrequestIDAsync()
+        {
+            return base.Channel.GetrequestIDAsync();
+        }
+        
+        public System.Threading.Tasks.Task<ServiceReference1.ComplaintHistory[]> GetComplainTicketHistoryAsync(string _property)
+        {
+            return base.Channel.GetComplainTicketHistoryAsync(_property);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
