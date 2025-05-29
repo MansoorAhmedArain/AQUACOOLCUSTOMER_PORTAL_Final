@@ -346,6 +346,18 @@ namespace ServiceReference1
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetComplainTicketHistory", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.ComplaintHistory[]> GetComplainTicketHistoryAsync(string _property);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getPaymentReceiptReport", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> getPaymentReceiptReportAsync(string _contractId, string _paymentDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustStatementReport", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> getCustStatementReportAsync(string _contracted, string _fromDate, string _toDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getBillingReport", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> getBillingReportAsync(string _contractid, int _month, int _year);
     }
     
     /// <remarks/>
@@ -3555,6 +3567,21 @@ namespace ServiceReference1
         public System.Threading.Tasks.Task<ServiceReference1.ComplaintHistory[]> GetComplainTicketHistoryAsync(string _property)
         {
             return base.Channel.GetComplainTicketHistoryAsync(_property);
+        }
+        
+        public System.Threading.Tasks.Task<string> getPaymentReceiptReportAsync(string _contractId, string _paymentDate)
+        {
+            return base.Channel.getPaymentReceiptReportAsync(_contractId, _paymentDate);
+        }
+        
+        public System.Threading.Tasks.Task<string> getCustStatementReportAsync(string _contracted, string _fromDate, string _toDate)
+        {
+            return base.Channel.getCustStatementReportAsync(_contracted, _fromDate, _toDate);
+        }
+        
+        public System.Threading.Tasks.Task<string> getBillingReportAsync(string _contractid, int _month, int _year)
+        {
+            return base.Channel.getBillingReportAsync(_contractid, _month, _year);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

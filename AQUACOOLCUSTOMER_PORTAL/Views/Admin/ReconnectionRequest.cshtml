@@ -1,5 +1,6 @@
-﻿@using ServiceReference1;
-@model Projects[]
+﻿@using AQUACOOLCUSTOMER_PORTAL.DTO
+@using ServiceReference1;
+@model ReconnectionViewModal
 @{
     ViewData["Title"] = "ReconnectionRequest";
 }
@@ -12,32 +13,30 @@
             </div>
             <div class="mt-5 input-style">
                 <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
-            <select class="form-control  rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown">
+            <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown">
                 <option value="">Select a project</option>
                 @{
                     <option value="">project</option>
                     <option value="">project</option>
                     <option value="">project</option>
-                    foreach (var project in Model)
+                    foreach (var project in (Projects[])ViewBag.projects)
                     {
                         <option value="@project.Id">@project.Name</option>
                     }
                 }
             </select>
-                @* <div class="input-group">
-                    <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
-                    <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div> *@
-
-
                 <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+
+                <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown1">
+                    <option value="">Select a contract</option>
+                    @{
+                        foreach (var item in Model.ContractIDs)
+                        {
+                            <option value="@item.ID">@item.Name</option>
+                        }
+                    }
+                </select>
                 </div>
 
 

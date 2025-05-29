@@ -1,47 +1,58 @@
-﻿
+﻿@using AQUACOOLCUSTOMER_PORTAL.DTO;
 @{
     ViewData["Title"] = "StatementofAccount";
 }
 
     <div class="bg-container d-none d-md-flex">
+       
         <div class="left-box "><img src="/images/BG8.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
         <div class="right-box pt-4">
-            <div class="icon-text h4">
-                <span>Download Statement of Account</span>
-            </div>
-            <div class="mt-5 input-style">
-                <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
-                <div class="input-group">
-                    <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
-                    <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+            <form method="post" action="@Url.Action("StatementofAccount","Admin")">
+                <div class="icon-text h4">
+                    <span>Download Statement of Account</span>
+                </div>
+                <div class="mt-5 input-style">
+                   @*  <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
+                    <div class="input-group">
+                        <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                        <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
+                        <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div> *@
+
+                    <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
+                    <div class="input-group mb-3">
+                    <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown1">
+                        <option value="">Select a contract</option>
+                        @{
+                        foreach (var item in (List<ContractIDs>)ViewBag.ContractsList)
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        }
+                        </select>
+                       @*  <input type="text" class="form-control rounded-pill" name="EAG" style="border: 1px solid #8FD2F0;"> *@
                     </div>
+
+                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">From Date</div>
+                    <div class="input-group mb-3">
+                    <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" class="icon-image"></span>
+                        <input type="date" class="form-control rounded-start rounded-pill"  name="fromDate" placeholder="2023 November 15 Mon" style="border: 1px solid #8FD2F0;">
+                    </div>
+
+                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">To Date</div>
+                    <div class="input-group mb-3">
+                    <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" class="icon-image"></span>
+                    <input type="date" class="form-control rounded-start rounded-pill" name="toDate" placeholder=" 2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
+                    </div>
+                    <input type="submit" class="btn rounded-pill btn-style mt-3" value="Statement Request Submission" />
+                    <span class="message" style="color:green">@ViewBag.Message</span>
+                    <footer class="mt-5" style="color: #03213d; font-size: small; font-weight: bold;">* The statement will be received on your registered email address with in the next one hour, or customer can download the SOA immediately</footer>
                 </div>
-
-                <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                </div>
-
-                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">From Date</div>
-                <div class="input-group mb-3">
-                <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" class="icon-image"></span>
-                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="2023 November 15 Mon" style="border: 1px solid #8FD2F0;">
-                </div>
-
-                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">To Date</div>
-                <div class="input-group mb-3">
-                <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" class="icon-image"></span>
-                    <input type="password" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
-                </div>
-
-                <a href="#" class="btn rounded-pill btn-style mt-3">Statement Request Submission</a>
-
-                <footer class="mt-5" style="color: #03213d; font-size: small; font-weight: bold;">* The statement will be received on your registered email address with in the next one hour, or customer can download the SOA immediately</footer>
-            </div>
+            </form>
         </div>
     </div>
 

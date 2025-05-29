@@ -209,8 +209,19 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
            var projects =  await _service.GetProjectsAsync();
             return projects;
         }
+        private async Task<List<ContractIDs>> LoadContractsForSelection(string id)
+        {
+            var contractIdsList = new List<ContractIDs>();
 
-        
+            var custContracts = await _service.getCustContAsync(id, true);
+
+            foreach (var item in custContracts)
+            {
+                contractIdsList.Add(new ContractIDs { ID = item.ContractID, Name = item.ContractID });
+            }
+            return contractIdsList;
+        }
+
         public async Task<IActionResult> ReconnectionRequest()
         {
             var userId = HttpContext.Session.GetString("UserId");
@@ -220,10 +231,17 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 return RedirectPermanent("/Home/Index");
             }
             var projects = await LoadProjectSelection();
-            ViewBag.Projects = projects;
+            
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
-            return View(projects);
+            var contracts = await LoadContractsForSelection(userId);
+            var viewModal = new ReconnectionViewModal()
+            {
+                //Projects = projects,
+                ContractIDs = contracts
+            };
+          // ViewBag.Contracts = new SelectList(projects, "Id","Name");
+            return View(viewModal);
 
         }
         public IActionResult StatementofAccount()
@@ -234,6 +252,29 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
+            var contracts =  LoadContractsForSelection(userId).Result;
+            ViewBag.ContractsList = contracts;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult StatementofAccount(StatementOfAccountModel sInfo)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            if (sInfo.EAG == "")
+            {
+                ViewBag.Message = "Please select  EAG number.";
+                return View();
+            }
+            var contracts = LoadContractsForSelection(userId).Result;
+            ViewBag.ContractsList = contracts;
+            var response = _service.getCustStatementReportAsync(sInfo.EAG, sInfo.FromDate.Date.ToString("MM/dd/yyyy"), sInfo.ToDate.Date.ToString("MM/dd/yyyy")).Result;
+            ViewBag.Message = response;
             return View();
         }
 
