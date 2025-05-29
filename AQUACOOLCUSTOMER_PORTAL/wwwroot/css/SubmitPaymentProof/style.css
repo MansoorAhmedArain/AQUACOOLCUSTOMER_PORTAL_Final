@@ -45,7 +45,7 @@ body{
 }
 
 .img-style{
-    width: 470px;
+    width: 475px;
     height: 85vh;
 }
 
@@ -58,6 +58,7 @@ body{
 .icon-image{
     width: 25px;
 }
+
 
 .icon-text {
     display: inline;
@@ -75,16 +76,17 @@ body{
 
 
 
+
 .btn-style{
     width: 100%;
-    background-color: #033059;
+    background-color: #44D62C;;
     color: white;
    
 }
 
 .btn-style:hover, .btn-style:active {
-    background-color: #04417a;
-    border-right: 1px solid #04417a;
+    background-color: #3ec529;
+    border-right: 1px solid #42ad31;
     color: white;
  
 }
@@ -104,7 +106,7 @@ body{
 .mbimage-style{
     width: 100vw;
     height: 88vh;
-    background-image: url(/images/Stock\ BG9\ Image.jpg); 
+    background-image: url(/images/Stock\ BG11\ Image.jpg); 
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -134,7 +136,7 @@ body{
 }
 
 .mbbtn-style{
-    background-color: #03213d;
+    background-color: #3ec529;
     color: white;
     width: 100%;
     text-wrap: nowrap;

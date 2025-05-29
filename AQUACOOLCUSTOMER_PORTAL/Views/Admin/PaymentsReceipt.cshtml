@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "PaymentsReceipt";
+}
+
+<link href="~/css/paymentreceipt/style.css" rel="stylesheet" />
+<link href="~/css/paymentreceipt/responsive.css" rel="stylesheet" />
+<div class="bg-container d-none d-md-flex">
+    <div class="left-box "><img src="/images/BG9.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+    <div class="right-box pt-4">
+        <div class="icon-text h4">
+            <span>Bill / Payment Receipt</span>
+        </div>
+        <div class="mt-5 input-style">
+            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
+            <div class="input-group">
+                <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
+                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+
+            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Download</span>
+            <div class="input-group">
+                <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
+                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+
+            <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+            </div>
+
+
+            <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Invoice Month</div>
+            <div class="input-group mb-3">
+                <span class="input-group-text rounded-pill rounded-end"><img src="./Icons/Date.png" alt="" class="icon-image"></span>
+                <input type="text" class="form-control rounded-start rounded-pill" placeholder="November" style="border: 1px solid #8FD2F0;">
+            </div>
+
+            <a href="#" class="btn rounded-pill btn-style mt-3">Submit</a>
+
+            <footer class="mt-5" style="color: #03213d; font-size: small; font-weight: bold;">* The invoice and payment receipt will be sent on your registered email address with in the next one hour, or customer can download the bill immediately</footer>
+        </div>
+    </div>
+</div>
+
+<!--Mobile design-->
+<div class="mb-container d-md-none">

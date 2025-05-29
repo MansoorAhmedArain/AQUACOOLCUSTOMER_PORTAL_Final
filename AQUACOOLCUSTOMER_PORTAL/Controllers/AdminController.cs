@@ -1180,9 +1180,16 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// </exception>
         public IActionResult TransactionHistory()
         {
-            var contractId = "EAG-032457";
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            var complainTypes = _service.GetrequestIDAsync().Result;
+            var contracts = _service.getCustContAsync(userId, true).Result;
+
+            var contractId = contracts[0].ContractID; //"EAG-032457";
             if (string.IsNullOrEmpty(contractId))
                 throw new Exception("Contract Id cannot be null");
 
@@ -1235,7 +1242,9 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     Unit = HttpUtility.HtmlEncode(c.UnitName),
                     Project = HttpUtility.HtmlEncode(c.ProjectName),
                     RequestId = HttpUtility.HtmlEncode(""),
-                    Balance = _service.getCustContractBalanceAsync(HttpUtility.HtmlEncode(c.Customer), HttpUtility.HtmlEncode(c.ContractID)).Result
+                    Balance = _service.getCustContractBalanceAsync(HttpUtility.HtmlEncode(c.Customer), HttpUtility.HtmlEncode(c.ContractID)).Result,
+                    Status = HttpUtility.HtmlEncode(c.WFstatus)
+                    
                 };
 
                 var propertyRequest = _service.getPropertyPendingRequestsAsync(HttpUtility.HtmlEncode(c.PropertyId)).Result;
@@ -1244,6 +1253,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 {
                     a.RequestId = propertyRequest[0].ReqID;
                 }
+                
 
                 contractsList.Add(a);
             }
@@ -1303,7 +1313,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //if (ModelState.IsValid)
             //{
             var contracts = _service.getCustContAsync(userId, true).Result;
-           
+            complaint.Comments += $"        Invoice No: {complaint.HighBillInvoiceNo} Email: {complaint.Email}  Date: {complaint.DateOfPayment}";
 
             // call the complaint api to post the data.
             var response = _service.CreateComplainTicketAsync(contracts[0].PropertyId, complaint.SubType, complaint.Comments).Result;
@@ -1323,5 +1333,14 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             // }
             return View(viewModal);
         }
+        public IActionResult PaymentsReceipt()
+        {
+            return View();
+        }
+        public IActionResult SubmitPaymentProof()
+        {
+            return View();
+        }
+        
     }
 }

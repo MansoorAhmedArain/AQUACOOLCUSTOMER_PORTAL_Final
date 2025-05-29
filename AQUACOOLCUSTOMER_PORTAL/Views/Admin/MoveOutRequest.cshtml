@@ -98,61 +98,63 @@
 
                         <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bold;">How do you want your refund processed through?</div>
                         <span class="form-check form-check-inline mt-1 ms-3">
-                            <input style="border: 1px solid #8FD2F0;" type="checkbox" checked class="form-check-input" name="Cheque" id="Cheque">
+                            <input style="border: 1px solid #8FD2F0;" type="checkbox" checked class="form-check-input  refund-option" name="Cheque" id="Cheque">
                             <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="rememberMe">Cheque</label>
                         </span>
 
                         <div class="form-check form-check-inline mt-1 ms-5">
-                            <input style="border: 1px solid #8FD2F0;" type="checkbox" name="bank" class="form-check-input" id="Cheque">
+                            <input style="border: 1px solid #8FD2F0;" type="checkbox" name="bank" class="form-check-input  refund-option" id="BankTransfer">
                             <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="rememberMe">Bank Transfer</label>
                         </div>
-
-                        <div class="input-group mb-3 ">
-                            <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">Bank Name</span>
-                            <select class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" id="ShortName" name="ShortName">
-                                <option value="">Select a bank</option>
-                                @{
-                                    <option value="">Bank</option>
-                                    foreach (var item in (List<SelectListItem>)ViewBag.BankNameList)
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
+                        <div class="BankInfo">
+                            <div class="input-group mb-3 BankInfo">
+                                <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">Bank Name</span>
+                                <select class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" id="ShortName" name="ShortName">
+                                    <option value="">Select a bank</option>
+                                    @{
+                                        <option value="">Bank</option>
+                                        foreach (var item in (List<SelectListItem>)ViewBag.BankNameList)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
                                     }
+                                </select>
+                            </div>
+
+                            <div class="input-group mb-3 BankInfo">
+                                <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">IBAN</span>
+                                <input type="text" class="form-control rounded-start rounded-pill" name="IBanNo" maxlength="25" required style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <div class="input-group mb-3 BankInfo">
+                                <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder;">Account No.</span>
+                                <input type="text" class="form-control rounded-start rounded-pill" name="AccountNumber" maxlength="20" required style="border: 1px solid #8FD2F0;">
+                            </div>
+                            <div class="input-group mb-3 BankInfo">
+                                <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder;">Swift No.</span>
+                                <input type="text" class="form-control rounded-start rounded-pill" name="SwiftNo" required style="border: 1px solid #8FD2F0;">
+                            </div>
+                            <div class="input-group mb-3 BankInfo">
+                                <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;" maxlength="6">OTP</span>
+                                @if (!ViewBag.OTPReady)
+                                {
+
+                                    <input type="text" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;" placeholder="Please enter 6 digit OTP"
+                                           disabled AutoComplete="off" />
+
+                                    <button type="submit" class="btn rounded-pill btnnext-style" name="submitButton" value="getotp" style="margin-top:15px"><i class="glyphicon glyphicon-ok-sign"></i> Get OTP</button>
+
                                 }
-                            </select>
-                        </div>
+                                else
+                                {
+                                    <input type="text" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;" placeholder="Please enter 6 digit OTP" AutoComplete="off" />
+                                    <button type="submit" class="btn rounded-pill btnnext-style" name="submitButton" value="validate"><i class="glyphicon glyphicon-ok-sign"></i> Validate OTP</button>
+                                    <button type="submit" class="btn rounded-pill btnnext-style" name="submitButton" value="resendotp"><i class="glyphicon glyphicon-ok-sign"></i> Resend OTP</button>
+                                }
+                            </div>
 
-                        <div class="input-group mb-3 ">
-                            <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">IBAN</span>
-                            <input type="text" class="form-control rounded-start rounded-pill" name="IBanNo" maxlength="25" required style="border: 1px solid #8FD2F0;">
                         </div>
-
-                        <div class="input-group mb-3 ">
-                            <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder;">Account No.</span>
-                            <input type="text" class="form-control rounded-start rounded-pill" name="AccountNumber" maxlength="20" required style="border: 1px solid #8FD2F0;">
-                        </div>
-                        <div class="input-group mb-3 ">
-                            <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder;">Swift No.</span>
-                            <input type="text" class="form-control rounded-start rounded-pill" name="SwiftNo" required style="border: 1px solid #8FD2F0;">
-                        </div>
-                        <div class="input-group mb-3 ">
-                            <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;" maxlength="6">OTP</span>
-                            @if (!ViewBag.OTPReady)
-                            {
-
-                                <input type="text" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;" placeholder="Please enter 6 digit OTP"
-                                       disabled AutoComplete="off" />
-                                       
-                                <button type="submit" class="btn rounded-pill btnnext-style" name="submitButton" value="getotp" style="margin-top:15px"><i class="glyphicon glyphicon-ok-sign"></i> Get OTP</button>
-
-                            }
-                            else
-                            {
-                                <input type="text" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;" placeholder="Please enter 6 digit OTP" AutoComplete="off" />
-                                <button type="submit" class="btn rounded-pill btnnext-style" name="submitButton" value="validate"><i class="glyphicon glyphicon-ok-sign"></i> Validate OTP</button>
-                                <button type="submit" class="btn rounded-pill btnnext-style" name="submitButton" value="resendotp"><i class="glyphicon glyphicon-ok-sign"></i> Resend OTP</button>
-                            }
-                        </div>
-
+                        
 
                     </div>
                 }
@@ -233,7 +235,36 @@
         </div>
     </div>
 </div>
+<script>
+    const checkboxes = document.querySelectorAll('.refund-option');
+    const bankInfoDiv = document.querySelector('.BankInfo');
 
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', function () {
+            if (this.checked) {
+                // Uncheck other checkboxes
+                checkboxes.forEach(other => {
+                    if (other !== this) {
+                        other.checked = false;
+                    }
+                });
+
+                // Show/hide BankInfo
+                if (this.id === 'BankTransfer') {
+                    bankInfoDiv.style.display = 'block';
+                } else {
+                    bankInfoDiv.style.display = 'none';
+                }
+            } else {
+                // If unchecking the current option, hide BankInfo as well
+                bankInfoDiv.style.display = 'none';
+            }
+        });
+    });
+
+    // Optional: Hide BankInfo by default
+    bankInfoDiv.style.display = 'none';
+</script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/site.js"></script>

@@ -27,14 +27,14 @@
 
 
                     </div>
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">High Bill - Invoice Number</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" name="HighBillInvoiceNo" style="border: 1px solid #8FD2F0;">
+                    <div class="ms-3" id="labelHighbil" style="color: #03213d; font-size: small; font-weight: bolder;">High Bill - Invoice Number</div>
+                    <div class="input-group mb-2" >
+                        <input type="text" class="form-control rounded-pill" id="HighBillInvoiceNo" name="HighBillInvoiceNo" style="border: 1px solid #8FD2F0;">
                     </div>
 
                     <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Comment</div>
                     <div class="input-group">
-                        <input class="form-control comment-style" name="Comments" />
+                        <input class="form-control comment-style" name="Comments"  required/>
                     </div>
 
                     @*  <div class="ms-3 mt-1" style="color: #03213d; font-size: small; font-weight: bolder;">Low Bill - Invoice Number</div>
@@ -49,13 +49,13 @@
 
                     <div class="ms-3 mt-1" style="color: #03213d; font-size: small; font-weight: bolder;">Bill Not Recieved - Email Address</div>
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" name="Email" style="border: 1px solid #8FD2F0;" />
+                        <input type="email" class="form-control rounded-pill" name="Email" style="border: 1px solid #8FD2F0;" />
                     </div>
 
                     <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Online Payment not Reflecting - Date of Payment</div>
                     <div class="input-group">
                         <span class="input-group-text rounded-pill rounded-end"><img src="./Icons/Date.png" alt="" class="icon-image"></span>
-                        <input type="text" class="form-control rounded-start rounded-pill" name="DateOfPayment" placeholder="Fri 15 November 2024" style="border: 1px solid #8FD2F0;">
+                        <input type="date" class="form-control rounded-start rounded-pill" name="DateOfPayment" placeholder="Fri 15 November 2024" style="border: 1px solid #8FD2F0;">
                         <span style="color:red"> @ViewBag.SuccessMessage</span>
                     </div>
                     <div class="mt-3">
@@ -147,3 +147,18 @@
     </div>
 
 </main>
+<script>
+    const dropdown = document.getElementById('complainTypeDropdown');
+    const textbox = document.getElementById('HighBillInvoiceNo');
+    const lbl = document.getElementById("labelHighbil");
+
+    dropdown.addEventListener('change', function () {
+        if (this.value != 'High Bill') {
+            textbox.style.display = 'none';
+             lbl.style.display = 'none';
+        } else {
+            textbox.style.display = 'block';
+            lbl.style.display = 'block';
+        }
+    });
+</script>

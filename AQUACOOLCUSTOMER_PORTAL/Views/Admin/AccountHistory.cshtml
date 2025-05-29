@@ -30,7 +30,7 @@
                             <tbody>
                                 <tr>
                                     <td>@Html.ActionLink(m.ContractID, "Invoices", new { contractId = m.ContractID })</td>
-                                    <td>N/A</td>
+                                    <td>@m.Status</td>
                                     <td>@m.Project</td>
                                     <td>@m.Balance</td>
                                     <td>@Html.ActionLink("Pay", "Invoices", new { contractId = m.ContractID })</td>

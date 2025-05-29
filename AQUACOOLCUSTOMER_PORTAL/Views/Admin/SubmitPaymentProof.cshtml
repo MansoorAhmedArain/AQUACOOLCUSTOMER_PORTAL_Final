@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "SubmitPaymentProof";
+}
+<link href="~/css/submitpaymentproof/style.css" rel="stylesheet" />
+<link href="~/css/submitpaymentproof/responsive.css" rel="stylesheet" />
+
+<div class="bg-container d-none d-md-flex">
+    <div class="left-box "><img src="/images/Stock BG12 Image.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+    <div class="right-box pt-4">
+        <div class="icon-text h4">
+            <span>Sumbit Payment Proof</span>
+        </div>
+        <div class="mt-5 input-style">
+            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
+            <div class="input-group">
+                <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
+                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+
+            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">EAG Selection</span>
+            <div class="input-group">
+                <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
+                <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+
+
+            <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">Invoice Number</div>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+            </div>
+
+
+            <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Date of Payment</div>
+            <div class="input-group">
+                <span class="input-group-text rounded-pill rounded-end"><img src="./Icons/Date.png" alt="" class="icon-image"></span>
+                <input type="text" class="form-control rounded-start rounded-pill" placeholder="Fri 15 November 2024" style="border: 1px solid #8FD2F0;">
+            </div>
+
+            <div class="radio-btn">
+                <div class="ms-3 mt-3" style="color: #03213d; font-size: small; font-weight: bold;">Payment Method</div>
+                <span class="form-check form-check-inline ms-3 mt-1">
+                    <input style="border: 1px solid #8FD2F0;" type="checkbox" class="form-check-input" id="Cheque">
+                    <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="rememberMe">Cheque</label>
+                </span>
+
+                <span class="form-check form-check-inline ms-3 mt-1">
+                    <input style="border: 1px solid #8FD2F0;" type="checkbox" class="form-check-input" id="Cheque">
+                    <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="rememberMe">Bank Transfer</label>
+                </span>
+
+                <span class="form-check form-check-inline ms-3 mt-1" style="white-space: normal; word-wrap: break-word;">
+                    <input style="border: 1px solid #8FD2F0;" type="checkbox" class="form-check-input" id="Cheque">
+                    <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="rememberMe">ATM Cash Deposit</label>
+                </span>
+            </div>
+
+            <div class="mt-4">
+                <a href="#" class="btn rounded-pill btn-style">Submit</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Mobile design-->
+<div class="mb-container d-md-none">
