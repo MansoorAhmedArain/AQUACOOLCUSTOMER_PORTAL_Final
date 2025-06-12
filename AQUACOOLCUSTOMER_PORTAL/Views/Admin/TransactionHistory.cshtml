@@ -17,7 +17,7 @@
                 <table class="mt-2">
                     <tbody>
                         <tr>
-                            <td class="table-row">AED 0,000 <br><span style=" font-size: 10px; color: #888;">Balance Due</span></td>
+                            <td class="table-row">AED @ViewBag.CustOutstandingBalance <br><span style=" font-size: 10px; color: #888;">Balance Due</span></td>
                             <td class="table-row">AED 20,000 <br><span style=" font-size: 10px; color: #888;">Latest Bill</span></td>
                             <td class="table-row">25th Jan 2024 <br><span style=" font-size: 10px; color: #888;">Due Date</span></td>
                         </tr>
@@ -33,16 +33,18 @@
                                 <th>Amount</th>
                                 <th>Type</th>
                                 <th>Status</th>
+                                <th>Receipt</th>
                             </tr>
                         </thead>
                         @foreach (var item in Model)
                         {
                             <tbody>
                                 <tr>
-                                    <td>@item.Date</td>
+                                    <td>@item.Date.ToShortDateString()</td>
                                     <td>@item.Amount</td>
                                     <td>@item.PayAgainst</td>
                                     <td></td>
+                                    <td><a href="#" style="text-decoration:none; color:#009ADE"><i class='fas fa-receipt' style="font-size:18px; color:#009ADE"></i></a></td>
                                 </tr>
                             </tbody>
                         }

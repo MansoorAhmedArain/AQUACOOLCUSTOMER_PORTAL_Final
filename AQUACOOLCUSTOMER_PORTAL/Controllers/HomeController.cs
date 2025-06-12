@@ -59,18 +59,18 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 if (!String.IsNullOrWhiteSpace(response) || response.Contains("Success"))
                 {
                     var resp = response.Split("|");
-                    //HttpContext.Session.SetString("UserId", resp[1]);   //C000006
-                    //HttpContext.Session.SetString("UserName", username); // AQ000038
+                   // HttpContext.Session.SetString("UserId", resp[1]);   //C000006
+                   // HttpContext.Session.SetString("UserName", username); // AQ000038
                     HttpContext.Session.SetString("UserId", "C014843");   //C000006
                     HttpContext.Session.SetString("UserName", "ryankakoon@gmail.com"); // AQ000038
                     return RedirectToAction("Index", "Admin");
                 }
-                ViewBag.ErrorMessage = "Not Authorized. Please check your Credentials";
+                ViewBag.ErrorMessage = "Not Authorized. Please check your Credentials. "+response;
             }
             catch (Exception ex)
             {
 
-                ViewBag.ErroMessage = "Internal Server error unable to fetch your details.";
+                ViewBag.ErroMessage = "Internal Server error unable to fetch your details." + ex.Message;
             }
             return View();
         }
@@ -303,8 +303,16 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //     "", "", "", "","").Result;
             return View();
         }
-        public IActionResult QuickPayment()
+        public IActionResult QuickPayment(string contractId= "", string outstandingBalance= "")
         {
+            if (!string.IsNullOrWhiteSpace(contractId))
+            {
+                ViewBag.ContractIdBag = contractId;
+                ViewBag.OutstandingBalance = outstandingBalance;
+                return View();
+            }
+            ViewBag.ContractIdBag = "";
+            ViewBag.OutstandingBalance = "";
             return View();
         }
 
@@ -315,11 +323,11 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        [HttpPost]
-        public IActionResult QuickPayment(string username, string password)
-        {
-            return View();
-        }
+        //[HttpPost]
+        //public IActionResult QuickPayment(string username, string password)
+        //{
+        //    return View();
+        //}
 
         [HttpGet]
         public IActionResult GetCustomerDetails(string eagNumber, string payAmount)

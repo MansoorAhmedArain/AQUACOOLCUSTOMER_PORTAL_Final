@@ -358,6 +358,30 @@ namespace ServiceReference1
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getBillingReport", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> getBillingReportAsync(string _contractid, int _month, int _year);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/CreateReconnectionTicket", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> CreateReconnectionTicketAsync(string _propertyId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetCustContractBalance", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> GetCustContractBalanceAsync(string _custID, string _contractID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetDisconnectionTicket", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> GetDisconnectionTicketAsync(string _contractID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/createPaymProofTicket", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> createPaymProofTicketAsync(string _contract, string _invoice, string _paymentDate, string _paymentMethod, string document);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustomerEnergyConsumption", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustomerEnergyConsumptionAsync(string _contractid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustomerBillConsumption", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustomerBillConsumptionAsync(string _contractid);
     }
     
     /// <remarks/>
@@ -396,6 +420,46 @@ namespace ServiceReference1
             set
             {
                 this.nameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="AQC AX")]
+    public partial class Consumption
+    {
+        
+        private string monthField;
+        
+        private string amountField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string month
+        {
+            get
+            {
+                return this.monthField;
+            }
+            set
+            {
+                this.monthField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string amount
+        {
+            get
+            {
+                return this.amountField;
+            }
+            set
+            {
+                this.amountField = value;
             }
         }
     }
@@ -3582,6 +3646,36 @@ namespace ServiceReference1
         public System.Threading.Tasks.Task<string> getBillingReportAsync(string _contractid, int _month, int _year)
         {
             return base.Channel.getBillingReportAsync(_contractid, _month, _year);
+        }
+        
+        public System.Threading.Tasks.Task<string> CreateReconnectionTicketAsync(string _propertyId)
+        {
+            return base.Channel.CreateReconnectionTicketAsync(_propertyId);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetCustContractBalanceAsync(string _custID, string _contractID)
+        {
+            return base.Channel.GetCustContractBalanceAsync(_custID, _contractID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetDisconnectionTicketAsync(string _contractID)
+        {
+            return base.Channel.GetDisconnectionTicketAsync(_contractID);
+        }
+        
+        public System.Threading.Tasks.Task<string> createPaymProofTicketAsync(string _contract, string _invoice, string _paymentDate, string _paymentMethod, string document)
+        {
+            return base.Channel.createPaymProofTicketAsync(_contract, _invoice, _paymentDate, _paymentMethod, document);
+        }
+        
+        public System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustomerEnergyConsumptionAsync(string _contractid)
+        {
+            return base.Channel.getCustomerEnergyConsumptionAsync(_contractid);
+        }
+        
+        public System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustomerBillConsumptionAsync(string _contractid)
+        {
+            return base.Channel.getCustomerBillConsumptionAsync(_contractid);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

@@ -8,54 +8,54 @@
     <div class="bg-container d-none d-md-flex">
         <div class="left-box "><img src="/images/BG10.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
         <div class="right-box pt-4">
-            <div class="icon-text h4">
-            <span>Create Reconnection Request</span>
-            </div>
-            <div class="mt-5 input-style">
-                <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
-            <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown">
-                <option value="">Select a project</option>
-                @{
-                    <option value="">project</option>
-                    <option value="">project</option>
-                    <option value="">project</option>
-                    foreach (var project in (Projects[])ViewBag.projects)
-                    {
-                        <option value="@project.Id">@project.Name</option>
-                    }
-                }
-            </select>
-                <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
-                <div class="input-group mb-2">
-
-                <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown1">
-                    <option value="">Select a contract</option>
+            <form method="post" action="@Url.Action("ReconnectionRequest","Admin")">
+                <div class="icon-text h4">
+                <span>Create Reconnection Request</span>
+                </div>
+                <div class="mt-5 input-style">
+                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
+                <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown">
+                    <option value="">Select a project</option>
                     @{
-                        foreach (var item in Model.ContractIDs)
+                        <option value="">project</option>
+                        foreach (var project in (Projects[])ViewBag.projects)
                         {
-                            <option value="@item.ID">@item.Name</option>
+                            <option value="@project.Id">@project.Name</option>
                         }
                     }
                 </select>
+                    <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
+                    <div class="input-group mb-2">
+
+                    <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" name="EAG" id="contractDropdown">
+                        <option value="">Select a contract</option>
+                        @{
+                            foreach (var item in Model.ContractIDs)
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        }
+                    </select>
+                    </div>
+
+
+                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;" readonly="readonly">Disconnection Ticket ID</div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control rounded-pill" id="disconnectionID" style="border: 1px solid #8FD2F0;">
+                    </div>
+
+
+                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Outstanding Balance</div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control rounded-pill" name="Balance" id="balance" readonly="readonly" style="border: 1px solid #8FD2F0;">
+                    </div>
+
+                <span style="color: blue">@ViewBag.Message</span>
+                    <input type="submit" class="btn rounded-pill btn-style mt-3" value="Submit" />
+                  @*   <a href="#" class="btn rounded-pill btn-style mt-3">Pay Now</a> *@
+
                 </div>
-
-
-                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Disconnection Ticket ID</div>
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                </div>
-
-
-                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Outstanding Balance</div>
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                </div>
-
-
-                <a href="#" class="btn rounded-pill btn-style mt-3">Submit</a>
-                <a href="#" class="btn rounded-pill btn-style mt-3">Pay Now</a>
-
-            </div>
+            </form>
         </div>
     </div>
 
@@ -104,3 +104,32 @@
         </div>
     </div>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#contractDropdown').on('change', function () {
+            var selectedValue = $(this).val();
+            if (selectedValue) {
+                $.ajax({
+                    url: '@Url.Action("GetDisconnectionTicketId", "Admin")', // Change controller name
+                    type: 'GET',
+                    data: { contractId: selectedValue },
+                    success: function (data) {
+                        var response = data.split(',');
+                        $('#disconnectionID').val(response[0]);
+                        $('#balance').val(response[1]);
+                    },
+                    error: function () {
+                        alert('Error loading contract details');
+                    }
+                });
+            } else {
+                $('#disconnectionID').val(''); // Clear the field if no selection
+                $('#balance').val(response[1]);
+
+            }
+        });
+
+    });
+</script>

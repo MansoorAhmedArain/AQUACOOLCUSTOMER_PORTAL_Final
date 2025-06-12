@@ -3,6 +3,7 @@ using AQUACOOLCUSTOMER_PORTAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using ServiceReference1;
@@ -222,6 +223,10 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             return contractIdsList;
         }
 
+        /// <summary>
+        /// Get reconnection form.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> ReconnectionRequest()
         {
             var userId = HttpContext.Session.GetString("UserId");
@@ -237,12 +242,75 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var contracts = await LoadContractsForSelection(userId);
             var viewModal = new ReconnectionViewModal()
             {
+                ContractIDs = contracts
+            };
+            return View(viewModal);
+
+        }
+
+        /// <summary>
+        /// post the reconnection data
+        /// </summary>
+        /// <param name="EAG"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> ReconnectionRequest(string EAG)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            var projects = await LoadProjectSelection();
+
+            // var units = LoadUnitSelection("test");
+            ViewBag.Projects = projects;
+            var contracts = await LoadContractsForSelection(userId);
+            var viewModal = new ReconnectionViewModal()
+            {
                 //Projects = projects,
                 ContractIDs = contracts
             };
-          // ViewBag.Contracts = new SelectList(projects, "Id","Name");
+            if (string.IsNullOrWhiteSpace(EAG))
+            {
+                ViewBag.Message = "EAG number could'nt be empty.";
+                return View(viewModal);
+            }
+            var activeContracts = _service.getCustContAsync(userId, true).Result;
+
+            foreach (var item in activeContracts)
+            {
+                if (item.ContractID == EAG)
+                {
+                    var response = _service.CreateReconnectionTicketAsync(item.PropertyId).Result;
+                    ViewBag.Message = response;
+                    return View(viewModal);
+                }
+            }
+           
             return View(viewModal);
 
+        }
+
+        /// <summary>
+        /// Get disconnection ticket id according to EAG number.
+        /// </summary>
+        /// <param name="contractId"></param>
+        /// <returns></returns>
+        public string GetDisconnectionTicketId(string contractId)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return "Not found.";
+            }
+
+            var disconnectionID = _service.GetDisconnectionTicketAsync(contractId).Result;
+            var outstandingBalance = _service.GetCustContractBalanceAsync(userId, contractId).Result;
+            return disconnectionID+","+outstandingBalance;
+               
         }
         public IActionResult StatementofAccount()
         {
@@ -1237,6 +1305,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             TempData["ContractId"] = contractId;
             var u = _service.getCustomerByUserIDAsync(username).Result;
             var invoices = _service.getCustPaymentsAsync(u, contractId).Result;
+            ViewBag.CustOutstandingBalance = _service.GetCustContractBalanceAsync(userId, contractId).Result;
             var result = new List<AxPayments>();
             foreach (var invoice in invoices)
             {
@@ -1251,6 +1320,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             return View(result);
         }
+        
 
         /// <summary>
         /// Displays the account history view for the currently logged-in user.
@@ -1374,14 +1444,121 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             // }
             return View(viewModal);
         }
+
+        [HttpGet]
         public IActionResult PaymentsReceipt()
         {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            var contracts = LoadContractsForSelection(userId).Result;
+            ViewBag.ContractsList = contracts;
             return View();
         }
-        public IActionResult SubmitPaymentProof()
+
+        [HttpPost]
+        public IActionResult PaymentsReceipt(PaymentsReceipt paymentsReceipt)
         {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            if (string.IsNullOrWhiteSpace(paymentsReceipt.EAG))
+            {
+                ViewBag.Message = "EAG number is required.";
+                return View();
+            }
+            var response = _service.getBillingReportAsync(paymentsReceipt.EAG, paymentsReceipt.InvoiceDate.Month, paymentsReceipt.InvoiceDate.Year).Result;
+            ViewBag.Message = response;
+
+            var contracts = LoadContractsForSelection(userId).Result;
+            ViewBag.ContractsList = contracts;
             return View();
         }
-        
+
+        /// <summary>
+        /// Submit payment proof action
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> SubmitPaymentProof()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            var projects = await LoadProjectSelection();
+
+            // var units = LoadUnitSelection("test");
+            ViewBag.Projects = projects;
+            var contracts = await LoadContractsForSelection(userId);
+            var viewModal = new ReconnectionViewModal()
+            {
+                ContractIDs = contracts
+            };
+            return View(viewModal);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> SubmitPaymentProof(PaymProofTicketRequest form, IFormFile file)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            var projects = await LoadProjectSelection();
+
+            // var units = LoadUnitSelection("test");
+            ViewBag.Projects = projects;
+            var contracts = await LoadContractsForSelection(userId);
+            var viewModal = new ReconnectionViewModal()
+            {
+                ContractIDs = contracts
+            };
+            if (file != null)
+            {
+                if (file != null && file.Length > 0) //
+                {
+                    var extension = Path.GetExtension(file.FileName);
+
+                    string fileName;
+                    if (!string.IsNullOrEmpty(form.PaymentDate.ToShortDateString()))
+                    {
+                        fileName = $"{form.EAG}-{form.PaymentDate:dd-MMM-yyyy}{extension}";
+                    }
+                    else
+                    {
+                        fileName = $"{form.EAG}{extension}";
+                    }
+
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        file.CopyTo(memoryStream);
+                        var byteArray = memoryStream.ToArray();
+                        var data = Convert.ToBase64String(byteArray);
+
+                        var resp = _service.createPaymProofTicketAsync(form.EAG, form.Invoice, form.PaymentDate.ToString("dd-MMM-yyyy"), form.PaymentMethod, data).Result;
+                        
+                    }
+                }
+            }
+            
+            return View(viewModal);
+        }
+
     }
 }
