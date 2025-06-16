@@ -917,10 +917,24 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             if (CustomerType.ToLower() == "tenant")
             {
-                //if (!_client.validateCustBankAcount(User.Identity.Name, ContractID))
                 if (!_service.validateCustBankAcountAsync(account, ContractID).Result && modal.Bank == "on")
                 {
-                    return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, requestId = modal.RequestId, customerType = CustomerType });
+                   // return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, requestId = modal.RequestId, customerType = CustomerType });
+                    var bankDetails = new BankDetails()
+                    {
+                        BankName = modal.ShortName,
+                        AccountNumber = modal.AccountNumber,
+                        ContractId = ContractID,
+                        CustomerType = CustomerType,
+                        RequestId = modal.RequestId,
+                        IBanNo = modal.IBanNo,
+                        OTP = modal.OTP,
+                        MoveOutdate = modal.MoveOutDate,
+                        ShortName = modal.ShortName,
+                        SwiftNo = modal.SwiftNo
+                    };
+                    var response = UpdateBankingDetails(bankDetails, userId, modal.SubmitButton);
+
                 }
                 else
                 {
@@ -932,7 +946,22 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 //if (!_client.validateCustBankAcount(User.Identity.Name, ContractID))
                 if (!_service.validateCustBankAcountAsync(account, ContractID).Result && modal.Bank == "on")
                 {
-                    return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, requestId = modal.RequestId, customerType = CustomerType });
+                    //return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, requestId = modal.RequestId, customerType = CustomerType });
+                    var bankDetails = new BankDetails()
+                    {
+                        BankName = modal.ShortName,
+                        AccountNumber = modal.AccountNumber,
+                        ContractId = ContractID,
+                        CustomerType = CustomerType,
+                        RequestId = modal.RequestId,
+                        IBanNo = modal.IBanNo,
+                        OTP = modal.OTP,
+                        MoveOutdate = modal.MoveOutDate,
+                        ShortName = modal.ShortName,
+                        SwiftNo = modal.SwiftNo
+                    };
+                   var response =  UpdateBankingDetails(bankDetails,userId,modal.SubmitButton);
+                    TempData["Error"] = response;
                 }
                 else
                 {
@@ -1158,6 +1187,131 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //ViewBag.ShowOTP = false;
             Getbanks();
             return View();
+        }
+        public async Task<string> UpdateBankingDetails(BankDetails bankDetails, string userId, string submitButton)
+        {
+            var cu = _service.getCustomerByUserIDAsync(userId).Result;
+            ViewBag.Contract = cu;
+            bankDetails.CustomerId = cu; 
+            if (submitButton.Equals("getotp") || submitButton.Equals("resendotp"))
+            {
+                if (string.IsNullOrWhiteSpace(bankDetails.BankName))
+                {
+                    TempData["Error"] = "Bank Name is required.";
+                    return "Bank Name is required.";
+                }
+                if (string.IsNullOrWhiteSpace(bankDetails.IBanNo))
+                {
+                    TempData["Error"] = "IBan Number  is required.";
+                    return "IBan Number  is required..";
+                }
+                if (string.IsNullOrWhiteSpace(bankDetails.AccountNumber))
+                {
+                    TempData["Error"] = "Account Number is required.";
+                    return "Account Number is required.";
+                }
+                if (string.IsNullOrWhiteSpace(bankDetails.SwiftNo))
+                {
+                    TempData["Error"] = "Swift Code is required.";
+                    return "Swift Code is required.";
+                }
+                if (ValidateBankAccount(bankDetails.IBanNo.Trim()))
+                {
+                    if (string.IsNullOrWhiteSpace(bankDetails.OTP))
+                    {
+                        var bankslist = _service.GetSDRefundBanksListAsync().Result;
+                        foreach (SDRefundBanksList d in bankslist)
+                        {
+                            if (d.BankCode.Equals(bankDetails.ShortName))
+                            {
+                                bankDetails.BankName = d.BankName;
+                            }
+                        }
+                        var returnMessage = await _service.getBankDetailsAsync(HttpUtility.HtmlEncode(bankDetails.CustomerId), HttpUtility.HtmlEncode(bankDetails.ContractId), HttpUtility.HtmlEncode(bankDetails.ShortName), HttpUtility.HtmlEncode(bankDetails.BankName), HttpUtility.HtmlEncode(bankDetails.IBanNo.Trim()), HttpUtility.HtmlEncode(bankDetails.AccountNumber.Trim()), string.Empty);
+
+                        TempData["Message"] = returnMessage;
+                        if (returnMessage.Contains("OTP"))
+                        {
+                            ViewBag.OTPReady = true;
+                        }
+                        else
+                        {
+                            ViewBag.OTPReady = false;
+                        }
+                    }
+                }
+                else
+                {
+                    ViewBag.OTPReady = false;
+                    TempData["Error"] = "Invalid IBAN Number";
+                }
+            }
+            else if (submitButton.Equals("validate"))
+            {
+                ViewBag.OTPReady = false;
+
+                var returnMessage = _service.getBankDetailsAsync(bankDetails.CustomerId, bankDetails.ContractId, string.Empty, string.Empty, string.Empty, string.Empty, bankDetails.OTP.Trim()).Result;
+
+                TempData["Message"] = returnMessage;
+            }
+            else
+            {
+                if (submitButton.Equals("next"))
+                {
+
+                    string result = "";
+
+                    string CustomerType = Convert.ToString(bankDetails.CustomerType);
+
+                    if (CustomerType.ToLower() == "tenant")
+                    {
+
+                        result = _service.initiateDirectMoveOutAsync(userId, bankDetails.ContractId, bankDetails.MoveOutdate.ToString()).Result;
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(bankDetails.RequestId))
+                            result = _service.initiateRegMoveOutAsync(bankDetails.ContractId, bankDetails.RequestId).Result;
+                    }
+
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        TempData["Error"] = "Result is Empty. Please Contact Customer support";
+                        //return View("UserProfile");
+                        return "Result is Empty. Please Contact Customer support"; 
+                    }
+
+                    var output = result.Split('|');
+
+                    if (output[0] == "Success")
+                    {
+                        try
+                        {// commented by MA
+                            
+                                if (_service.validateCustBankAcountAsync(bankDetails.CustomerId, bankDetails.ContractId).Result)
+                                {
+                                    await _service.deleteCustBankAccountAsync(bankDetails.CustomerId, bankDetails.ContractId);
+                                }
+                            
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.WriteLine("Error occured while processing: " + ex.Message);
+                        }
+
+
+                        TempData["Message"] = output[1];
+                        return output[1];
+                    }
+                    else
+                    {
+                        TempData["Error"] = output[1];
+                        //return RedirectToAction("UserProfile");
+                        return output[1];
+                    }
+                }
+            }
+            return string.Empty;
         }
 
         public static bool ValidateBankAccount(string bankAccount)

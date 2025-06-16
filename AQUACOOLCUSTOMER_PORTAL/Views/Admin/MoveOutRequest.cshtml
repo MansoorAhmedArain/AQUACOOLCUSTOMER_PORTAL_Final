@@ -63,7 +63,7 @@
                             <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
                             <div class="input-group">
                                 <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                            <select class="form-control rounded-start rounded-pill" placeholder="Select" name="projectDropdown" style="border: 1px solid #8FD2F0;" id="projectDropdown">
+                            <select class="form-control rounded-start rounded-pill" placeholder="Select" name="projectDropdown" required style="border: 1px solid #8FD2F0;" id="projectDropdown">
                                     <option value="">Select a project</option>
                                     @{
                                         <option value="">project</option>
@@ -77,7 +77,7 @@
 
                             <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">Unit Number</div>
                             <div class="input-group mb-2">
-                                <select type="text" class="form-control rounded-pill" name="UnitNumber" id="unitNumbersDropdown" style="background-color: #cff2c9;">
+                                <select type="text" class="form-control rounded-pill" name="UnitNumber" required id="unitNumbersDropdown" style="background-color: #cff2c9;">
                                     @* <option value="value">text</option> *@
                                 </select>
                             </div>
@@ -85,7 +85,7 @@
                             <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Select RequestId</span>
                             <div class="input-group">
                                 <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                                <select class="form-control rounded-start rounded-pill" placeholder="Select" name="requestId" style="border: 1px solid #8FD2F0;" id="requestDropdown">
+                                <select class="form-control rounded-start rounded-pill" placeholder="Select"  required name="requestId" style="border: 1px solid #8FD2F0;" id="requestDropdown">
                                     <option value="">Select a request Id</option>
                                     @{
                                         <option value="">project</option>
@@ -100,7 +100,7 @@
                             <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Select Move Out Date</div>
                             <div class="input-group">
                                 <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" style="width: 25px;"></span>
-                                <input type="date" name="MoveOutdate" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
+                                <input type="date" name="MoveOutdate" class="form-control rounded-start rounded-pill" required placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
                             </div>
                             <div class="ms-3 mb-3" style="color: #48b4e6; font-size: small; font-weight: 500;">(Note: On the move out date the service will be disconnected)</div>
 
@@ -163,7 +163,7 @@
                                 </div>
 
                             </div>
-                            <input type="submit" class="btn rounded-pill btnnext-style" name="submitButton" value="Submit" />
+                        <input type="submit" class="btn rounded-pill btnnext-style" name="submitButton" id="submitButton" value="Submit" />
                         </div>
                
                 </div>
@@ -248,6 +248,7 @@
 <script>
     const checkboxes = document.querySelectorAll('.refund-option');
     const bankInfoDiv = document.querySelector('.BankInfo');
+    const submitButton = document.querySelector('#submitButton');
 
     checkboxes.forEach(cb => {
         cb.addEventListener('change', function () {
@@ -262,12 +263,15 @@
                 // Show/hide BankInfo
                 if (this.id === 'BankTransfer') {
                     bankInfoDiv.style.display = 'block';
+                    submitButton.style.display = 'none';
                 } else {
                     bankInfoDiv.style.display = 'none';
+                    submitButton.style.display = 'block';
                 }
             } else {
                 // If unchecking the current option, hide BankInfo as well
                 bankInfoDiv.style.display = 'none';
+                submitButton.style.display = 'block';
             }
         });
     });
