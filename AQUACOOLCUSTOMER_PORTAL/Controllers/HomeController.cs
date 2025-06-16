@@ -47,22 +47,22 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
-                {
-                    ViewBag.ErroMessage = "username or password can not be empty.";
-                    return View();
-                }
+                //if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                //{
+                //    ViewBag.ErroMessage = "username or password can not be empty.";
+                //    return View();
+                //}
                 //AQ000067 // 3WGCSZHU
                 // AQ000175 // Emic$2021
                 // test // test
                 var response = _service.LoginAsync(username, password).Result;  //Success|C003776|test
-                if (!String.IsNullOrWhiteSpace(response) || response.Contains("Success"))
+                if (!String.IsNullOrWhiteSpace(response) && response.Contains("Success"))
                 {
                     var resp = response.Split("|");
-                   // HttpContext.Session.SetString("UserId", resp[1]);   //C000006
-                   // HttpContext.Session.SetString("UserName", username); // AQ000038
-                    HttpContext.Session.SetString("UserId", "C014843");   //C000006
-                    HttpContext.Session.SetString("UserName", "ryankakoon@gmail.com"); // AQ000038
+                    HttpContext.Session.SetString("UserId", resp[1]);   //C000006
+                    HttpContext.Session.SetString("UserName", username); // AQ000038
+                    //HttpContext.Session.SetString("UserId", "C014843");   //C000006
+                    //HttpContext.Session.SetString("UserName", "ryankakoon@gmail.com"); // AQ000038
                     return RedirectToAction("Index", "Admin");
                 }
                 ViewBag.ErrorMessage = "Not Authorized. Please check your Credentials. "+response;
