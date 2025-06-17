@@ -876,16 +876,14 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //ViewBag.Contract = cu;
             //ViewBag.ContractId = ContractId;
             ViewBag.OTPReady = false;
-            //TempData["ContractId"] = ContractId;
-            //TempData["requestId"] = requestId;
-            //TempData["CustomerType"] = customerType;
-            // var units = LoadUnitSelection("test");
-
-
             return View(projects);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modal"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> MoveOutRequest(MoveOutRequestModel modal)
         {
@@ -1059,135 +1057,135 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         //    });
         //}
 
-        [HttpPost]
-        public async Task<ActionResult> UpdateBankingDetails(IFormCollection formVal, BankDetails bankDetails, string submitButton)
-        {
-            var userId = HttpContext.Session.GetString("UserId");
-            var username = HttpContext.Session.GetString("UserName");
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
-            {
-                return RedirectToAction("index", "Home");
-            }
-            var cu = _service.getCustomerByUserIDAsync(username).Result;
-            ViewBag.Contract = cu;
-            bankDetails.CustomerId = cu;
-            //ViewBag.Contract = User.Identity.Name;
-            //bankDetails.CustomerId = User.Identity.Name;
+        //[HttpPost]
+        //public async Task<ActionResult> UpdateBankingDetails(IFormCollection formVal, BankDetails bankDetails, string submitButton)
+        //{
+        //    var userId = HttpContext.Session.GetString("UserId");
+        //    var username = HttpContext.Session.GetString("UserName");
+        //    if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+        //    {
+        //        return RedirectToAction("index", "Home");
+        //    }
+        //    var cu = _service.getCustomerByUserIDAsync(username).Result;
+        //    ViewBag.Contract = cu;
+        //    bankDetails.CustomerId = cu;
+        //    //ViewBag.Contract = User.Identity.Name;
+        //    //bankDetails.CustomerId = User.Identity.Name;
 
-            if (string.IsNullOrWhiteSpace(bankDetails.ContractId))
-            {
-                bankDetails.ContractId = Convert.ToString(TempData["ContractId"]);
-            }
-            if (string.IsNullOrWhiteSpace(bankDetails.RequestId))
-            {
-                bankDetails.RequestId = Convert.ToString(TempData["RequestId"]);
-            }
-            if (string.IsNullOrWhiteSpace(bankDetails.CustomerType))
-            {
-                bankDetails.CustomerType = Convert.ToString(TempData["CustomerType"]);
-            }
+        //    if (string.IsNullOrWhiteSpace(bankDetails.ContractId))
+        //    {
+        //        bankDetails.ContractId = Convert.ToString(TempData["ContractId"]);
+        //    }
+        //    if (string.IsNullOrWhiteSpace(bankDetails.RequestId))
+        //    {
+        //        bankDetails.RequestId = Convert.ToString(TempData["RequestId"]);
+        //    }
+        //    if (string.IsNullOrWhiteSpace(bankDetails.CustomerType))
+        //    {
+        //        bankDetails.CustomerType = Convert.ToString(TempData["CustomerType"]);
+        //    }
 
-            if (submitButton.Equals("getotp") || submitButton.Equals("resendotp"))
-            {
-                if (ValidateBankAccount(bankDetails.IBanNo.Trim()))
-                {
-                    if (string.IsNullOrWhiteSpace(bankDetails.OTP))
-                    {
-                        var bankslist = _service.GetSDRefundBanksListAsync().Result;
-                        foreach (SDRefundBanksList d in bankslist)
-                        {
-                            if (d.BankCode.Equals(bankDetails.ShortName))
-                            {
-                                bankDetails.BankName = d.BankName;
-                            }
-                        }
-                        var returnMessage = await _service.getBankDetailsAsync(HttpUtility.HtmlEncode(bankDetails.CustomerId), HttpUtility.HtmlEncode(bankDetails.ContractId), HttpUtility.HtmlEncode(bankDetails.ShortName), HttpUtility.HtmlEncode(bankDetails.BankName), HttpUtility.HtmlEncode(bankDetails.IBanNo.Trim()), HttpUtility.HtmlEncode(bankDetails.AccountNumber.Trim()), string.Empty);
+        //    if (submitButton.Equals("getotp") || submitButton.Equals("resendotp"))
+        //    {
+        //        if (ValidateBankAccount(bankDetails.IBanNo.Trim()))
+        //        {
+        //            if (string.IsNullOrWhiteSpace(bankDetails.OTP))
+        //            {
+        //                var bankslist = _service.GetSDRefundBanksListAsync().Result;
+        //                foreach (SDRefundBanksList d in bankslist)
+        //                {
+        //                    if (d.BankCode.Equals(bankDetails.ShortName))
+        //                    {
+        //                        bankDetails.BankName = d.BankName;
+        //                    }
+        //                }
+        //                var returnMessage = await _service.getBankDetailsAsync(HttpUtility.HtmlEncode(bankDetails.CustomerId), HttpUtility.HtmlEncode(bankDetails.ContractId), HttpUtility.HtmlEncode(bankDetails.ShortName), HttpUtility.HtmlEncode(bankDetails.BankName), HttpUtility.HtmlEncode(bankDetails.IBanNo.Trim()), HttpUtility.HtmlEncode(bankDetails.AccountNumber.Trim()), string.Empty);
 
-                        TempData["Message"] = returnMessage;
-                        if (returnMessage.Contains("OTP"))
-                        {
-                            ViewBag.OTPReady = true;
-                        }
-                        else
-                        {
-                            ViewBag.OTPReady = false;
-                        }
-                    }
-                }
-                else
-                {
-                    ViewBag.OTPReady = false;
-                    TempData["Error"] = "Invalid IBAN Number";
-                }
-            }
-            else if (submitButton.Equals("validate"))
-            {
-                ViewBag.OTPReady = false;
+        //                TempData["Message"] = returnMessage;
+        //                if (returnMessage.Contains("OTP"))
+        //                {
+        //                    ViewBag.OTPReady = true;
+        //                }
+        //                else
+        //                {
+        //                    ViewBag.OTPReady = false;
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ViewBag.OTPReady = false;
+        //            TempData["Error"] = "Invalid IBAN Number";
+        //        }
+        //    }
+        //    else if (submitButton.Equals("validate"))
+        //    {
+        //        ViewBag.OTPReady = false;
 
-                var returnMessage = _service.getBankDetailsAsync(bankDetails.CustomerId, bankDetails.ContractId, string.Empty, string.Empty, string.Empty, string.Empty, bankDetails.OTP.Trim()).Result;
+        //        var returnMessage = _service.getBankDetailsAsync(bankDetails.CustomerId, bankDetails.ContractId, string.Empty, string.Empty, string.Empty, string.Empty, bankDetails.OTP.Trim()).Result;
 
-                TempData["Message"] = returnMessage;
-            }
-            else
-            {
-                if (submitButton.Equals("next"))
-                {
+        //        TempData["Message"] = returnMessage;
+        //    }
+        //    else
+        //    {
+        //        if (submitButton.Equals("next"))
+        //        {
 
-                    string result = "";
+        //            string result = "";
 
-                    string CustomerType = Convert.ToString(bankDetails.CustomerType);
+        //            string CustomerType = Convert.ToString(bankDetails.CustomerType);
 
-                    if (CustomerType.ToLower() == "tenant")
-                    {
+        //            if (CustomerType.ToLower() == "tenant")
+        //            {
 
-                        result = _service.initiateDirectMoveOutAsync(username, bankDetails.ContractId, bankDetails.MoveOutdate.ToString()).Result;
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(bankDetails.RequestId))
-                            result = _service.initiateRegMoveOutAsync(bankDetails.ContractId, bankDetails.RequestId).Result;
-                    }
+        //                result = _service.initiateDirectMoveOutAsync(username, bankDetails.ContractId, bankDetails.MoveOutdate.ToString()).Result;
+        //            }
+        //            else
+        //            {
+        //                if (!string.IsNullOrEmpty(bankDetails.RequestId))
+        //                    result = _service.initiateRegMoveOutAsync(bankDetails.ContractId, bankDetails.RequestId).Result;
+        //            }
 
-                    if (string.IsNullOrEmpty(result))
-                    {
-                        TempData["Error"] = "Result is Empty. Please Contact Customer support";
-                        return RedirectToAction("UserProfile");
-                    }
+        //            if (string.IsNullOrEmpty(result))
+        //            {
+        //                TempData["Error"] = "Result is Empty. Please Contact Customer support";
+        //                return RedirectToAction("UserProfile");
+        //            }
 
-                    var output = result.Split('|');
+        //            var output = result.Split('|');
 
-                    if (output[0] == "Success")
-                    {
-                        try
-                        {// commented by MA
-                            if (!string.IsNullOrEmpty(formVal["CheckCheque"]) && Convert.ToBoolean(formVal["CheckCheque"]))
-                            {
-                                if (_service.validateCustBankAcountAsync(bankDetails.CustomerId, bankDetails.ContractId).Result)
-                                {
-                                    await _service.deleteCustBankAccountAsync(bankDetails.CustomerId, bankDetails.ContractId);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.WriteLine("Error occured while processing: " + ex.Message);
-                        }
+        //            if (output[0] == "Success")
+        //            {
+        //                try
+        //                {// commented by MA
+        //                    if (!string.IsNullOrEmpty(formVal["CheckCheque"]) && Convert.ToBoolean(formVal["CheckCheque"]))
+        //                    {
+        //                        if (_service.validateCustBankAcountAsync(bankDetails.CustomerId, bankDetails.ContractId).Result)
+        //                        {
+        //                            await _service.deleteCustBankAccountAsync(bankDetails.CustomerId, bankDetails.ContractId);
+        //                        }
+        //                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Log.WriteLine("Error occured while processing: " + ex.Message);
+        //                }
 
 
-                        TempData["Message"] = output[1];
-                        return RedirectToAction("UploadNoC", new { Id = output[1] });
-                    }
-                    else
-                    {
-                        TempData["Error"] = output[1];
-                        return RedirectToAction("UserProfile");
-                    }
-                }
-            }
-            //ViewBag.ShowOTP = false;
-            Getbanks();
-            return View();
-        }
+        //                TempData["Message"] = output[1];
+        //                return RedirectToAction("UploadNoC", new { Id = output[1] });
+        //            }
+        //            else
+        //            {
+        //                TempData["Error"] = output[1];
+        //                return RedirectToAction("UserProfile");
+        //            }
+        //        }
+        //    }
+        //    //ViewBag.ShowOTP = false;
+        //    Getbanks();
+        //    return View();
+        //}
         public async Task<string> UpdateBankingDetails(BankDetails bankDetails, string userId, string submitButton)
         {
             var cu = _service.getCustomerByUserIDAsync(userId).Result;

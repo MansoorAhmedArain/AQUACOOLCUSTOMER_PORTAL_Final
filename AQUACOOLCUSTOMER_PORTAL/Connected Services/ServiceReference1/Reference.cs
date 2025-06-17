@@ -335,9 +335,9 @@ namespace ServiceReference1
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> GetUnitDLAsync(string _propertyId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetCustomerDetails", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/Getdataforquickpaym", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetCustomerDetailsAsync(string contractId);
+        System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetdataforquickpaymAsync(string _EAG);
         
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetrequestID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -3618,9 +3618,9 @@ namespace ServiceReference1
             return base.Channel.GetUnitDLAsync(_propertyId);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetCustomerDetailsAsync(string contractId)
+        public System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetdataforquickpaymAsync(string _EAG)
         {
-            return base.Channel.GetCustomerDetailsAsync(contractId);
+            return base.Channel.GetdataforquickpaymAsync(_EAG);
         }
         
         public System.Threading.Tasks.Task<ServiceReference1.SubTypes[]> GetrequestIDAsync()

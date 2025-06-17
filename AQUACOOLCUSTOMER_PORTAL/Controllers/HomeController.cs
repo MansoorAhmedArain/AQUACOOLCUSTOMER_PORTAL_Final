@@ -345,21 +345,22 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 };
                 return Json(customerT);
             }
-            var u = _service.getCustomerByUserIDAsync("ryankakoon@gmail.com").Result;
-            var cust = _service.getCustomerRegDetailsAsync(eagNumber).Result;
-            var contracts = _service.getCustContAsync(u, true).Result.ToList();
-            var contractsList = new List<AxContract>();
-            
+           
+            var cust = _service.GetdataforquickpaymAsync(eagNumber).Result;
+            // var contracts = _service.getCustContAsync(u, true).Result.ToList();
+            //var contractsList = new List<AxContract>();
+
             //ViewBag.IsSwissNakheel = _client.EnableCCPayOption(contractId).ToString().Trim().Equals("Yes") ? true : false;
 
+            var u = _service.getCustomerByUserIDAsync(cust.Email).Result;
             var balance = _service.getCustContractBalanceAsync(u, eagNumber).Result;
             // Dummy data for example
             var customer = new
             {
-                CustomerName = "John Doe",
-                UnitNumber = 123,
-                MobileNumber = "1234567890",
-                Email = "john@example.com",
+                CustomerName = cust.Name,
+                UnitNumber = cust.Unit_,
+                MobileNumber = cust.Phone,
+                Email = cust.Email,
                 AmountDue = balance,
                 PayAmount = payAmount,
 

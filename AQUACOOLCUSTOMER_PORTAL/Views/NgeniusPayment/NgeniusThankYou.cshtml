@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "NgeniusThankYou";
+}
+<div class=" container about_home">
+    <div>
+        @Html.Raw(TempData["ResponseData"])
+    </div>
+
+    <div>
+        <table>
+            <tr>
+                <td align="right">@*<strong><i>Message: </i></strong>*@</td>
+                <td>
+                    @if (ViewBag.Error != null)
+                    {
+                        <div>@ViewBag.Error</div>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
