@@ -15,7 +15,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web;
 
-namespace Aquacool.Web.Controllers
+namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 {
     public class NgeniusPaymentController : Controller
     {
@@ -28,6 +28,10 @@ namespace Aquacool.Web.Controllers
             _logger = logger;
             _service = new Service1SoapClient(Service1SoapClient.EndpointConfiguration.Service1Soap);
         }
+        public ActionResult Test() {
+            return View();
+        }
+        [HttpGet]
         public ActionResult Index(string @ref)
         {
             string refNumber = string.Empty;
@@ -43,7 +47,7 @@ namespace Aquacool.Web.Controllers
                 var Response = RetrievePaymentStatus(refNumber, AccessToken);
                 TempData["ResponseData"] = Response;
             }
-            return RedirectToAction("Index", "NgeniusThankYou");
+            return RedirectToAction("NgeniusThankYou");
         }
 
         private string RetrievePaymentStatus(string reference, string AccessToken)

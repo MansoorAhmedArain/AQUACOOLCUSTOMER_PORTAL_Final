@@ -8,6 +8,7 @@
     <div class="bg-container d-none d-md-flex">
         <div class="left-box "><img src="/images/BG10.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
         <div class="right-box pt-4">
+        @Html.Partial("_Messages")
             <form method="post" action="@Url.Action("ReconnectionRequest","Admin")">
                 <div class="icon-text h4">
                 <span>Create Reconnection Request</span>

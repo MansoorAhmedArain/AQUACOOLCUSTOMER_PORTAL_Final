@@ -82,7 +82,7 @@
                 <img src="/images/BG5.jpg" class="rounded-start rounded-pill img-style" alt="">
             </div>
             <div class="right-box py-5">
-
+                @Html.Partial("_Messages")
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" style="width: 0%; background-color: #44D62C;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -93,77 +93,88 @@
                     @* <div class="step-circle" onclick="displayStep(4)">4</div>
                     <div class="step-circle" onclick="displayStep(5)">5</div> *@
                 </div>
+                <form method="post" action="@Url.Action("AccountAsIndividual","Home")">
+                    <div class="step step-1 ">
+                        <!-- Step 1 form fields here -->
+                        <div class="input-style">
 
-                <div class="step step-1 ">
-                    <!-- Step 1 form fields here -->
-                    <div class="input-style">
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">First Name</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="FirstName" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">First Name</span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="FirstName" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Last Name</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="LastName" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Nationality</span>
+                            <div class="input-group">
+                                @* <input type="text" name="Nationality"  class="form-control rounded-pill" style="border: 1px solid #8FD2F0;"> *@
+                                <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
+                                <select class="form-control rounded-start rounded-pill" placeholder="Select" required name="Nationality" style="border: 1px solid #8FD2F0;" id="Nationality">
+                                    <option value="">Select a request Id</option>
+                                    @{
+                                        <option value="">project</option>
+                                        foreach (var item in (List<SelectListItem>)ViewBag.Countries)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                           @*  <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Number</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="Passport-number" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Expiry Date</span>
+                            <div class="input-group">
+                                <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" class="icon-image"></span>
+                                <input type="text" placeholder="9/5/2024" name="Passport-ExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div> *@
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
+                                Primary Phone Number
+                            </span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="MobileNumber1" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
+                                Secondary Phone Number
+                            </span>
+                            <div class="input-group">
+                                <input type="text" name="MobileNumber2" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Email Address Primary</span>
+                            <div class="input-group">
+                                <input type="text" placeholder="Required" name="EmailAddress1" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
+                                Email Address Secondary
+                            </span>
+                            <div class="input-group">
+                                <input type="text" name="EmailAddress2" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
+                                Create your Password
+                            </span>
+                            <div class="input-group">
+                                <input type="password" placeholder="Required" name="Password" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
+                            </div>
+
+                            <div class="btn-container my-3">
+                                <button type="button" class="btn rounded-pill backbtn-style prev-step">Back</button>
+                                <button type="submit" class="btn rounded-pill btn-style next-step">Next</button>
+                            </div>
                         </div>
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Last Name</span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="LastName" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
 
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Nationality</span>
-                        <div class="input-group">
-                            <input type="text" name="Nationality" re class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
-
-                       @*  <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Number</span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="Passport-number" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
-
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Expiry Date</span>
-                        <div class="input-group">
-                            <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" class="icon-image"></span>
-                            <input type="text" placeholder="9/5/2024" name="Passport-ExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div> *@
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                            Primary Phone Number
-                        </span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="Primary-phoneNumber" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
-
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                            Secondary Phone Number
-                        </span>
-                        <div class="input-group">
-                            <input type="text" name="Secondary-phoneNumber" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
-
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Email Address Primary</span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="Email-addressPrimary" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
-
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                            Email Address Secondary
-                        </span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Alternate Email Address" name="Email-addressSecondary" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
-                        <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                            Create your Password
-                        </span>
-                        <div class="input-group">
-                            <input type="text" placeholder="Required" name="Create-password" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                        </div>
-
-                        <div class="btn-container my-3">
-                            <button type="button" class="btn rounded-pill backbtn-style prev-step">Back</button>
-                            <button type="button" class="btn rounded-pill btn-style next-step">Next</button>
-                        </div>
                     </div>
-
-
-                </div>
-
+                </form>
 
                 @* <div class="step step-2">
                     <!-- Step 2 form fields here -->
@@ -268,7 +279,7 @@
                     <button type="button" class="btn rounded-pill btn-style1 next-step">C-XXXX</button>
 
                     <p class="mt-5" style="color: #03213d; font-size: 20px;">Please proceed with <br> Move in Request to the property.</p>
-                    <a type="button" class="btn rounded-pill btn-style1">Move in Request</a>
+                    <a href="@Url.Action("login")" class="btn rounded-pill btn-style1">Move in Request</a>
 
                 </div>
 

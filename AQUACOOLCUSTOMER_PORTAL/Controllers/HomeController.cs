@@ -139,6 +139,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                                      Text = HttpUtility.HtmlEncode(c.ShortName),
                                      Value = HttpUtility.HtmlEncode(c.CountryRegId)
                                  }).ToList();
+            TempData["Message"] = "";
             return View();
         }
         [HttpPost]
@@ -164,56 +165,56 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //    return View(customer);
             //}
 
-            if (customer.Password != customer.ConfirmPassword)
-            {
-                TempData["Error"] = "Password and Confirm Password should match.";
-                return View(customer);
-            }
+            //if (customer.Password != customer.ConfirmPassword)
+            //{
+            //    TempData["Error"] = "Password and Confirm Password should match.";
+            //    return View(customer);
+            //}
 
-            if (string.IsNullOrEmpty(customer.Account))
-            {
-                TempData["Error"] = "Please select the account type";
-                return View(customer);
-            }
+            //if (string.IsNullOrEmpty(customer.Account))
+            //{
+            //    TempData["Error"] = "Please select the account type";
+            //    return View(customer);
+            //}
 
-            if (customer.Agreement == false)
-            {
-                TempData["Error"] = "Please select the Disclaimer check";
-                return View(customer);
-            }
+            //if (customer.Agreement == false)
+            //{
+            //    TempData["Error"] = "Please select the Disclaimer check";
+            //    return View(customer);
+            //}
 
-            var passportExpiry = customer.PassportExpiryDate ?? "1/1/2000";
-            var idExpiry = customer.IdExpiryDate ?? "1/1/2000";
+            //var passportExpiry = customer.PassportExpiryDate ?? "1/1/2000";
+            //var idExpiry = customer.IdExpiryDate ?? "1/1/2000";
 
-            if (customer.Account.Equals("Company"))
-            {
-                int tldno;
-                var TLD = int.TryParse((customer.TradeLicenseExpiryDate.Replace("/", "")), out tldno);
-                if (!TLD)
-                {
-                    TempData["Error"] = "Invalid Trade License Expiry";
-                    return View(customer);
-                }
-            }
+            //if (customer.Account.Equals("Company"))
+            //{
+            //    int tldno;
+            //    var TLD = int.TryParse((customer.TradeLicenseExpiryDate.Replace("/", "")), out tldno);
+            //    if (!TLD)
+            //    {
+            //        TempData["Error"] = "Invalid Trade License Expiry";
+            //        return View(customer);
+            //    }
+            //}
 
-            if (customer.Resident.Equals("Resident"))
-            {
-                int idno;
-                var EID = int.TryParse((idExpiry.Replace("/", "")), out idno);
-                if (!EID)
-                {
-                    TempData["Error"] = "Invalid Emirates ID Expiry";
-                    return View(customer);
-                }
-            }
+            //if (customer.Resident.Equals("Resident"))
+            //{
+            //    int idno;
+            //    var EID = int.TryParse((idExpiry.Replace("/", "")), out idno);
+            //    if (!EID)
+            //    {
+            //        TempData["Error"] = "Invalid Emirates ID Expiry";
+            //        return View(customer);
+            //    }
+            //}
 
-            int pdno;
-            var PED = int.TryParse((passportExpiry.Replace("/", "")), out pdno);
-            if (!PED)
-            {
-                TempData["Error"] = "Invalid Passport Expiry Date";
-                return View(customer);
-            }
+            //int pdno;
+            //var PED = int.TryParse((passportExpiry.Replace("/", "")), out pdno);
+            //if (!PED)
+            //{
+            //    TempData["Error"] = "Invalid Passport Expiry Date";
+            //    return View(customer);
+            //}
 
             validation = PerformValidation(customer);
             //  validation = "Success";
@@ -236,13 +237,15 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                       HttpUtility.HtmlEncode(customer.Nationality),
                       HttpUtility.HtmlEncode(customer.EmailAddress1),
                       HttpUtility.HtmlEncode(customer.IdNumber),
-                      HttpUtility.HtmlEncode(idExpiry),
+                      HttpUtility.HtmlEncode(""),
+                     // HttpUtility.HtmlEncode(idExpiry),
                       HttpUtility.HtmlEncode(customer.FirstName),
                       HttpUtility.HtmlEncode("00000"),
                       HttpUtility.HtmlEncode(customer.LastName),
                       HttpUtility.HtmlEncode(mobile1.ToString()),
                       HttpUtility.HtmlEncode(customer.Nationality),
-                      HttpUtility.HtmlEncode(passportExpiry),
+                       HttpUtility.HtmlEncode(""),
+                      //HttpUtility.HtmlEncode(passportExpiry),
                       HttpUtility.HtmlEncode(customer.PassportNumber),
                       HttpUtility.HtmlEncode(customer.PoBox),
                       HttpUtility.HtmlEncode(customer.EmailAddress2),
@@ -291,17 +294,162 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         [HttpGet]
         public IActionResult AccountAsIndividual()
         {
-
+            ViewBag.Countries = (from c in _service.GetCountriesAsync().Result
+                                 select new SelectListItem
+                                 {
+                                     Text = HttpUtility.HtmlEncode(c.ShortName),
+                                     Value = HttpUtility.HtmlEncode(c.CountryRegId)
+                                 }).ToList();
             return View();
         }
 
         [HttpPost]
-        public IActionResult AccountAsIndividual(AccountInfo info)
+        public IActionResult AccountAsIndividual(AxCustomer customer)
         {
-            //var response =  _service.RegistrationAsync("", "", "", accountInfo.PrimaryEmailAddress, "", "", accountInfo.FullName, "", accountInfo.FullName,
-            //     accountInfo.PrimaryMobileNo, "Pakistani", "passno", "pbox", accountInfo.SecondryEmailAddress, accountInfo.SecondryMobileNo, "", "", "",
-            //     "", "", "", "","").Result;
-            return View();
+            int mobile1;
+            string validation = string.Empty;
+            bool IsValid = false;
+            customer.Account = "Individual";
+            customer.Agreement = true;
+
+            var workin = int.TryParse(HttpUtility.HtmlEncode(customer.MobileNumber1), out mobile1);
+            ViewBag.Countries = (from c in _service.GetCountriesAsync().Result
+                                 select new SelectListItem
+                                 {
+                                     Text = HttpUtility.HtmlEncode(c.ShortName),
+                                     Value = HttpUtility.HtmlEncode(c.CountryRegId)
+                                 }).ToList();
+
+            //if (!workin)
+            //{
+            //    TempData["Error"] = "Mobile Number 1 is not valid. Only digits are allowed";
+            //    return View(customer);
+            //}
+
+            //if (customer.Password != customer.ConfirmPassword)
+            //{
+            //    TempData["Error"] = "Password and Confirm Password should match.";
+            //    return View(customer);
+            //}
+
+            //if (string.IsNullOrEmpty(customer.Account))
+            //{
+            //    TempData["Error"] = "Please select the account type";
+            //    return View(customer);
+            //}
+
+            //if (customer.Agreement == false)
+            //{
+            //    TempData["Error"] = "Please select the Disclaimer check";
+            //    return View(customer);
+            //}
+
+            //var passportExpiry = customer.PassportExpiryDate ?? "1/1/2000";
+            //var idExpiry = customer.IdExpiryDate ?? "1/1/2000";
+
+            //if (customer.Account.Equals("Company"))
+            //{
+            //    int tldno;
+            //    var TLD = int.TryParse((customer.TradeLicenseExpiryDate.Replace("/", "")), out tldno);
+            //    if (!TLD)
+            //    {
+            //        TempData["Error"] = "Invalid Trade License Expiry";
+            //        return View(customer);
+            //    }
+            //}
+
+            //if (customer.Resident.Equals("Resident"))
+            //{
+            //    int idno;
+            //    var EID = int.TryParse((idExpiry.Replace("/", "")), out idno);
+            //    if (!EID)
+            //    {
+            //        TempData["Error"] = "Invalid Emirates ID Expiry";
+            //        return View(customer);
+            //    }
+            //}
+
+            //int pdno;
+            //var PED = int.TryParse((passportExpiry.Replace("/", "")), out pdno);
+            //if (!PED)
+            //{
+            //    TempData["Error"] = "Invalid Passport Expiry Date";
+            //    return View(customer);
+            //}
+
+            validation = PerformValidation(customer);
+            //  validation = "Success";
+            if (validation.Equals("Success"))
+            {
+                IsValid = true;
+            }
+            else
+            {
+                IsValid = false;
+                TempData["Error"] = validation + " is not valid";
+                return View(customer);
+            }
+
+            if (IsValid)
+            {
+                ViewBag.Customer = Newtonsoft.Json.JsonConvert.SerializeObject(customer);
+                var result = _service.RegistrationAsync(HttpUtility.HtmlEncode(customer.Account),
+                      HttpUtility.HtmlEncode(customer.Emirate.ToString()),
+                      HttpUtility.HtmlEncode(customer.Nationality),
+                      HttpUtility.HtmlEncode(customer.EmailAddress1),
+                      HttpUtility.HtmlEncode(customer.IdNumber),
+                      HttpUtility.HtmlEncode(""),
+                      // HttpUtility.HtmlEncode(idExpiry),
+                      HttpUtility.HtmlEncode(customer.FirstName),
+                      HttpUtility.HtmlEncode("00000"),
+                      HttpUtility.HtmlEncode(customer.LastName),
+                      HttpUtility.HtmlEncode(mobile1.ToString()),
+                      HttpUtility.HtmlEncode(customer.Nationality),
+                       HttpUtility.HtmlEncode(""),
+                      //HttpUtility.HtmlEncode(passportExpiry),
+                      HttpUtility.HtmlEncode(customer.PassportNumber),
+                      HttpUtility.HtmlEncode(customer.PoBox),
+                      HttpUtility.HtmlEncode(customer.EmailAddress2),
+                      HttpUtility.HtmlEncode(customer.MobileNumber2),
+                      HttpUtility.HtmlEncode(customer.Address),
+                      HttpUtility.HtmlEncode(customer.EmailAddress1),
+                      HttpUtility.HtmlEncode(customer.Password),
+                      HttpUtility.HtmlEncode(customer.Company),
+                      HttpUtility.HtmlEncode(customer.TradeLicenseNumber),
+                      HttpUtility.HtmlEncode(customer.TradeLicenseExpiryDate),
+                      HttpUtility.HtmlEncode(customer.TRN)).Result;
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    TempData["Error"] = "Some Error Occurred";
+                    ViewBag.Customer = Newtonsoft.Json.JsonConvert.SerializeObject(customer);
+                }
+                else
+                {
+                    var mess = result.Split('|');
+                    if (mess[0] == "Error")
+                    {
+                        TempData["Error"] = mess[1];
+                        TempData["IsSuccess"] = false;
+                        ViewBag.Customer = Newtonsoft.Json.JsonConvert.SerializeObject(customer);
+                    }
+                    else if (mess[0].StartsWith("Value cannot be null"))
+                    {
+                        TempData["Error"] = mess[0];
+                        TempData["IsSuccess"] = false;
+                        ViewBag.Customer = Newtonsoft.Json.JsonConvert.SerializeObject(customer);
+                    }
+                    else
+                    {
+                        TempData["IsSuccess"] = true;
+                        TempData["Message"] = result;
+                    }
+                }
+            }
+            //  var result = "Success";
+
+
+            return View(customer);
         }
         public IActionResult QuickPayment(string contractId= "", string outstandingBalance= "")
         {
@@ -346,21 +494,21 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 return Json(customerT);
             }
            
-            var cust = _service.GetdataforquickpaymAsync(eagNumber).Result;
+            var custDetailsAccordingToEAG = _service.GetdataforquickpaymAsync(eagNumber).Result;
             // var contracts = _service.getCustContAsync(u, true).Result.ToList();
             //var contractsList = new List<AxContract>();
 
             //ViewBag.IsSwissNakheel = _client.EnableCCPayOption(contractId).ToString().Trim().Equals("Yes") ? true : false;
-
-            var u = _service.getCustomerByUserIDAsync(cust.Email).Result;
+            HttpContext.Session.SetString("UserName", custDetailsAccordingToEAG.Email);
+            var u = _service.getCustomerByUserIDAsync(custDetailsAccordingToEAG.Email).Result;
             var balance = _service.getCustContractBalanceAsync(u, eagNumber).Result;
             // Dummy data for example
             var customer = new
             {
-                CustomerName = cust.Name,
-                UnitNumber = cust.Unit_,
-                MobileNumber = cust.Phone,
-                Email = cust.Email,
+                CustomerName = custDetailsAccordingToEAG.Name,
+                UnitNumber = custDetailsAccordingToEAG.Unit_,
+                MobileNumber = custDetailsAccordingToEAG.Phone,
+                Email = custDetailsAccordingToEAG.Email,
                 AmountDue = balance,
                 PayAmount = payAmount,
 
@@ -441,15 +589,15 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                         Validation = "Success";
                     }
 
-                    if (!Regex.Match(AxCustomerObject.TradeLicenseNumber.Trim(), @"^[a-zA-Z0-9]*$").Success)
-                    {
-                        Validation = "Trade License Number";
-                        return Validation;
-                    }
-                    else
-                    {
-                        Validation = "Success";
-                    }
+                    //if (!Regex.Match(AxCustomerObject.TradeLicenseNumber.Trim(), @"^[a-zA-Z0-9]*$").Success)
+                    //{
+                    //    Validation = "Trade License Number";
+                    //    return Validation;
+                    //}
+                    //else
+                    //{
+                    //    Validation = "Success";
+                    //}
 
                     if (!Regex.Match(AxCustomerObject.TRN.Trim(), @"^\d+$").Success)
                     {
@@ -467,18 +615,81 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 }
             }
 
-            if (!AxCustomerObject.Resident.Equals("Resident") && !AxCustomerObject.Resident.Equals("Non Resident"))
+            if (!AxCustomerObject.Account.Equals("Company"))
             {
-                Validation = "Resident";
-                return Validation;
-            }
-            else
-            {
-                if (AxCustomerObject.Resident.Equals("Resident"))
+                if (!AxCustomerObject.Resident.Equals("Resident") && !AxCustomerObject.Resident.Equals("Non Resident"))
                 {
-                    if (!Regex.Match((AxCustomerObject.IdNumber.Contains("-") ? AxCustomerObject.IdNumber.Replace("-", "") : AxCustomerObject.IdNumber), @"^\d+$").Success)
+                    Validation = "Resident";
+                    return Validation;
+                }
+                else
+                {
+                    if (AxCustomerObject.Resident.Equals("Resident"))
                     {
-                        Validation = "Emirates ID";
+                        if (!Regex.Match((AxCustomerObject.IdNumber.Contains("-") ? AxCustomerObject.IdNumber.Replace("-", "") : AxCustomerObject.IdNumber), @"^\d+$").Success)
+                        {
+                            Validation = "Emirates ID";
+                            return Validation;
+                        }
+                        else
+                        {
+                            Validation = "Success";
+                        }
+                    }
+                    else
+                    {
+                        Validation = "Success";
+                    }
+                }
+
+                // First Name Validation
+                if (!Regex.Match(AxCustomerObject.FirstName.Trim(), @"^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$").Success)
+                {
+                    Validation = "First Name";
+                    return Validation;
+                }
+                else
+                {
+                    Validation = "Success";
+                }
+
+                // Last Name Validation
+                if (!Regex.Match(AxCustomerObject.LastName.Trim(), @"^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$").Success)
+                {
+                    Validation = "Last Name";
+                    return Validation;
+                }
+                else
+                {
+                    Validation = "Success";
+                }
+
+                if (!Regex.Match(AxCustomerObject.Nationality.Trim(), @"^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$").Success)
+                {
+                    Validation = "Nationality";
+                    return Validation;
+                }
+                else
+                {
+                    Validation = "Success";
+                }
+
+
+                if (!Regex.Match(Convert.ToString(AxCustomerObject.Emirate).Trim(), @"^[a-zA-Z0-9]*$").Success)
+                {
+                    Validation = "Emirate";
+                    return Validation;
+                }
+                else
+                {
+                    Validation = "Success";
+                }
+
+                if (!string.IsNullOrEmpty(AxCustomerObject.PassportNumber))
+                {
+                    if (!Regex.Match(AxCustomerObject.PassportNumber.Trim(), @"^[a-zA-Z0-9]*$").Success)
+                    {
+                        Validation = "Passport Number";
                         return Validation;
                     }
                     else
@@ -490,83 +701,23 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 {
                     Validation = "Success";
                 }
-            }
 
-            // First Name Validation
-            if (!Regex.Match(AxCustomerObject.FirstName.Trim(), @"^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$").Success)
-            {
-                Validation = "First Name";
-                return Validation;
-            }
-            else
-            {
-                Validation = "Success";
-            }
-
-            // Last Name Validation
-            if (!Regex.Match(AxCustomerObject.LastName.Trim(), @"^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$").Success)
-            {
-                Validation = "Last Name";
-                return Validation;
-            }
-            else
-            {
-                Validation = "Success";
-            }
-
-            if (!Regex.Match(AxCustomerObject.Nationality.Trim(), @"^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$").Success)
-            {
-                Validation = "Nationality";
-                return Validation;
-            }
-            else
-            {
-                Validation = "Success";
-            }
-
-
-            if (!Regex.Match(Convert.ToString(AxCustomerObject.Emirate).Trim(), @"^[a-zA-Z0-9]*$").Success)
-            {
-                Validation = "Emirate";
-                return Validation;
-            }
-            else
-            {
-                Validation = "Success";
-            }
-
-            if (!string.IsNullOrEmpty(AxCustomerObject.PassportNumber))
-            {
-                if (!Regex.Match(AxCustomerObject.PassportNumber.Trim(), @"^[a-zA-Z0-9]*$").Success)
+                if (!string.IsNullOrEmpty(AxCustomerObject.PoBox))
                 {
-                    Validation = "Passport Number";
-                    return Validation;
+                    if (!Regex.Match(AxCustomerObject.PoBox.Trim(), @"^[a-zA-Z0-9]*$").Success)
+                    {
+                        Validation = "PO Box";
+                        return Validation;
+                    }
+                    else
+                    {
+                        Validation = "Success";
+                    }
                 }
                 else
                 {
                     Validation = "Success";
                 }
-            }
-            else
-            {
-                Validation = "Success";
-            }
-
-            if (!string.IsNullOrEmpty(AxCustomerObject.PoBox))
-            {
-                if (!Regex.Match(AxCustomerObject.PoBox.Trim(), @"^[a-zA-Z0-9]*$").Success)
-                {
-                    Validation = "PO Box";
-                    return Validation;
-                }
-                else
-                {
-                    Validation = "Success";
-                }
-            }
-            else
-            {
-                Validation = "Success";
             }
 
             if (AxCustomerObject.Password.Length > 18)

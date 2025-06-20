@@ -228,8 +228,12 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         public ActionResult VPC_DO(PaymentRequestModel form)
         {
             var userId = HttpContext.Session.GetString("UserId");
-            var username = "ryankakoon@gmail.com";//HttpContext.Session.GetString("UserName");
-            
+            //var username = "ryankakoon@gmail.com";
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return RedirectToAction("index", "Admin");
+            }
             // IFormCollection form = TempData["Form"] as IFormCollection;
             if (form == null)
                 return RedirectToAction("UserProfile", "Admin");
