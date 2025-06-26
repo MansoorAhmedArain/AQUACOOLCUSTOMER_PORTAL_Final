@@ -58,7 +58,13 @@
                                         }
                                     </td>
                                     <td>-</td>
-                                    <td><a href="#">Complete this Req. </a></td>
+                                    <td>
+                                       @*  <a href="#">Complete this Req. </a> *@
+                                        @if (tickets.Status.ToLower() == "not submitted" || tickets.Status.ToLower() == "pending under customer")
+                                        {
+                                           <span>Complete this req</span>
+                                        }
+                                        </td>
                                   @*   <td>-</td> *@
                                 </tr>
                             </tbody>

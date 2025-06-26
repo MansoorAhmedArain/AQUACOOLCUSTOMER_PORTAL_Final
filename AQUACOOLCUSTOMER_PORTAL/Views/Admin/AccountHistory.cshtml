@@ -29,12 +29,13 @@
                         {
                             <tbody>
                                 <tr>
-                                    <td>@Html.ActionLink(m.ContractID, "Invoices", new { contractId = m.ContractID })</td>
+                                    @* <td>@Html.ActionLink(m.ContractID, "Invoices", new { contractId = m.ContractID })</td> *@
+                                    <td>@m.ContractID</td>
                                     <td>@m.Status</td>
                                     <td>@m.Project</td>
                                     <td>@m.Balance</td>
                                     <td>@Html.ActionLink("Pay", "QuickPayment","Home", new { contractId = m.ContractID, outstandingBalance = m.Balance })</td>
-                                    <td>N/A</td>
+                                    <td>@m.SecurityDeposit</td>
                                     <td>N/A</td>
                                 </tr>
                             

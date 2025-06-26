@@ -898,7 +898,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             ViewBag.BankNameList = Getbanks();
             ViewBag.ApprovedRequestId = GetApporvedAxRequest(userId);
             ViewBag.OTPReady = false;
-            string ContractID = string.Empty;
+            string ContractID = string.Empty; // should be filled.
             string CustomerType = string.Empty;
             var axRequests = GetAxRequestCustom(userId);
             foreach (var item in axRequests)
@@ -1465,6 +1465,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         #region User Profile
         public ActionResult UserProfile()
         {
+            return RedirectToAction("AccountHistory");
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
             var cu = _service.getCustomerByUserIDAsync(username).Result;
@@ -1591,8 +1592,10 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     Project = HttpUtility.HtmlEncode(c.ProjectName),
                     RequestId = HttpUtility.HtmlEncode(""),
                     Balance = _service.getCustContractBalanceAsync(HttpUtility.HtmlEncode(c.Customer), HttpUtility.HtmlEncode(c.ContractID)).Result,
-                    Status = HttpUtility.HtmlEncode(c.WFstatus)
-                    
+                    Status = HttpUtility.HtmlEncode(c.WFstatus),
+                    SecurityDeposit = _service.GetAllocatedSDAmtAsync(c.PropertyId).Result
+
+
                 };
 
                 var propertyRequest = _service.getPropertyPendingRequestsAsync(HttpUtility.HtmlEncode(c.PropertyId)).Result;
@@ -1740,6 +1743,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 ContractIDs = contracts
             };
+            TempData["Message"] = "";
             return View(viewModal);
         }
 
@@ -1789,7 +1793,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                         var data = Convert.ToBase64String(byteArray);
 
                         var resp = _service.createPaymProofTicketAsync(form.EAG, form.Invoice, form.PaymentDate.ToString("dd-MMM-yyyy"), form.PaymentMethod, data).Result;
-                        
+                        TempData["Message"] = resp;
                     }
                 }
             }

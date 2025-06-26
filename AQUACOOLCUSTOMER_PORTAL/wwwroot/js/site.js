@@ -50,7 +50,7 @@
 $(document).ready(function () {
     $('#projectDropdown').change(function () {
         var selectedProject = $(this).val();
-
+        var propertyId = $(this)
         // If no project is selected, clear the Unit Numbers dropdown
         if (!selectedProject) {
             $('#unitNumbersDropdown').empty().append('<option value="">Select Unit Number</option>');

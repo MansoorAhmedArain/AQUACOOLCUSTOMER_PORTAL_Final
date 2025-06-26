@@ -15,6 +15,7 @@
         </div>
         <form action="@Url.Action("SubmitPaymentProof","Admin")" method="post" enctype="multipart/form-data">
             <div class="mt-5 input-style">
+                @Html.Partial("_Messages")
                 @*   <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
              <div class="input-group">
                 <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>

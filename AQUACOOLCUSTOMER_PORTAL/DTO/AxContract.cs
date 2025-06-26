@@ -12,5 +12,6 @@
         public string Unit { get; internal set; }
         public string Project { get; internal set; }
         public string Status { get; set; }
+        public string SecurityDeposit { get; set; }
     }
 }
