@@ -36,7 +36,7 @@
                                     <td>@m.Balance</td>
                                     <td>@Html.ActionLink("Pay", "QuickPayment","Home", new { contractId = m.ContractID, outstandingBalance = m.Balance })</td>
                                     <td>@m.SecurityDeposit</td>
-                                    <td>N/A</td>
+                                    <td>@m.LastPaymentDate</td>
                                 </tr>
                             
                             @* <td>@m.Unit - @m.CustomerType</td>

@@ -201,6 +201,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             return json;
         }
 
+        
+
         /// <summary>
         /// Get the list of the projects from ax
         /// </summary>
@@ -254,8 +256,9 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// <param name="EAG"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ReconnectionRequest(string EAG)
+        public async Task<IActionResult> ReconnectionRequest(string EAG, string Balance)
         {
+            
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
@@ -277,12 +280,18 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 ViewBag.Message = "EAG number could'nt be empty.";
                 return View(viewModal);
             }
+            if (Balance != "0" || !Balance.Contains("-"))
+            {
+                ViewBag.Message = "Please settle your outstanding balance along with AED 105 reconnection fee in order to proceed with your reconnection request. ";
+                return View(viewModal);
+            }
             var activeContracts = _service.getCustContAsync(userId, true).Result;
 
             foreach (var item in activeContracts)
             {
                 if (item.ContractID == EAG)
                 {
+
                     var response = _service.CreateReconnectionTicketAsync(item.PropertyId).Result;
                     ViewBag.Message = response;
                     return View(viewModal);
@@ -871,12 +880,12 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             Projects[] projects = await LoadProjectSelection();
             ViewBag.Projects = projects;
             ViewBag.BankNameList = Getbanks();
-            ViewBag.ApprovedRequestId = GetApporvedAxRequest(userId);
+            ViewBag.ActiveContracts = GetActiveContracts(userId);
             //var cu = _service.getCustomerByUserIDAsync(userId).Result;
             //ViewBag.Contract = cu;
             //ViewBag.ContractId = ContractId;
             ViewBag.OTPReady = false;
-            return View(projects);
+            return View();
         }
 
         /// <summary>
@@ -896,18 +905,22 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             Projects[] projects = await LoadProjectSelection();
             ViewBag.Projects = projects;
             ViewBag.BankNameList = Getbanks();
-            ViewBag.ApprovedRequestId = GetApporvedAxRequest(userId);
+            ViewBag.ActiveContracts = GetActiveContracts(userId);
             ViewBag.OTPReady = false;
-            string ContractID = string.Empty; // should be filled.
+           // string ContractID = string.Empty; // should be filled.
             string CustomerType = string.Empty;
-            var axRequests = GetAxRequestCustom(userId);
-            foreach (var item in axRequests)
-            {
-                if (item.RequestId == modal.RequestId)
-                {
-                    CustomerType = item.MoveInType;
-                } 
-            }
+           // var axRequests = GetAxRequestCustom(userId);
+            var contractRead = Contracts_Read(username);
+            var moveType = contractRead.Where(x => x.ContractID == modal.ContractId).Select(xx => xx.CustomerType).FirstOrDefault();
+            var requestId = contractRead.Where(x => x.ContractID == modal.ContractId).Select(xx => xx.RequestId).FirstOrDefault();
+            //foreach (var item in axRequests)
+            //{
+            //    if (item.RequestId == modal.ContractId)
+            //    {
+            //        CustomerType = item.MoveInType;
+            //    } 
+            //}
+            CustomerType = moveType?? "";
           
             var account = _service.getCustomerByUserIDAsync(userId).Result;
 
@@ -915,63 +928,63 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             if (CustomerType.ToLower() == "tenant")
             {
-                if (!_service.validateCustBankAcountAsync(account, ContractID).Result && modal.Bank == "on")
+                if (!_service.validateCustBankAcountAsync(account, modal.ContractId).Result && modal.Bank == "on")
                 {
-                   // return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, requestId = modal.RequestId, customerType = CustomerType });
+                   // return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, moveType = modal.ContractId, customerType = CustomerType });
                     var bankDetails = new BankDetails()
                     {
                         BankName = modal.ShortName,
                         AccountNumber = modal.AccountNumber,
-                        ContractId = ContractID,
+                        ContractId = modal.ContractId,
                         CustomerType = CustomerType,
-                        RequestId = modal.RequestId,
+                        RequestId = modal.ContractId,
                         IBanNo = modal.IBanNo,
                         OTP = modal.OTP,
                         MoveOutdate = modal.MoveOutDate,
                         ShortName = modal.ShortName,
                         SwiftNo = modal.SwiftNo
                     };
-                    var response = UpdateBankingDetails(bankDetails, userId, modal.SubmitButton);
-
+                    result = UpdateBankingDetails(bankDetails, userId, modal.SubmitButton,username).Result;
+                    
                 }
                 else
                 {
-                    result = _service.initiateDirectMoveOutAsync(account, ContractID, DateTime.Now.ToString()).Result;
+                    result = _service.initiateDirectMoveOutAsync(account, modal.ContractId, DateTime.Now.ToString()).Result;
                 }
             }
             else
             {
                 //if (!_client.validateCustBankAcount(User.Identity.Name, ContractID))
-                if (!_service.validateCustBankAcountAsync(account, ContractID).Result && modal.Bank == "on")
+                if (!_service.validateCustBankAcountAsync(account, modal.ContractId).Result && modal.Bank == "on")
                 {
-                    //return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, requestId = modal.RequestId, customerType = CustomerType });
+                    //return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, moveType = modal.ContractId, customerType = CustomerType });
                     var bankDetails = new BankDetails()
                     {
                         BankName = modal.ShortName,
                         AccountNumber = modal.AccountNumber,
-                        ContractId = ContractID,
+                        ContractId = modal.ContractId,
                         CustomerType = CustomerType,
-                        RequestId = modal.RequestId,
+                        RequestId = modal.ContractId,
                         IBanNo = modal.IBanNo,
                         OTP = modal.OTP,
                         MoveOutdate = modal.MoveOutDate,
                         ShortName = modal.ShortName,
                         SwiftNo = modal.SwiftNo
                     };
-                   var response =  UpdateBankingDetails(bankDetails,userId,modal.SubmitButton);
-                    TempData["Error"] = response;
+                   result =  UpdateBankingDetails(bankDetails,userId,modal.SubmitButton,username).Result;
+                    
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(modal.RequestId))
-                        result = _service.initiateRegMoveOutAsync(ContractID, modal.RequestId).Result;
+                    if (!string.IsNullOrEmpty(modal.ContractId))
+                        result = _service.initiateRegMoveOutAsync(modal.ContractId, requestId).Result;
                 }
             }
 
             if (string.IsNullOrEmpty(result))
             {
                 TempData["Error"] = "Result is Empty. Please Contact Customer support";
-                return View(projects);
+                return View(modal);
             }
 
             var output = result.Split('|');
@@ -991,16 +1004,21 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                             var data = Convert.ToBase64String(byteArray);
                             var ticketId = _service.submitTicketMoveOutAsync(output[1], fileName, data).Result;
                             TempData["Error"] = _service.attachAqcFilesAsync(ticketId, "noc", data, "yes").Result;
-                            return View(projects);
+                            return View(modal);
                         }
                 }
             }
             else
             {
-                TempData["Message"] = output[1];
-                return View(projects);
+                if (output.Length == 2)
+                {
+                    TempData["Message"] = output[1];
+                    return View(modal);
+                }
+                TempData["Message"] = output[0];
+                
             }
-            return View(projects);
+            return View(modal);
         }
 
         public ActionResult UploadNoC(string Id)
@@ -1034,7 +1052,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         //    return RedirectToAction("MoveOutTickets");
         //}
 
-        //public ActionResult UpdateBankingDetails(string ContractId, string requestId, string customerType)
+        //public ActionResult UpdateBankingDetails(string ContractId, string moveType, string customerType)
         //{
         //    var userId = HttpContext.Session.GetString("UserId");
         //    var username = HttpContext.Session.GetString("UserName");
@@ -1048,7 +1066,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         //    ViewBag.ContractId = ContractId;
         //    ViewBag.OTPReady = false;
         //    TempData["ContractId"] = ContractId;
-        //    TempData["requestId"] = requestId;
+        //    TempData["moveType"] = moveType;
         //    TempData["CustomerType"] = customerType;
         //    Getbanks();
         //    return View(new BankDetails()
@@ -1076,9 +1094,9 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         //    {
         //        bankDetails.ContractId = Convert.ToString(TempData["ContractId"]);
         //    }
-        //    if (string.IsNullOrWhiteSpace(bankDetails.RequestId))
+        //    if (string.IsNullOrWhiteSpace(bankDetails.ContractId))
         //    {
-        //        bankDetails.RequestId = Convert.ToString(TempData["RequestId"]);
+        //        bankDetails.ContractId = Convert.ToString(TempData["ContractId"]);
         //    }
         //    if (string.IsNullOrWhiteSpace(bankDetails.CustomerType))
         //    {
@@ -1142,8 +1160,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         //            }
         //            else
         //            {
-        //                if (!string.IsNullOrEmpty(bankDetails.RequestId))
-        //                    result = _service.initiateRegMoveOutAsync(bankDetails.ContractId, bankDetails.RequestId).Result;
+        //                if (!string.IsNullOrEmpty(bankDetails.ContractId))
+        //                    result = _service.initiateRegMoveOutAsync(bankDetails.ContractId, bankDetails.ContractId).Result;
         //            }
 
         //            if (string.IsNullOrEmpty(result))
@@ -1186,7 +1204,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         //    Getbanks();
         //    return View();
         //}
-        public async Task<string> UpdateBankingDetails(BankDetails bankDetails, string userId, string submitButton)
+        public async Task<string> UpdateBankingDetails(BankDetails bankDetails, string userId, string submitButton, string username)
         {
             var cu = _service.getCustomerByUserIDAsync(userId).Result;
             ViewBag.Contract = cu;
@@ -1254,7 +1272,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             else
             {
-                if (submitButton.Equals("next"))
+                if (submitButton.ToLower().Equals("next"))
                 {
 
                     string result = "";
@@ -1264,7 +1282,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     if (CustomerType.ToLower() == "tenant")
                     {
 
-                        result = _service.initiateDirectMoveOutAsync(userId, bankDetails.ContractId, bankDetails.MoveOutdate.ToString()).Result;
+                        result = _service.initiateDirectMoveOutAsync(username, bankDetails.ContractId, bankDetails.MoveOutdate.ToString()).Result;
                     }
                     else
                     {
@@ -1381,6 +1399,24 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                        {
                            Text = d.ReqID,
                            Value = d.ReqID
+                       }).ToList();
+            return newList;
+        }
+        /// <summary>
+        /// Get all active contracts to initate the move out request.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        private List<SelectListItem> GetActiveContracts(string userId)
+        {
+            var result = _service.getCustContAsync(userId,true).Result;
+
+            List<SelectListItem> newList = new List<SelectListItem>();
+            newList = (from d in result
+                       select new SelectListItem()
+                       {
+                           Text = d.ContractID,
+                           Value = d.ContractID
                        }).ToList();
             return newList;
         }
@@ -1525,7 +1561,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// <exception cref="Exception">
         /// Thrown when the contract ID is null or empty.
         /// </exception>
-        public IActionResult TransactionHistory()
+        public IActionResult TransactionHistory(string contractId = "")
         {
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
@@ -1535,8 +1571,20 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             var complainTypes = _service.GetrequestIDAsync().Result;
             var contracts = _service.getCustContAsync(userId, true).Result;
+            if (contractId == "")
+            {
+                contractId = contracts[0].ContractID; //"EAG-032457";
+                
+            }
+            List<AxPayments> result = GetPaymentsAccordingToContract(userId, username, contractId);
+            var contractsListData = LoadContractsForSelection(userId).Result;
+            ViewBag.ContractsList = contractsListData;
+            ViewBag.SelectedContractEAG = contractId;
+            return View(result);
+        }
 
-            var contractId = contracts[0].ContractID; //"EAG-032457";
+        private List<AxPayments> GetPaymentsAccordingToContract(string userId, string username, string contractId)
+        {
             if (string.IsNullOrEmpty(contractId))
                 throw new Exception("Contract Id cannot be null");
 
@@ -1556,9 +1604,10 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 i.PayAgainst = invoice.PayAgainst;
                 result.Add(i);
             }
-            return View(result);
+
+            return result;
         }
-        
+
 
         /// <summary>
         /// Displays the account history view for the currently logged-in user.
@@ -1593,9 +1642,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     RequestId = HttpUtility.HtmlEncode(""),
                     Balance = _service.getCustContractBalanceAsync(HttpUtility.HtmlEncode(c.Customer), HttpUtility.HtmlEncode(c.ContractID)).Result,
                     Status = HttpUtility.HtmlEncode(c.WFstatus),
-                    SecurityDeposit = _service.GetAllocatedSDAmtAsync(c.PropertyId).Result
-
-
+                    SecurityDeposit = _service.GetAllocatedSDAmtAsync(c.PropertyId).Result,
+                    LastPaymentDate = _service.getLastPaymentDateAsync(c.ContractID).Result
                 };
 
                 var propertyRequest = _service.getPropertyPendingRequestsAsync(HttpUtility.HtmlEncode(c.PropertyId)).Result;
@@ -1743,7 +1791,6 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 ContractIDs = contracts
             };
-            TempData["Message"] = "";
             return View(viewModal);
         }
 

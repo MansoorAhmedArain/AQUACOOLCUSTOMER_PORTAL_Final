@@ -1,19 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Controllers\DataController.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Remove="Views\Admin\RequestsSummary.cshtml" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
@@ -24,24 +21,22 @@
     <PackageReference Include="System.ServiceModel.NetTcp" Version="6.0.*" />
     <PackageReference Include="System.ServiceModel.Security" Version="6.0.*" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="wwwroot\css\MoveinRequest2\" />
     <Folder Include="wwwroot\css\Complaint\" />
     <Folder Include="wwwroot\Scripts\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
-
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\Admin\RequestsSummary.cshtml" />
   </ItemGroup>
-
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Admin\RequestsSummary.cshtml" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="Views\Admin\RequestsSummary.cshtml" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.*" />
+  </ItemGroup>
 </Project>

@@ -42,7 +42,7 @@
 
                 <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;" readonly="readonly">Disconnection Ticket ID</div>
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" id="disconnectionID" style="border: 1px solid #8FD2F0;">
+                        <input type="text" class="form-control rounded-pill" id="disconnectionID" readonly style="border: 1px solid #8FD2F0;">
                     </div>
 
 
@@ -52,8 +52,8 @@
                     </div>
 
                 <span style="color: blue">@ViewBag.Message</span>
-                    <input type="submit" class="btn rounded-pill btn-style mt-3" value="Submit" />
-                  @*   <a href="#" class="btn rounded-pill btn-style mt-3">Pay Now</a> *@
+                    <input type="submit" class="btn rounded-pill btn-style mt-3" id="submitBtn" value="Submit" />
+                <a href="@Url.Action("AccountHistory","Admin")" class="btn rounded-pill btn-style mt-3">Pay Now</a>
 
                 </div>
             </form>
@@ -119,6 +119,13 @@
                     success: function (data) {
                         var response = data.split(',');
                         $('#disconnectionID').val(response[0]);
+                        if($('#disconnectionID').val() == "Disconnection ticket not found"){
+                            document.getElementById('submitBtn').disabled  = true;
+                        }
+                        else{
+                            document.getElementById('submitBtn').disabled  = false;
+                        }
+                        
                         $('#balance').val(response[1]);
                     },
                     error: function () {

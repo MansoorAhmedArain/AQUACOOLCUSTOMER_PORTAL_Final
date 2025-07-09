@@ -85,11 +85,11 @@
                         <small class="form-text ps-3" style="color : #092f57">EAG Number</small>
                         <input  required class="form-control rounded-pill f1" value="@ViewBag.ContractIdBag">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display:none">
                         <small class="form-text ps-3" style="color: #092f57;">Amount</small>
-                        <input required type="number" class="form-control rounded-pill f2" value="@ViewBag.OutstandingBalance">
+                        <input  type="number"  class="form-control rounded-pill f2" value="@ViewBag.OutstandingBalance">
                     </div>
-                    <a href="#myModal" class="btn rounded-pill btn-style my-4" id="btnPay" data-bs-toggle="modal">Pay</a>
+                    <a href="#myModal" class="btn rounded-pill btn-style my-4" id="btnPay" data-bs-toggle="modal">Next</a>
                 </form>
             </div>
         </div>
@@ -105,13 +105,13 @@
                     <form class="mbform-style m-4">
                         <div class="form-group">
                             <small class="form-text ps-3" style="color : #092f57">EAG Number</small>
-                            <input class="form-control rounded-pill f1">
+                            <input required class="form-control rounded-pill f1" value="@ViewBag.ContractIdBag">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display:none">
                             <small class="form-text ps-3" style="color: #092f57;">Amount</small>
-                            <input type="number" class="form-control rounded-pill f2">
+                            <input required type="number" class="form-control rounded-pill f2" value="@ViewBag.OutstandingBalance">
                         </div>
-                        <a href="#myModal" class="btn rounded-pill mbbtn-style my-4" data-bs-toggle="modal">Pay</a>
+                        <a href="#myModal" class="btn rounded-pill mbbtn-style my-4" data-bs-toggle="modal">Next</a>
                     </form>
                 </div>
             </div>
@@ -131,19 +131,19 @@
                             <form class="modal-style">
                                 <div class="form-group">
                                     <small class="form-text ps-3" style="color : #092f57; font-size: 12px;">Customer Name</small>
-                                    <input type="text" id="customerName"  class="form-control rounded-pill f1">
+                                    <input type="text" id="customerName" readonly class="form-control rounded-pill f1">
                                 </div>
                                 <div class="form-group">
                                     <small class="form-text ps-3" style="color: #092f57; font-size: 12px;">Project / Unit number</small>
-                                    <input type="text" id="unitNumber" class="form-control rounded-pill f2">
+                                    <input type="text" id="unitNumber" readonly class="form-control rounded-pill f2">
                                 </div>
                                 <div class="form-group">
-                                    <small class="form-text ps-3" style="color: #092f57; font-size: 12px;">Mobile Number</small>
-                                    <input type="number" id="mobileNumber" class="form-control rounded-pill f2">
+                                    <small class="form-text ps-3" style="color: #092f57; font-size: 12px;display:none">Mobile Number</small>
+                                    <input type="number" id="mobileNumber" style="display:none" class="form-control rounded-pill f2">
                                 </div>
                                 <div class="form-group">
-                                    <small class="form-text ps-3" style="color: #092f57; font-size: 12px;">Email ID</small>
-                                    <input type="email" id="email" class="form-control rounded-pill f2">
+                                    <small class="form-text ps-3" style="color: #092f57; font-size: 12px;display:none">Email ID</small>
+                                    <input type="email" id="email" style="display:none"  class="form-control rounded-pill f2">
                                 </div>
                             </form>
                         </div>
@@ -159,11 +159,11 @@
                                         </strong>
                                     </label>
                                     <div class="input-group">
-                                        <input type="text" id="amountDue" class="form-control rounded-end rounded-pill" style="border: 1px solid #8FD2F0;">
-                                        <input type="number" id="payAmount" name="payAmount" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                                        <input type="text" id="amountDue" class="form-control rounded-end rounded-pill" readonly style="border: 1px solid #8FD2F0;">
+                                        <input type="number" id="payAmount" required name="payAmount" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
                                     </div>
                                     <div class="ms-3 mt-1">
-                                        <input type="checkbox" id="agree" name="interest" value="agree" />
+                                        <input type="checkbox" checked id="agree" name="interest" value="agree" />
                                         <label for="agree"><strong><small>I agree to Payment Terms and Condition</small></strong></label>
                                     </div>
                                     <input type="submit" class="btn rounded-pill modal-btn mt-2" value="Pay Now" />
@@ -213,7 +213,7 @@
             success: function (data) {
                 // Fill modal fields
                 $('#customerName').val(data.customerName);
-                $('#unitNumber').val(data.unitNumber);
+                            $('#unitNumber').val(data.projectName+" / "+data.unitNumber);
                 $('#mobileNumber').val(data.mobileNumber);
                 $('#email').val(data.email);
                 $('#amountDue').val(data.amountDue);

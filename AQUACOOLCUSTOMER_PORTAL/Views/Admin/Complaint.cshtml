@@ -24,8 +24,19 @@
                                 }
                             }
                         </select>
+                    </div>
+                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Complain Ticket SubType</div>
+                    <div class="input-group mb-2">
+                        <select class="form-control  rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" name="SubType" id="complainSubTypeDropdown">
+                            <option value=""> -- Select a complain type -- </option>
+                            @{
 
-
+                                foreach (var subTypes in Model.SubTypes)
+                                {
+                                    <option value="@subTypes.RequestID">@subTypes.Description</option>
+                                }
+                            }
+                        </select>
                     </div>
                     <div class="ms-3" id="labelHighbil" style="color: #03213d; font-size: small; font-weight: bolder;">High Bill - Invoice Number</div>
                     <div class="input-group mb-2" >

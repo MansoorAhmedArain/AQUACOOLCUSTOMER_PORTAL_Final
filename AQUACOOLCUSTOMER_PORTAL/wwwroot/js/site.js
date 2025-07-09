@@ -75,46 +75,7 @@ $(document).ready(function () {
                 var pdfFilePath = '/EUA/MAG-000001.pdf';
                 $('#pdfViewer').attr('src', pdfFilePath).show();
                 $('#downloadButton').attr('href', pdfFilePath).attr('download', 'Agreement.pdf').show();
-                // set the declare load
-
-                //var selectedUnit = $(this).val();
-
-                //if (!selectedUnit) {
-                //    $('#lblSecurityDeposit').text(''); // Clear label if no unit is selected
-                //    return;
-                //}
-                console.log("selected projects "+selectedProject);
-                $.ajax({
-                    url: '/api/data2/AllocatedSDAmt?property=' + selectedProject, // Update with the correct controller/action
-                    type: 'POST',
-                    data: { property: selectedProject }, // Send selected unit ID
-                    success: function (response) {
-                        //var securityDeposit = response.securityDeposit || 'N/A'; // Fallback if no data
-                        var securityDeposit = response['sdAmount']; // Fallback if no data
-                        $('#lblSecurityDeposit').text(' ' + securityDeposit);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error fetching security deposit:', error);
-                        $('#lblSecurityDeposit').text('Error fetching data');
-                    }
-                });
-
-                // Get declared load 
-                $.ajax({
-                    url: '/api/data2/UnitDL?property=' + selectedProject, // Update with the correct controller/action
-                    type: 'POST',
-                    data: { property: selectedProject }, // Send selected unit ID
-                    success: function (response) {
-                        //var securityDeposit = response.securityDeposit || 'N/A'; // Fallback if no data
-                        var declareLoad = response['unitdl']; // Fallback if no data
-                        $('#lblDeclareLoad').text(' ' + declareLoad);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error fetching security deposit:', error);
-                        $('#lblDeclareLoad').text('Error fetching data');
-                    }
-                });
-
+                
             },
             error: function (xhr, status, error) {
                 console.error('Error fetching unit numbers:', error);
@@ -122,5 +83,37 @@ $(document).ready(function () {
         });
     });
 
-    
+    $('#unitNumbersDropdown').change(function () {
+        var pid = $('#unitNumbersDropdown').val();
+        $.ajax({
+            url: '/api/data2/AllocatedSDAmt?property=' + pid, // Update with the correct controller/action
+            type: 'POST',
+            data: { property: pid }, // Send selected unit ID
+            success: function (response) {
+                //var securityDeposit = response.securityDeposit || 'N/A'; // Fallback if no data
+                var securityDeposit = response['sdAmount']; // Fallback if no data
+                $('#lblSecurityDeposit').text(' ' + securityDeposit);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching security deposit:', error);
+                $('#lblSecurityDeposit').text('Error fetching data');
+            }
+        });
+
+        // Get declared load
+        $.ajax({
+            url: '/api/data2/UnitDL?property=' + pid, // Update with the correct controller/action
+            type: 'POST',
+            data: { property: pid }, // Send selected unit ID
+            success: function (response) {
+                //var securityDeposit = response.securityDeposit || 'N/A'; // Fallback if no data
+                var declareLoad = response['unitdl']; // Fallback if no data
+                $('#lblDeclareLoad').text(' ' + declareLoad);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching security deposit:', error);
+                $('#lblDeclareLoad').text('Error fetching data');
+            }
+        });
+    });
 });

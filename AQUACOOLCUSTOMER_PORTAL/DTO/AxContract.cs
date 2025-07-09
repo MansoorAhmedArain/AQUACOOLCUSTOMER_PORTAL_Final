@@ -13,5 +13,6 @@
         public string Project { get; internal set; }
         public string Status { get; set; }
         public string SecurityDeposit { get; set; }
+        public string LastPaymentDate { get; set; }
     }
 }

@@ -511,6 +511,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 Email = custDetailsAccordingToEAG.Email,
                 AmountDue = balance,
                 PayAmount = payAmount,
+                ProjectName = custDetailsAccordingToEAG.ProjectName
 
             };
             TempData["ContractId"] = eagNumber;

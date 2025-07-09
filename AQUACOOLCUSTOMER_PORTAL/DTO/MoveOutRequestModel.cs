@@ -11,7 +11,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.DTO
         public string UnitNumber { get; set; }
 
         [Required]
-        public string RequestId { get; set; }
+        public string ContractId { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
