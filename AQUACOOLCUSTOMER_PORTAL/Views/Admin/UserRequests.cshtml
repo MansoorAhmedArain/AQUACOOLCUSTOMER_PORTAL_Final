@@ -54,7 +54,7 @@
                                     <td>
                                         @if (tickets.Status.ToLower() == "not submitted" || tickets.Status.ToLower() == "pending under customer")
                                         {
-                                            @Html.ActionLink("Upload Files", "NewRegistration", new { Id = tickets.RequestId })
+                                            @Html.ActionLink("Upload Files", "NewRegistration", new { Id = tickets.RequestId, type= tickets.MoveInType })
                                         }
                                     </td>
                                     <td>-</td>

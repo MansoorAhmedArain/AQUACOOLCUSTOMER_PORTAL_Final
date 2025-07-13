@@ -93,7 +93,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if (@ViewBag.CustomerType == "Owner" || @ViewBag.CustomerType == "Tenant") // emritid
+                            {
                             <tr>
+                               
                                 @if (eid == null || eid.Status != showStatus)
                                 {
                                     <td>Emirates ID</td>
@@ -140,9 +143,12 @@
                                 }
                               
                             </tr>
+                            }
                         </tbody>
 
                         <tbody>
+                            @if (@ViewBag.CustomerType == "Owner" || @ViewBag.CustomerType == "Tenant") // passport
+                            {
                             <tr>
                                 <td>Passport</td>
                                @if (eid == null || eid.Status != showStatus)
@@ -168,9 +174,12 @@
                                     <td class="status"><strong>Emirates Id is @eid.Status</strong></td>
                                 }
                             </tr>
+                            }
                         </tbody>
 
                         <tbody>
+                            @if (@ViewBag.CustomerType == "Owner" || @ViewBag.CustomerType == "Tenant")// visa
+                            {
                             <tr>
                                 <td>Visa</td>
                                 @if (vis == null || vis.Status != showStatus)
@@ -196,9 +205,12 @@
                                     <td class="status"><strong>Visa is @vis.Status</strong></td>
                                 }
                             </tr>
+                            }
                         </tbody>
 
                         <tbody>
+                            @if (@ViewBag.CustomerType == "Owner" || @ViewBag.CustomerType == "Tenant") //tentacy contract
+                            {
                             <tr>
                                 <td>Tenancy Contract</td>
                                @if (ten == null || ten.Status != showStatus)
@@ -245,9 +257,12 @@
                                     <td class="status"><strong>Tentacy Id is @ten.Status</strong></td>
                                 }
                             </tr>
+                            }
                         </tbody>
 
                         <tbody>
+                            @if (@ViewBag.CustomerType == "Owner") //title deed
+                            {
                             <tr>
                                 <td>Title Deed</td>
                                 @if (tde == null || tde.Status != showStatus)
@@ -273,9 +288,12 @@
                                     <td class="status"><strong>Title Dead is @tde.Status</strong></td>
                                 }
                             </tr>
+                            }
                         </tbody>
 
                         <tbody>
+                            @if (@ViewBag.CustomerType == "Owner" || @ViewBag.CustomerType == "Tenant") //trade licence
+                            {
                             <tr>
                                 <td>Trade License</td>
                                 @if (eid == null || eid.Status != showStatus)
@@ -301,9 +319,12 @@
                                     <td class="status"><strong>Emirates Id is @eid.Status</strong></td>
                                 }
                             </tr>
+                            }
                         </tbody>
 
                         <tbody>
+                            @if (@ViewBag.CustomerType == "Owner" || @ViewBag.CustomerType == "Tenant") // power of atorny
+                            {
                             <tr>
                                 <td>Power of Attorney</td>
                                @if (eid == null || eid.Status != showStatus)
@@ -330,6 +351,7 @@
                                     <td class="status"><strong>Emirates Id is @eid.Status</strong></td>
                                 }
                             </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -340,8 +362,8 @@
                     <div class="left-container">
                         <div class="btn-conatiner">
                                 <input type="submit" class="btn rounded-pill btn-style mt-3" value="Complete move in request"/>
-                            <a href="#" class="btn rounded-pill btn-style mt-3">Complete Move in Request and initiate new one</a>
-                            <a href="#" class="btn rounded-pill btn-style mt-3">Save current request and return later for submission</a>
+                            @* <a href="#" class="btn rounded-pill btn-style mt-3">Complete Move in Request and initiate new one</a> *@
+                            <a href="@Url.Action("UserRequests", "Admin")" class="btn rounded-pill btn-style mt-3">Save current request and return later for submission</a>
                         </div>
                         <p class="mt-1" style="color: #03213d; font-size: 0.8vw;">* The service time-frame is capped at 4 Business days, dependent on the resolution of the outstanding balance by the existing customer.</p>
                     </div>
