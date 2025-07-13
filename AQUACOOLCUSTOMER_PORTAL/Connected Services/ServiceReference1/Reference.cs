@@ -174,6 +174,10 @@ namespace ServiceReference1
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.CustPendingRequests[]> getPropertyPendingRequestsAsync(string _propertyid);
         
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustomerTransaction", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.CustPayments[]> getCustomerTransactionAsync(string _contract);
+        
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustPayments", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.CustPayments[]> getCustPaymentsAsync(string _custId, string _contId);
@@ -317,7 +321,7 @@ namespace ServiceReference1
         
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/CreateComplainTicket", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<string> CreateComplainTicketAsync(string _propertyId, string _ticketSubType, string _comments);
+        System.Threading.Tasks.Task<string> CreateComplainTicketAsync(string _propertyId, string _ticketSubType, string _subTicket, string _comments);
         
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/deleteCustBankAccount", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -335,6 +339,10 @@ namespace ServiceReference1
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> GetUnitDLAsync(string _propertyId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/saveBillingReport", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> saveBillingReportAsync(string _contractid, int _month, int _year);
+        
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/Getdataforquickpaym", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetdataforquickpaymAsync(string _EAG);
@@ -343,13 +351,17 @@ namespace ServiceReference1
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.SubTypes[]> GetrequestIDAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getComplainSubtype", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.SubTypes[]> getComplainSubtypeAsync(string _complainType);
+        
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetComplainTicketHistory", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.ComplaintHistory[]> GetComplainTicketHistoryAsync(string _property);
         
-        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getPaymentReceiptReport", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/savePaymentReceiptReport", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<string> getPaymentReceiptReportAsync(string _contractId, string _paymentDate);
+        System.Threading.Tasks.Task<string> savePaymentReceiptReportAsync(string _contractId, string _paymentDate);
         
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustStatementReport", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -3441,6 +3453,11 @@ namespace ServiceReference1
             return base.Channel.getPropertyPendingRequestsAsync(_propertyid);
         }
         
+        public System.Threading.Tasks.Task<ServiceReference1.CustPayments[]> getCustomerTransactionAsync(string _contract)
+        {
+            return base.Channel.getCustomerTransactionAsync(_contract);
+        }
+        
         public System.Threading.Tasks.Task<ServiceReference1.CustPayments[]> getCustPaymentsAsync(string _custId, string _contId)
         {
             return base.Channel.getCustPaymentsAsync(_custId, _contId);
@@ -3613,9 +3630,9 @@ namespace ServiceReference1
             return base.Channel.GetSDRefundBanksListAsync();
         }
         
-        public System.Threading.Tasks.Task<string> CreateComplainTicketAsync(string _propertyId, string _ticketSubType, string _comments)
+        public System.Threading.Tasks.Task<string> CreateComplainTicketAsync(string _propertyId, string _ticketSubType, string _subTicket, string _comments)
         {
-            return base.Channel.CreateComplainTicketAsync(_propertyId, _ticketSubType, _comments);
+            return base.Channel.CreateComplainTicketAsync(_propertyId, _ticketSubType, _subTicket, _comments);
         }
         
         public System.Threading.Tasks.Task<string> deleteCustBankAccountAsync(string _Customer_id, string _ContractId)
@@ -3638,6 +3655,11 @@ namespace ServiceReference1
             return base.Channel.GetUnitDLAsync(_propertyId);
         }
         
+        public System.Threading.Tasks.Task<string> saveBillingReportAsync(string _contractid, int _month, int _year)
+        {
+            return base.Channel.saveBillingReportAsync(_contractid, _month, _year);
+        }
+        
         public System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetdataforquickpaymAsync(string _EAG)
         {
             return base.Channel.GetdataforquickpaymAsync(_EAG);
@@ -3648,14 +3670,19 @@ namespace ServiceReference1
             return base.Channel.GetrequestIDAsync();
         }
         
+        public System.Threading.Tasks.Task<ServiceReference1.SubTypes[]> getComplainSubtypeAsync(string _complainType)
+        {
+            return base.Channel.getComplainSubtypeAsync(_complainType);
+        }
+        
         public System.Threading.Tasks.Task<ServiceReference1.ComplaintHistory[]> GetComplainTicketHistoryAsync(string _property)
         {
             return base.Channel.GetComplainTicketHistoryAsync(_property);
         }
         
-        public System.Threading.Tasks.Task<string> getPaymentReceiptReportAsync(string _contractId, string _paymentDate)
+        public System.Threading.Tasks.Task<string> savePaymentReceiptReportAsync(string _contractId, string _paymentDate)
         {
-            return base.Channel.getPaymentReceiptReportAsync(_contractId, _paymentDate);
+            return base.Channel.savePaymentReceiptReportAsync(_contractId, _paymentDate);
         }
         
         public System.Threading.Tasks.Task<string> getCustStatementReportAsync(string _contracted, string _fromDate, string _toDate)

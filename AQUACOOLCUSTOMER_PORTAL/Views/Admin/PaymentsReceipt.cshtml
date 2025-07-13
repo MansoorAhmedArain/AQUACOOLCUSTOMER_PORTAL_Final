@@ -57,6 +57,8 @@
 
                 <input type="submit" class="btn rounded-pill btn-style mt-3" value="Statement Request Submission" />
                 <span class="message" style="color:green">@ViewBag.Message</span>
+                <button class="btn rounded-pill btn-style mt-3" onclick="downloadPdf()"> Download</button>
+                   
 
                 <footer class="mt-5" style="color: #03213d; font-size: small; font-weight: bold;">* The invoice and payment receipt will be sent on your registered email address with in the next one hour</footer>
             </div>
@@ -66,3 +68,21 @@
 
 <!--Mobile design-->
 <div class="mb-container d-md-none">
+</div>
+<script>
+    function downloadPdf() {
+        const eag = document.getElementById('projectDropdown1').value;
+        const invoiceDate = document.querySelector('input[name="InvoiceDate"]').value;
+
+        if (!eag || !invoiceDate) {
+            alert("Please select both EAG and Invoice Date.");
+            return;
+        }
+
+        // Construct the URL with query parameters
+        const url = `/Admin/DownloadPdfBillingReceipt?eag=${encodeURIComponent(eag)}&invoiceDate=${encodeURIComponent(invoiceDate)}`;
+
+        // Open the file download in new tab
+        window.open(url, '_blank');
+    }
+</script>

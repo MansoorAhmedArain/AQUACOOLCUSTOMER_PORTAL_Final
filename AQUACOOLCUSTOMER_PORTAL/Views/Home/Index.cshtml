@@ -71,7 +71,7 @@
 
 <body>
   <header>
-        <image src="/Images/Logo.png" class="img-style my-5"></image>
+        <image src="/Images/Logo.png" class="img-style my-5" style="margin-right: 1164px;"></image>
   </header>
     <video autoplay muted loop id="background-video">
         <source src="Videos/Fan movie.mp4" type="video/mp4">
@@ -93,7 +93,7 @@
 
                         <a href="/Home/login" class="button rounded-pill btn btn-light"><img src="./Icons/Customer-Login.png"></img>Customer Login</a>
 
-                        <a href="#" class="button rounded-pill btn btn-light"><img src="./Icons/Customer-Service-Charter.png"></img>Customer Service</a>
+                        <a href="#" onclick="openPdf()" class="button rounded-pill btn btn-light"><img src="./Icons/Customer-Service-Charter.png"></img>Customer Service Charter</a>
 
                         <a href="#" class="button rounded-pill btn btn-light"><img src="./Icons/FAQ.png"></img>FAQ</a>
           </div>
@@ -107,6 +107,12 @@
 
   <script src="/js/bootstrapjs/bootstrap.bundle.js"></script>
   <script src="https://kit.fontawesome.com/c5b8d1d3fa.js" crossorigin="anonymous"></script>
+    <script>
+        function openPdf() {
+            // Update the path to your actual PDF file
+            window.open('/Documents/Aquacool Customer Service Charter Final-updated3.pdf', '_blank');
+        }
+    </script>
 </body>
 
 </html>

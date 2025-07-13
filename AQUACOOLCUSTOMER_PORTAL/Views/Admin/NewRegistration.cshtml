@@ -97,7 +97,7 @@
                                 @if (eid == null || eid.Status != showStatus)
                                 {
                                     <td>Emirates ID</td>
-                                    <td>Individual(owner or tenant)</td>
+                                    <td>@ViewBag.CustomerType</td>
                                     <td>
                                         <input type="date" id="expirydate" name="expirydate"
                                                class="form-control expirydate" style=""
@@ -147,7 +147,7 @@
                                 <td>Passport</td>
                                @if (eid == null || eid.Status != showStatus)
                                 {
-                                    <td>Individual(owner or tenant)</td>
+                                    <td>@ViewBag.CustomerType</td>
                                     <td>
                                         <input type="date" id="expirydate" name="expirydate"
                                                class="form-control expirydate" style=""
@@ -175,7 +175,7 @@
                                 <td>Visa</td>
                                 @if (vis == null || vis.Status != showStatus)
                                 {
-                                    <td>Individual(owner or tenant)</td>
+                                    <td>@ViewBag.CustomerType</td>
                                     <td>
                                         <input type="date" id="expirydate" name="expirydate"
                                                class="form-control expirydate" style=""
@@ -203,7 +203,7 @@
                                 <td>Tenancy Contract</td>
                                @if (ten == null || ten.Status != showStatus)
                                 {
-                                    <td>Individual(owner or tenant)</td>
+                                    <td>@ViewBag.CustomerType</td>
                                     <td>
                                         <input type="date" id="expirydate" name="expirydate"
                                                class="form-control expirydate" style=""
@@ -252,7 +252,7 @@
                                 <td>Title Deed</td>
                                 @if (tde == null || tde.Status != showStatus)
                                 {
-                                    <td>Individual(owner or tenant)</td>
+                                    <td>@ViewBag.CustomerType</td>
                                     <td>
                                         <input type="date" id="expirydate" name="expirydate"
                                                class="form-control expirydate" style=""
@@ -280,7 +280,7 @@
                                 <td>Trade License</td>
                                 @if (eid == null || eid.Status != showStatus)
                                 {
-                                    <td>Individual(owner or tenant)</td>
+                                    <td>@ViewBag.CustomerType</td>
                                     <td>
                                         <input type="date" id="expirydate" name="expirydate"
                                                class="form-control expirydate" style=""
@@ -308,7 +308,7 @@
                                 <td>Power of Attorney</td>
                                @if (eid == null || eid.Status != showStatus)
                                 {
-                                    <td>Individual(owner or tenant)</td>
+                                    <td>@ViewBag.CustomerType</td>
                                     <td>
                                         <input type="date" id="expirydate" name="expirydate"
                                                class="form-control expirydate" style=""

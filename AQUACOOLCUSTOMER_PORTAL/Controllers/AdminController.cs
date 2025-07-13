@@ -9,6 +9,7 @@ using NuGet.Protocol;
 using ServiceReference1;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.ServiceModel;
 using System.Text;
 using System.Web;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -23,6 +24,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         {
             _logger = logger;
             _service = new Service1SoapClient(Service1SoapClient.EndpointConfiguration.Service1Soap);
+            
         }
         public IActionResult Index()
         {
@@ -43,7 +45,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             return View();
         }
 
-        public ActionResult NewRegistration(string Id = "")
+        public ActionResult NewRegistration(string Id = "", string type = "")
         {
             if (!string.IsNullOrEmpty(Id))
             {
@@ -60,6 +62,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 }
 
                 ViewBag.Status = files;
+                ViewBag.CustomerType = type;
             }
 
             return View();
@@ -94,6 +97,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             // ViewBag.Projects = projects;
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
+            
             //ViewBag.Error = "";
             return View(projects);
         }
@@ -180,7 +184,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
                             ViewBag.Status = files;
                             // redirect to upload documents.
-                            return RedirectToAction("NewRegistration", new { id = output[2] });
+                            return RedirectToAction("NewRegistration", new { id = output[2], type = registration.MoveInAs });
                         }
                     }
                     else
@@ -981,11 +985,11 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 }
             }
 
-            if (string.IsNullOrEmpty(result))
-            {
-                TempData["Error"] = "Result is Empty. Please Contact Customer support";
-                return View(modal);
-            }
+            //if (string.IsNullOrEmpty(result))
+            //{
+            //    TempData["Error"] = "Result is Empty. Please Contact Customer support";
+            //    return View(modal);
+            //}
 
             var output = result.Split('|');
 
@@ -1470,7 +1474,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
 
         /// <summary>
-        /// Call from quick payment popup dialouge.
+        /// Call from quick record popup dialouge.
         /// </summary>
         /// <param name="payAmount"></param>
         /// <returns></returns>
@@ -1552,10 +1556,10 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// Displays the transaction history for a specific contract.
         /// </summary>
         /// <returns>
-        /// Returns a view containing a list of payment transactions associated with the specified contract.
+        /// Returns a view containing a list of record transactions associated with the specified contract.
         /// </returns>
         /// <remarks>
-        /// This method retrieves the current user's session data, fetches payment records for a hardcoded contract ID,
+        /// This method retrieves the current user's session data, fetches record records for a hardcoded contract ID,
         /// constructs a list of transaction objects, and passes them to the view for display.
         /// </remarks>
         /// <exception cref="Exception">
@@ -1582,6 +1586,49 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             ViewBag.SelectedContractEAG = contractId;
             return View(result);
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult DownloadPdfBillingReceipt(string eag, string invoiceDate)
+        {
+            
+            var dateCustom = Convert.ToDateTime(invoiceDate);
+            string base64String = _service.saveBillingReportAsync(eag,dateCustom.Month,dateCustom.Year).Result; // Replace with your actual logic
+         
+            if (base64String== "SalesID not found")
+            {
+                return Json("SalesID not found");
+            }
+            else {
+                byte[] fileBytes = Convert.FromBase64String(base64String);
+                return File(fileBytes, "application/pdf", "document.pdf");
+            }
+               
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult getpaymentReceiptPDF(string contract, string date)
+        {
+            var dateCustom = Convert.ToDateTime(date).ToString("MM/dd/yyyy");
+            string base64String = _service.savePaymentReceiptReportAsync(contract, date).Result; // Replace with your actual logic
+
+            if (base64String == "Voucher not found")
+            {
+                return Json("Voucher not found");
+            }
+            else
+            {
+                byte[] fileBytes = Convert.FromBase64String(base64String);
+                return File(fileBytes, "application/pdf", "document.pdf");
+            }
+
+        }
 
         private List<AxPayments> GetPaymentsAccordingToContract(string userId, string username, string contractId)
         {
@@ -1590,18 +1637,19 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             TempData["ContractId"] = contractId;
             var u = _service.getCustomerByUserIDAsync(username).Result;
-            var invoices = _service.getCustPaymentsAsync(u, contractId).Result;
+            //var paymentsAndInvoices = _service.getCustPaymentsAsync(u, contractId).Result;
+            var paymentsAndInvoices = _service.getCustomerTransactionAsync(contractId).Result;
             ViewBag.CustOutstandingBalance = _service.GetCustContractBalanceAsync(userId, contractId).Result;
             var result = new List<AxPayments>();
-            foreach (var invoice in invoices)
+            foreach (var record in paymentsAndInvoices)
             {
                 var i = new AxPayments();
-                i.TransactionNumber = invoice.TransNum;
-                i.Amount = double.Parse(invoice.Amount);
-                i.JournalNumber = invoice.JournalNo;
-                i.Date = DateTime.Parse(invoice.Date, CultureInfo.GetCultureInfo("en-US"));
+                i.TransactionNumber = record.TransNum;
+                i.Amount = double.Parse(record.Amount);
+                i.JournalNumber = record.JournalNo;
+                i.Date = DateTime.Parse(record.Date, CultureInfo.GetCultureInfo("en-US"));
                 i.ContractId = contractId;
-                i.PayAgainst = invoice.PayAgainst;
+                i.PayAgainst = record.PayAgainst;
                 result.Add(i);
             }
 
@@ -1715,7 +1763,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             complaint.Comments += $"        Invoice No: {complaint.HighBillInvoiceNo} Email: {complaint.Email}  Date: {complaint.DateOfPayment}";
 
             // call the complaint api to post the data.
-            var response = _service.CreateComplainTicketAsync(contracts[0].PropertyId, complaint.SubType, complaint.Comments).Result;
+            var response = _service.CreateComplainTicketAsync(contracts[0].PropertyId, complaint.SubType, complaint.TicketType, complaint.Comments).Result;
             ViewBag.SuccessMessage = response;
             var complainTypes = _service.GetrequestIDAsync().Result;
             var complaintHistory = _service.GetComplainTicketHistoryAsync(contracts[0].PropertyId).Result;
@@ -1731,6 +1779,21 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             };
             // }
             return View(viewModal);
+        }
+
+        [HttpGet]
+        public JsonResult GetSubTypes(string typeId)
+        {
+            // Replace with real data fetching logic
+            var subTypes = _service.getComplainSubtypeAsync(typeId).Result;
+
+            var items = subTypes.Select(x => new SelectListItem
+            {
+                Value = x.RequestID.ToString(),
+                Text = x.Description
+            });
+
+            return Json(items);
         }
 
         [HttpGet]
@@ -1770,7 +1833,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
 
         /// <summary>
-        /// Submit payment proof action
+        /// Submit record proof action
         /// </summary>
         /// <returns></returns>
         [HttpGet]

@@ -55,7 +55,7 @@
                                     <td>@item.Amount</td>
                                     <td>@item.PayAgainst</td>
                                     <td></td>
-                                    <td><a href="#" style="text-decoration:none; color:#009ADE"><i class='fas fa-receipt' style="font-size:18px; color:#009ADE"></i></a></td>
+                                    <td><a href="@Url.Action("getpaymentReceiptPDF", "admin", new{contract = @ViewBag.SelectedContractEAG, date = item.Date.ToShortDateString() })" style="text-decoration:none; color:#009ADE"><i class='fas fa-receipt' style="font-size:18px; color:#009ADE"></i></a></td>
                                 </tr>
                             </tbody>
                         }

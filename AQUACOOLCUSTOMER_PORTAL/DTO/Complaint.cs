@@ -11,6 +11,8 @@
         public string HighBillInvoiceNo { get; set; }
 
         public string SubType { get; set; }
+
+        public string TicketType { get; set; }
         /// <summary>
         /// Gets or sets the invoice number associated with a low bill complaint.
         /// </summary>
