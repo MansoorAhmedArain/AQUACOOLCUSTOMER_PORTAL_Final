@@ -1584,6 +1584,9 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var contractsListData = LoadContractsForSelection(userId).Result;
             ViewBag.ContractsList = contractsListData;
             ViewBag.SelectedContractEAG = contractId;
+            var latestBill = _service.getLatestInvoiceAsync(contractId).Result;
+            ViewBag.SelectedContractDueDate = Convert.ToDateTime(latestBill[0].DueDate).ToShortDateString();
+            ViewBag.SelectedContractAmount = latestBill[0].Amount;
             return View(result);
         }
         

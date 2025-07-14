@@ -347,6 +347,10 @@ namespace ServiceReference1
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetdataforquickpaymAsync(string _EAG);
         
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getLatestInvoice", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.LatestInvoice[]> getLatestInvoiceAsync(string _contractid);
+        
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetrequestID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.SubTypes[]> GetrequestIDAsync();
@@ -572,6 +576,46 @@ namespace ServiceReference1
             set
             {
                 this.descriptionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="AQC AX")]
+    public partial class LatestInvoice
+    {
+        
+        private string dueDateField;
+        
+        private string amountField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string DueDate
+        {
+            get
+            {
+                return this.dueDateField;
+            }
+            set
+            {
+                this.dueDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Amount
+        {
+            get
+            {
+                return this.amountField;
+            }
+            set
+            {
+                this.amountField = value;
             }
         }
     }
@@ -3663,6 +3707,11 @@ namespace ServiceReference1
         public System.Threading.Tasks.Task<ServiceReference1.CustomerDetails> GetdataforquickpaymAsync(string _EAG)
         {
             return base.Channel.GetdataforquickpaymAsync(_EAG);
+        }
+        
+        public System.Threading.Tasks.Task<ServiceReference1.LatestInvoice[]> getLatestInvoiceAsync(string _contractid)
+        {
+            return base.Channel.getLatestInvoiceAsync(_contractid);
         }
         
         public System.Threading.Tasks.Task<ServiceReference1.SubTypes[]> GetrequestIDAsync()
