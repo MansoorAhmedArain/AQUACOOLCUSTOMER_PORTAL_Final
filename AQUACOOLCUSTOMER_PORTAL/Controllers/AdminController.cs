@@ -1589,7 +1589,63 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             ViewBag.SelectedContractAmount = latestBill[0].Amount;
             return View(result);
         }
-        
+        public IActionResult BillCurve(string contractId = "")
+        {
+            var energyConsumptionsData = _service.getCustEnergyConsumptionAsync(contractId).Result;
+            var billingConsumptionsData = _service.getCustBillConsumptionAsync(contractId).Result;
+            return View();
+        }
+        [HttpGet]
+        public JsonResult GetEnergyConsumption()
+        {
+            //    var data = new[]
+            //    {
+            //    new { Period = "Feb-Mar", Value = 90 },
+            //    new { Period = "Mar-Apr", Value = 75 },
+            //    new { Period = "Apr-May", Value = 110 },
+            //    new { Period = "May-Jun", Value = 45 },
+            //    new { Period = "Jun-Jul", Value = 60 }
+            //};
+            var data = new List<ConsumptionData>();
+            var energyConsumptionsData = _service.getCustEnergyConsumptionAsync("EAG-000003").Result;
+            foreach (var item in energyConsumptionsData)
+            {
+                data.Add(new ConsumptionData { Period = item.month, Value = Convert.ToDouble(item.amount) });
+            }
+            return Json(data);
+        }
+
+        [HttpGet]
+        public JsonResult GetBillConsumption()
+        {
+        //    var data = new[]
+        //    {
+        //    new { Period = "Apr 2023", Amount = 350 },
+        //    new { Period = "May 2023", Amount = 400 },
+        //    new { Period = "Jun 2023", Amount = 500 },
+        //    new { Period = "Jul 2023", Amount = 200 },
+        //    new { Period = "Aug 2023", Amount = 300 },
+        //    new { Period = "Sep 2023", Amount = 450 },
+        //    new { Period = "Oct 2023", Amount = 700 },
+        //    new { Period = "Nov 2023", Amount = 850 },
+        //    new { Period = "Dec 2023", Amount = 800 },
+        //    new { Period = "Jan 2024", Amount = 750 },
+        //    new { Period = "Feb 2024", Amount = 720 },
+        //    new { Period = "Mar 2024", Amount = 780 }
+        //};
+
+            var billingConsumptionsData = _service.getCustBillConsumptionAsync("EAG-000003").Result;
+            var data = new List<ConsumptionData>();
+            foreach (var item in billingConsumptionsData)
+            {
+                data.Add(new ConsumptionData { Period = item.month, Value = Convert.ToDouble(item.amount) });
+            }
+            return Json(data);
+        }
+
+
+
+
         /// <summary>
         /// 
         /// </summary>

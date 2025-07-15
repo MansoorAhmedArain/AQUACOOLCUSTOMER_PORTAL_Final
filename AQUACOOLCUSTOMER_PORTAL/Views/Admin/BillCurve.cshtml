@@ -1,0 +1,98 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Optional styling -->
+<style>
+    .chart-container {
+        width: 45%;
+        display: inline-block;
+        margin: 1%;
+        vertical-align: top;
+    }
+</style>
+<h2>Bill Curve</h2>
+
+<div class="chart-container">
+    <h4>Energy Consumption</h4>
+    <canvas id="energyChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <h4>Bill Consumption</h4>
+    <canvas id="billChart"></canvas>
+</div>
+<script>
+        $(document).ready(function () {
+        // Load both charts
+        loadEnergyConsumption();
+        loadBillConsumption();
+    });
+
+    function loadEnergyConsumption() {
+        $.ajax({
+            url: '/Admin/GetEnergyConsumption',
+            method: 'GET',
+            success: function (response) {
+                const labels = response.map(item => item.Period);
+                const data = response.map(item => item.Value);
+
+                new Chart(document.getElementById('energyChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'RTH',
+                            data: data,
+                            backgroundColor: '#00AEEF'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function loadBillConsumption() {
+        $.ajax({
+            url: '/Admin/GetBillConsumption',
+            method: 'GET',
+            success: function (response) {
+                const labels = response.map(item => item.Period);
+                const data = response.map(item => item.Amount);
+
+                new Chart(document.getElementById('billChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'AED',
+                            data: data,
+                            backgroundColor: '#00AEEF'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>

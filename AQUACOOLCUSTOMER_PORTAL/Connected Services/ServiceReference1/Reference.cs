@@ -391,13 +391,13 @@ namespace ServiceReference1
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> createPaymProofTicketAsync(string _contract, string _invoice, string _paymentDate, string _paymentMethod, string document);
         
-        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustomerEnergyConsumption", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustEnergyConsumption", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustomerEnergyConsumptionAsync(string _contractid);
+        System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustEnergyConsumptionAsync(string _contractid);
         
-        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustomerBillConsumption", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustBillConsumption", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustomerBillConsumptionAsync(string _contractid);
+        System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustBillConsumptionAsync(string _contractid);
         
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getLastPaymentDate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -3764,14 +3764,14 @@ namespace ServiceReference1
             return base.Channel.createPaymProofTicketAsync(_contract, _invoice, _paymentDate, _paymentMethod, document);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustomerEnergyConsumptionAsync(string _contractid)
+        public System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustEnergyConsumptionAsync(string _contractid)
         {
-            return base.Channel.getCustomerEnergyConsumptionAsync(_contractid);
+            return base.Channel.getCustEnergyConsumptionAsync(_contractid);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustomerBillConsumptionAsync(string _contractid)
+        public System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustBillConsumptionAsync(string _contractid)
         {
-            return base.Channel.getCustomerBillConsumptionAsync(_contractid);
+            return base.Channel.getCustBillConsumptionAsync(_contractid);
         }
         
         public System.Threading.Tasks.Task<string> getLastPaymentDateAsync(string _contractid)
