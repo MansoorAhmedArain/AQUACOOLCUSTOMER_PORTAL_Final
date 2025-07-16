@@ -216,21 +216,25 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //    return View(customer);
             //}
 
-            validation = PerformValidation(customer);
+            // validation = PerformValidation(customer);  // temporarly hide the validations
             //  validation = "Success";
-            if (validation.Equals("Success"))
-            {
-                IsValid = true;
-            }
-            else
-            {
-                IsValid = false;
-                TempData["Error"] = validation + " is not valid";
-                return View(customer);
-            }
+            //if (validation.Equals("Success"))
+            //{
+            //    IsValid = true;
+            //}
+            //else
+            //{
+            //    IsValid = false;
+            //    TempData["Error"] = validation + " is not valid";
+            //    return View(customer);
+            //}
 
-            if (IsValid)
-            {
+            //if (IsValid)
+            //{
+            customer.FirstName = customer.Company;
+            customer.LastName = customer.Company;
+            customer.PassportNumber = "";
+            customer.Nationality = "";
                 ViewBag.Customer = Newtonsoft.Json.JsonConvert.SerializeObject(customer);
                 var result = _service.RegistrationAsync(HttpUtility.HtmlEncode(customer.Account),
                       HttpUtility.HtmlEncode(customer.Emirate.ToString()),
@@ -238,7 +242,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                       HttpUtility.HtmlEncode(customer.EmailAddress1),
                       HttpUtility.HtmlEncode(customer.IdNumber),
                       HttpUtility.HtmlEncode(""),
-                     // HttpUtility.HtmlEncode(idExpiry),
+                      //HttpUtility.HtmlEncode(idExpiry),
                       HttpUtility.HtmlEncode(customer.FirstName),
                       HttpUtility.HtmlEncode("00000"),
                       HttpUtility.HtmlEncode(customer.LastName),
@@ -284,7 +288,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                         TempData["Message"] = result;
                     }
                 }
-            }
+            //}
             //  var result = "Success";
 
 
@@ -377,21 +381,25 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //    return View(customer);
             //}
 
-            validation = PerformValidation(customer);
-            //  validation = "Success";
-            if (validation.Equals("Success"))
-            {
-                IsValid = true;
-            }
-            else
-            {
-                IsValid = false;
-                TempData["Error"] = validation + " is not valid";
-                return View(customer);
-            }
+            //validation = PerformValidation(customer);
+            ////  validation = "Success";
+            //if (validation.Equals("Success"))
+            //{
+            //    IsValid = true;
+            //}
+            //else
+            //{
+            //    IsValid = false;
+            //    TempData["Error"] = validation + " is not valid";
+            //    return View(customer);
+            //}
 
-            if (IsValid)
+            //if (IsValid)
+            //{
+            if (customer.PassportNumber == null)
             {
+                customer.PassportNumber = "";
+            }
                 ViewBag.Customer = Newtonsoft.Json.JsonConvert.SerializeObject(customer);
                 var result = _service.RegistrationAsync(HttpUtility.HtmlEncode(customer.Account),
                       HttpUtility.HtmlEncode(customer.Emirate.ToString()),
@@ -445,7 +453,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                         TempData["Message"] = result;
                     }
                 }
-            }
+            //}
             //  var result = "Success";
 
 

@@ -24,7 +24,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         {
             _logger = logger;
             _service = new Service1SoapClient(Service1SoapClient.EndpointConfiguration.Service1Soap);
-            
+
         }
         public IActionResult Index()
         {
@@ -67,12 +67,12 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             return View();
         }
-        public async Task<IActionResult> MoveInRequest(string Id="")
+        public async Task<IActionResult> MoveInRequest(string Id = "")
         {
-            
+
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
-            
+
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
                 return RedirectPermanent("/Home/Index");
@@ -97,7 +97,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             // ViewBag.Projects = projects;
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
-            
+
             //ViewBag.Error = "";
             return View(projects);
         }
@@ -200,20 +200,20 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         public async Task<string> LoadUnitSelection(string propertyId)
         {
             var units = await _service.getProjectDetailsAllAsync(propertyId);
-           // var unit = units.Where(x=>x.PropertyID == propertyId).FirstOrDefault();
+            // var unit = units.Where(x=>x.PropertyID == propertyId).FirstOrDefault();
             var json = JsonConvert.SerializeObject(units);
             return json;
         }
 
-        
+
 
         /// <summary>
         /// Get the list of the projects from ax
         /// </summary>
         /// <returns></returns>
-        private async Task<Projects[]>  LoadProjectSelection()
+        private async Task<Projects[]> LoadProjectSelection()
         {
-           var projects =  await _service.GetProjectsAsync();
+            var projects = await _service.GetProjectsAsync();
             return projects;
         }
         private async Task<List<ContractIDs>> LoadContractsForSelection(string id)
@@ -242,7 +242,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 return RedirectPermanent("/Home/Index");
             }
             var projects = await LoadProjectSelection();
-            
+
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
             var contracts = await LoadContractsForSelection(userId);
@@ -262,7 +262,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         [HttpPost]
         public async Task<IActionResult> ReconnectionRequest(string EAG, string Balance)
         {
-            
+
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
@@ -301,7 +301,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     return View(viewModal);
                 }
             }
-           
+
             return View(viewModal);
 
         }
@@ -322,8 +322,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             var disconnectionID = _service.GetDisconnectionTicketAsync(contractId).Result;
             var outstandingBalance = _service.GetCustContractBalanceAsync(userId, contractId).Result;
-            return disconnectionID+","+outstandingBalance;
-               
+            return disconnectionID + "," + outstandingBalance;
+
         }
         public IActionResult StatementofAccount()
         {
@@ -333,7 +333,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
-            var contracts =  LoadContractsForSelection(userId).Result;
+            var contracts = LoadContractsForSelection(userId).Result;
             ViewBag.ContractsList = contracts;
             return View();
         }
@@ -385,7 +385,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectToAction("index","Home");
+                return RedirectToAction("index", "Home");
             }
             ViewBag.ErrorMessage = "";
             return View();
@@ -432,7 +432,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         [HttpGet]
         public IActionResult UpdateDocuments(string id = "")
         {
-             ViewBag.tktID = id;
+            ViewBag.tktID = id;
             //ViewBag.tktID = "REGRQ-000001541"; //"REGRQ-000001542"
             return View();
         }
@@ -489,14 +489,14 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     //  }
                 }
 
-               // return Json(new { success = true, type });
+                // return Json(new { success = true, type });
                 return RedirectToAction("NewRegistration", new { id = id });
             }
             catch (Exception ex)
             {
                 throw;
             }
-           
+
         }
 
 
@@ -573,7 +573,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
 
         #endregion
-        
+
         #region User Request
 
         public ActionResult UserRequests()
@@ -608,7 +608,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             return View(requests);
         }
-        
+
         /// <summary>
         /// Get all request of the user.
         /// </summary>
@@ -652,13 +652,13 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 return RedirectToAction("index", "Home");
             }
             var mitickets = GetMoveInTickets(username);
-           
+
             return View(mitickets);
         }
         public List<AxTicketDetails> GetMoveInTickets(string username)
         {
             //return View();
-            
+
             var u = _service.getCustomerByUserIDAsync(username).Result;
             var moveInTickets = _service.getCustTicketsMoveInAsync(u).Result;
             var mitickets = new List<AxTicketDetails>();
@@ -764,7 +764,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
         public bool CheckNotIsSwissOrNakheel(string contractId)
         {
-            
+
             var IsSwissNakheel = false;
             if (string.IsNullOrEmpty(contractId))
                 throw new Exception("Contract Id cannot be null");
@@ -804,7 +804,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 return RedirectToAction("index", "Home");
             }
             var u = _service.getCustomerByUserIDAsync(username).Result;
-            var invoices = _service.GetInvoicesAsync(u, contractId).Result; 
+            var invoices = _service.GetInvoicesAsync(u, contractId).Result;
             var contracts = _service.getCustContAsync(u, true).Result.ToList();
             var contractsList = new List<AxContract>();
             //foreach (var c in contracts)
@@ -911,9 +911,9 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             ViewBag.BankNameList = Getbanks();
             ViewBag.ActiveContracts = GetActiveContracts(userId);
             ViewBag.OTPReady = false;
-           // string ContractID = string.Empty; // should be filled.
+            // string ContractID = string.Empty; // should be filled.
             string CustomerType = string.Empty;
-           // var axRequests = GetAxRequestCustom(userId);
+            // var axRequests = GetAxRequestCustom(userId);
             var contractRead = Contracts_Read(username);
             var moveType = contractRead.Where(x => x.ContractID == modal.ContractId).Select(xx => xx.CustomerType).FirstOrDefault();
             var requestId = contractRead.Where(x => x.ContractID == modal.ContractId).Select(xx => xx.RequestId).FirstOrDefault();
@@ -924,8 +924,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //        CustomerType = item.MoveInType;
             //    } 
             //}
-            CustomerType = moveType?? "";
-          
+            CustomerType = moveType ?? "";
+
             var account = _service.getCustomerByUserIDAsync(userId).Result;
 
             string result = "";
@@ -934,7 +934,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 if (!_service.validateCustBankAcountAsync(account, modal.ContractId).Result && modal.Bank == "on")
                 {
-                   // return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, moveType = modal.ContractId, customerType = CustomerType });
+                    // return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, moveType = modal.ContractId, customerType = CustomerType });
                     var bankDetails = new BankDetails()
                     {
                         BankName = modal.ShortName,
@@ -948,8 +948,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                         ShortName = modal.ShortName,
                         SwiftNo = modal.SwiftNo
                     };
-                    result = UpdateBankingDetails(bankDetails, userId, modal.SubmitButton,username).Result;
-                    
+                    result = UpdateBankingDetails(bankDetails, userId, modal.SubmitButton, username).Result;
+
                 }
                 else
                 {
@@ -975,8 +975,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                         ShortName = modal.ShortName,
                         SwiftNo = modal.SwiftNo
                     };
-                   result =  UpdateBankingDetails(bankDetails,userId,modal.SubmitButton,username).Result;
-                    
+                    result = UpdateBankingDetails(bankDetails, userId, modal.SubmitButton, username).Result;
+
                 }
                 else
                 {
@@ -999,17 +999,17 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 // return RedirectToAction("UploadNoC", new { Id = output[1] });
                 if (modal.NOCFile != null && modal.NOCFile.Length > 0)
                 {
-                        var extension = Path.GetExtension(modal.NOCFile.FileName);
-                        string fileName = $"noc{extension}";
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            modal.NOCFile.CopyTo(memoryStream);
-                            var byteArray = memoryStream.ToArray();
-                            var data = Convert.ToBase64String(byteArray);
-                            var ticketId = _service.submitTicketMoveOutAsync(output[1], fileName, data).Result;
-                            TempData["Error"] = _service.attachAqcFilesAsync(ticketId, "noc", data, "yes").Result;
-                            return View(modal);
-                        }
+                    var extension = Path.GetExtension(modal.NOCFile.FileName);
+                    string fileName = $"noc{extension}";
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        modal.NOCFile.CopyTo(memoryStream);
+                        var byteArray = memoryStream.ToArray();
+                        var data = Convert.ToBase64String(byteArray);
+                        var ticketId = _service.submitTicketMoveOutAsync(output[1], fileName, data).Result;
+                        TempData["Error"] = _service.attachAqcFilesAsync(ticketId, "noc", data, "yes").Result;
+                        return View(modal);
+                    }
                 }
             }
             else
@@ -1020,7 +1020,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     return View(modal);
                 }
                 TempData["Message"] = output[0];
-                
+
             }
             return View(modal);
         }
@@ -1212,7 +1212,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         {
             var cu = _service.getCustomerByUserIDAsync(userId).Result;
             ViewBag.Contract = cu;
-            bankDetails.CustomerId = cu; 
+            bankDetails.CustomerId = cu;
             if (submitButton.Equals("getotp") || submitButton.Equals("resendotp"))
             {
                 if (string.IsNullOrWhiteSpace(bankDetails.BankName))
@@ -1298,7 +1298,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     {
                         TempData["Error"] = "Result is Empty. Please Contact Customer support";
                         //return View("UserProfile");
-                        return "Result is Empty. Please Contact Customer support"; 
+                        return "Result is Empty. Please Contact Customer support";
                     }
 
                     var output = result.Split('|');
@@ -1307,12 +1307,12 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     {
                         try
                         {// commented by MA
-                            
-                                if (_service.validateCustBankAcountAsync(bankDetails.CustomerId, bankDetails.ContractId).Result)
-                                {
-                                    await _service.deleteCustBankAccountAsync(bankDetails.CustomerId, bankDetails.ContractId);
-                                }
-                            
+
+                            if (_service.validateCustBankAcountAsync(bankDetails.CustomerId, bankDetails.ContractId).Result)
+                            {
+                                await _service.deleteCustBankAccountAsync(bankDetails.CustomerId, bankDetails.ContractId);
+                            }
+
                         }
                         catch (Exception ex)
                         {
@@ -1396,9 +1396,9 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         private List<SelectListItem> GetApporvedAxRequest(string userId)
         {
             var result = _service.getCustRequestsAllAsync(userId).Result;
-            
+
             List<SelectListItem> newList = new List<SelectListItem>();
-            newList = (from d in result.Where(x=>x.WFStatus =="Approved")
+            newList = (from d in result.Where(x => x.WFStatus == "Approved")
                        select new SelectListItem()
                        {
                            Text = d.ReqID,
@@ -1413,7 +1413,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// <returns></returns>
         private List<SelectListItem> GetActiveContracts(string userId)
         {
-            var result = _service.getCustContAsync(userId,true).Result;
+            var result = _service.getCustContAsync(userId, true).Result;
 
             List<SelectListItem> newList = new List<SelectListItem>();
             newList = (from d in result
@@ -1489,12 +1489,12 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     TempData["Error"] = "The minimum amount to be Paid is AED 100";
                     TempData["ContractId"] = contractId;
                     //return RedirectToAction("Invoices", new { contractId });
-                    return RedirectToAction("QuickPayment","Home");
+                    return RedirectToAction("QuickPayment", "Home");
                 }
-                TempData["TicketId"] = TempData["TicketId"]?.ToString();
-                TempData["ContractId"] = contractId;
-                TempData["amount"] = payAmount;
-                return RedirectToAction("Index", "Gateway");
+            TempData["TicketId"] = TempData["TicketId"]?.ToString();
+            TempData["ContractId"] = contractId;
+            TempData["amount"] = payAmount;
+            return RedirectToAction("Index", "Gateway");
             //}
             //else
             //{
@@ -1520,7 +1520,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         {
             var cu = _service.getCustomerByUserIDAsync(username).Result;
             var contracts = _service.getCustContAsync(cu, true).Result.ToList();
-            
+
             var contractsList = new List<AxContract>();
             foreach (var c in contracts)
             {
@@ -1575,10 +1575,18 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             var complainTypes = _service.GetrequestIDAsync().Result;
             var contracts = _service.getCustContAsync(userId, true).Result;
+            if (contracts.Length == 0)
+            {
+                ViewBag.ContractsList = new List<ContractIDs>();
+                ViewBag.SelectedContractEAG = "N/A";
+                ViewBag.SelectedContractDueDate = "N/A";
+                ViewBag.SelectedContractAmount = "N/A";
+                return View(new List<AxPayments>());
+            }
             if (contractId == "")
             {
                 contractId = contracts[0].ContractID; //"EAG-032457";
-                
+
             }
             List<AxPayments> result = GetPaymentsAccordingToContract(userId, username, contractId);
             var contractsListData = LoadContractsForSelection(userId).Result;
@@ -1591,8 +1599,6 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
         public IActionResult BillCurve(string contractId = "")
         {
-            var energyConsumptionsData = _service.getCustEnergyConsumptionAsync(contractId).Result;
-            var billingConsumptionsData = _service.getCustBillConsumptionAsync(contractId).Result;
             return View();
         }
         [HttpGet]
@@ -1606,41 +1612,95 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //    new { Period = "May-Jun", Value = 45 },
             //    new { Period = "Jun-Jul", Value = 60 }
             //};
-            var data = new List<ConsumptionData>();
-            var energyConsumptionsData = _service.getCustEnergyConsumptionAsync("EAG-000003").Result;
+            //var data = new List<ConsumptionData>();
+            //var energyConsumptionsData = _service.getCustEnergyConsumptionAsync("EAG-000003").Result;
+            //foreach (var item in energyConsumptionsData)
+            //{
+            //    data.Add(new ConsumptionData { Period = item.month, Value = Convert.ToDouble(item.amount) });
+            //}
+            //return Json(data);
+
+
+            //var labels = new[] { "Feb-Mar", "Mar-Apr", "Apr-May", "May-Jun", "Jun-Jul" };
+            //var data = new[] { 900, 750, 1100, 455, 600 };
+
+            //return Json(new
+            //{
+            //    labels = labels,
+            //    data = data
+            //});
+            string GetMonthName(int month)
+            {
+                return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(month);
+            }
+
+
+            var fetchData = new List<ConsumptionData>();
+            var energyConsumptionsData = _service.getCustEnergyConsumptionAsync("EAG-065556").Result;
+
             foreach (var item in energyConsumptionsData)
             {
-                data.Add(new ConsumptionData { Period = item.month, Value = Convert.ToDouble(item.amount) });
+                fetchData.Add(new ConsumptionData
+                {
+                    Period = item.month,
+                    Value = Convert.ToDouble(item.amount)
+                });
             }
-            return Json(data);
+
+            var labels = fetchData.Select(x =>
+            {
+                int month = Convert.ToInt32(x.Period);
+                string startMonth = GetMonthName(month);
+                string endMonth = GetMonthName((month % 12) + 1);
+                return $"{startMonth}-{endMonth}";
+            }).ToList();
+
+            var values = fetchData.Select(x => x.Value).ToList();
+
+            return Json(new
+            {
+                labels = labels,
+                data = values
+            });
+
         }
 
         [HttpGet]
         public JsonResult GetBillConsumption()
         {
-        //    var data = new[]
-        //    {
-        //    new { Period = "Apr 2023", Amount = 350 },
-        //    new { Period = "May 2023", Amount = 400 },
-        //    new { Period = "Jun 2023", Amount = 500 },
-        //    new { Period = "Jul 2023", Amount = 200 },
-        //    new { Period = "Aug 2023", Amount = 300 },
-        //    new { Period = "Sep 2023", Amount = 450 },
-        //    new { Period = "Oct 2023", Amount = 700 },
-        //    new { Period = "Nov 2023", Amount = 850 },
-        //    new { Period = "Dec 2023", Amount = 800 },
-        //    new { Period = "Jan 2024", Amount = 750 },
-        //    new { Period = "Feb 2024", Amount = 720 },
-        //    new { Period = "Mar 2024", Amount = 780 }
-        //};
+            //    var data = new[]
+            //    {
+            //    new { Period = "Apr 2023", Amount = 350 },
+            //    new { Period = "May 2023", Amount = 400 },
+            //    new { Period = "Jun 2023", Amount = 500 },
+            //    new { Period = "Jul 2023", Amount = 200 },
+            //    new { Period = "Aug 2023", Amount = 300 },
+            //    new { Period = "Sep 2023", Amount = 450 },
+            //    new { Period = "Oct 2023", Amount = 700 },
+            //    new { Period = "Nov 2023", Amount = 850 },
+            //    new { Period = "Dec 2023", Amount = 800 },
+            //    new { Period = "Jan 2024", Amount = 750 },
+            //    new { Period = "Feb 2024", Amount = 720 },
+            //    new { Period = "Mar 2024", Amount = 780 }
+            //};
 
-            var billingConsumptionsData = _service.getCustBillConsumptionAsync("EAG-000003").Result;
+            var billingConsumptionsData = _service.getCustBillConsumptionAsync("EAG-065556").Result;
             var data = new List<ConsumptionData>();
             foreach (var item in billingConsumptionsData)
             {
                 data.Add(new ConsumptionData { Period = item.month, Value = Convert.ToDouble(item.amount) });
             }
             return Json(data);
+
+            //var labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
+            //var data = new[] { 100, 500, 300, 800, 200, 300, 400, 600, 1000, 600, 900, 100 };
+
+            //return Json(new
+            //{
+            //    labels = labels,
+            //    data = data
+            //});
+
         }
 
 
@@ -1653,19 +1713,20 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         [HttpGet]
         public IActionResult DownloadPdfBillingReceipt(string eag, string invoiceDate)
         {
-            
+
             var dateCustom = Convert.ToDateTime(invoiceDate);
-            string base64String = _service.saveBillingReportAsync(eag,dateCustom.Month,dateCustom.Year).Result; // Replace with your actual logic
-         
-            if (base64String== "SalesID not found")
+            string base64String = _service.saveBillingReportAsync(eag, dateCustom.Month, dateCustom.Year).Result; // Replace with your actual logic
+
+            if (base64String == "SalesID not found")
             {
                 return Json("SalesID not found");
             }
-            else {
+            else
+            {
                 byte[] fileBytes = Convert.FromBase64String(base64String);
                 return File(fileBytes, "application/pdf", "document.pdf");
             }
-               
+
         }
         /// <summary>
         /// 
@@ -1759,7 +1820,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 {
                     a.RequestId = propertyRequest[0].ReqID;
                 }
-                
+
 
                 contractsList.Add(a);
             }
@@ -1782,20 +1843,31 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             var complainTypes = _service.GetrequestIDAsync().Result;
             var contracts = _service.getCustContAsync(userId, true).Result;
-            var complaintHistory = _service.GetComplainTicketHistoryAsync(contracts[0].PropertyId).Result;
-            if (complaintHistory == null || complaintHistory.Count() == 0)
+            if (contracts.Length > 0)
             {
-                complaintHistory = new ComplaintHistory[0];
+                var complaintHistory = _service.GetComplainTicketHistoryAsync(contracts[0].PropertyId).Result;
+                if (complaintHistory == null || complaintHistory.Count() == 0)
+                {
+                    complaintHistory = new ComplaintHistory[0];
+                }
+                ViewBag.SuccessMessage = "";
+                var viewModal = new ComplaintViewModal()
+                {
+                    Complaint = new Complaint(),
+                    SubTypes = complainTypes,
+                    ComplaintHistory = complaintHistory
+                };
+                return View(viewModal);
             }
-            ViewBag.SuccessMessage = "";
-            var viewModal = new ComplaintViewModal()
+
+            var viewModal1 = new ComplaintViewModal()
             {
                 Complaint = new Complaint(),
                 SubTypes = complainTypes,
-                ComplaintHistory = complaintHistory
+                ComplaintHistory = new ComplaintHistory[0]
             };
 
-            return View(viewModal);
+            return View(viewModal1);
         }
 
         /// <summary>
@@ -1966,7 +2038,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                     }
                 }
             }
-            
+
             return View(viewModal);
         }
 

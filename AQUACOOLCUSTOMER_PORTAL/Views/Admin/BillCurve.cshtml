@@ -16,9 +16,15 @@
         display: inline-block;
         margin: 1%;
         vertical-align: top;
+        margin-bottom: 8px
+    }
+
+    h4 {
+        display: flex;
+        align-content: center;
+        justify-content: center;
     }
 </style>
-<h2>Bill Curve</h2>
 
 <div class="chart-container">
     <h4>Energy Consumption</h4>
@@ -30,34 +36,48 @@
     <canvas id="billChart"></canvas>
 </div>
 <script>
-        $(document).ready(function () {
-        // Load both charts
+    $(document).ready(function () {
         loadEnergyConsumption();
         loadBillConsumption();
     });
+
+    let chart1;
+    let chart2;
 
     function loadEnergyConsumption() {
         $.ajax({
             url: '/Admin/GetEnergyConsumption',
             method: 'GET',
-            success: function (response) {
-                const labels = response.map(item => item.Period);
-                const data = response.map(item => item.Value);
+            success: function (res) {
+                let maxValue = Math.max(...res.data);
+                let roundedMax = Math.ceil(maxValue / 1000) * 1000;
+                const ctx = document.getElementById('energyChart').getContext('2d');
 
-                new Chart(document.getElementById('energyChart'), {
+                if (chart1) chart1.destroy();
+
+                chart1 = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: labels,
+                        labels: res.labels,
                         datasets: [{
-                            label: 'RTH',
-                            data: data,
-                            backgroundColor: '#00AEEF'
+                            label: `AED`,
+                            data: res.data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            borderRadius: 4,
                         }]
                     },
                     options: {
                         scales: {
                             y: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                max: roundedMax,
+                                ticks: {
+                                    callback: function (value) {
+                                        return `AED ${value.toLocaleString()}`;
+                                    }
+                                }
                             }
                         }
                     }
@@ -70,24 +90,36 @@
         $.ajax({
             url: '/Admin/GetBillConsumption',
             method: 'GET',
-            success: function (response) {
-                const labels = response.map(item => item.Period);
-                const data = response.map(item => item.Amount);
+            success: function (res) {
+                let maxValue = Math.max(...res.data);
+                let roundedMax = Math.ceil(maxValue / 1000) * 1000;
+                const ctx = document.getElementById('billChart').getContext('2d');
 
-                new Chart(document.getElementById('billChart'), {
+                if (chart2) chart2.destroy();
+
+                chart2 = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: labels,
+                        labels: res.labels,
                         datasets: [{
-                            label: 'AED',
-                            data: data,
-                            backgroundColor: '#00AEEF'
+                            label: `AED`,
+                            data: res.data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            borderRadius: 4,
                         }]
                     },
                     options: {
                         scales: {
                             y: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                max: roundedMax,
+                                ticks: {
+                                    callback: function (value) {
+                                        return `AED ${value.toLocaleString()}`;
+                                    }
+                                }
                             }
                         }
                     }
