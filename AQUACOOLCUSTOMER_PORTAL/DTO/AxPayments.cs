@@ -8,5 +8,6 @@
         public string TransactionNumber { get; set; }
         public string JournalNumber { get; set; }
         public string ContractId { get; set; }
+        public string TransNumberDescription { get; set; }
     }
 }

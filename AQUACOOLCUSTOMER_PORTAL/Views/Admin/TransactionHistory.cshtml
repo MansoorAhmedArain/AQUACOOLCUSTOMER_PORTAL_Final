@@ -43,7 +43,7 @@
                                 <th>Date</th>
                                 <th>Amount</th>
                                 <th>Type</th>
-                                <th>Status</th>
+                                <th>Trans Number</th>
                                 <th>Receipt</th>
                             </tr>
                         </thead>
@@ -54,8 +54,18 @@
                                     <td>@item.Date.ToShortDateString()</td>
                                     <td>@item.Amount</td>
                                     <td>@item.PayAgainst</td>
-                                    <td></td>
-                                    <td><a href="@Url.Action("getpaymentReceiptPDF", "admin", new{contract = @ViewBag.SelectedContractEAG, date = item.Date.ToShortDateString() })" style="text-decoration:none; color:#009ADE"><i class='fas fa-receipt' style="font-size:18px; color:#009ADE"></i></a></td>
+                                    <td>@item.TransNumberDescription</td>
+                                    <td>
+                                        @if(string.IsNullOrEmpty(item.TransNumberDescription))
+                                        {
+                                            <a href="@Url.Action("getpaymentReceiptPDF", "admin", new{contract = @ViewBag.SelectedContractEAG, date = item.Date.ToShortDateString() })" style="text-decoration:none; color:#009ADE"><i class='fas fa-receipt' style="font-size:18px; color:#009ADE"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <span> - </span>
+                                        }
+                                       
+                                    </td>
                                 </tr>
                             </tbody>
                         }

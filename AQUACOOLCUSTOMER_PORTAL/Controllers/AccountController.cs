@@ -18,8 +18,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         {
             //email = "mansoor.ahmed@bemea.com";
             // code = "E6C1B895-9B4F-4BA9-9EE4-01ECF318674B";
-            email = "mansoorahmedarain@gmail.com";
-            code = "5D6BDC55-C045-43FA-B71B-BC2A933BE6C8";
+            //email = "mansoorahmedarain@gmail.com";
+            //code = "5D6BDC55-C045-43FA-B71B-BC2A933BE6C8";
             if (!string.IsNullOrEmpty(email))
             {
                 var result = _service.verifyNewEmailAsync(email, code).Result;

@@ -1463,6 +1463,8 @@ namespace ServiceReference1
         
         private string transNumField;
         
+        private string transNumberDescriptionField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string Amount
@@ -1544,6 +1546,20 @@ namespace ServiceReference1
             set
             {
                 this.transNumField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string TransNumberDescription
+        {
+            get
+            {
+                return this.transNumberDescriptionField;
+            }
+            set
+            {
+                this.transNumberDescriptionField = value;
             }
         }
     }

@@ -94,7 +94,16 @@
                                     <td>@item.ComplaintID</td>
                                     <td>@item.Type</td>
                                     <td>@item.Status</td>
-                                    <td><a href="#">Esclate</a></td>
+                                    <td>
+                                        @if (item.Status == "Completed")
+                                        {
+                                            <a href="#">Esclate</a>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
                                 </tr>
                             }
                            

@@ -23,43 +23,43 @@
     <!-- Custom styles for this template -->
     <link href="~/css/Login/style.css" rel="stylesheet" />
     <link href="~/css/Login/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/ReconnectionRequest/style.css" rel="stylesheet" />
     <link href="~/css/ReconnectionRequest/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/MoveinRequest/style.css" rel="stylesheet" />
     <link href="~/css/MoveoutRequest/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/MoveoutRequest/style.css" rel="stylesheet" />
     <link href="~/css/MoveoutRequest/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/StatementofAccount/style.css" rel="stylesheet" />
     <link href="~/css/StatementofAccount/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/ForgetPassword/style.css" rel="stylesheet" />
     <link href="~/css/ForgetPage/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/UpdateDocuments/style.css" rel="stylesheet" />
     <link href="~/css/UpdateDocuments/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/MoveinRequest2/style.css" rel="stylesheet" />
     <link href="~/css/MoveinRequest2/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/TransactionHistory/style.css" rel="stylesheet" />
     <link href="~/css/TransactionHistory/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/AccountHistory/style.css" rel="stylesheet" />
     <link href="~/css/AccountHistory/responsive.css" rel="stylesheet" />
-    
+
     <link href="~/css/Complaint/style.css" rel="stylesheet" />
     <link href="~/css/Complaint/responsive.css" rel="stylesheet" />
-    
+
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light shadow">
             <div class="container-fluid">
-                <a href="@Url.Action("Index","Admin")">
+                <a href="@Url.Action("Index", "Admin")">
                     <img class="logo-style ms-5" src="/images/Logo.png" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@
                             <div class="input-group">
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">DASHBOARD</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="@Url.Action("AccountHistory","Admin")">Account History</a>
+                                    <a class="dropdown-item" href="@Url.Action("AccountHistory", "Admin")">Account History</a>
                                     <a class="dropdown-item" href="@Url.Action("BillCurve", "Admin")">Bill Curve</a>
                                 </div>
                         </li>
@@ -80,19 +80,19 @@
                             <div class="input-group">
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">REQUEST</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="@Url.Action("MoveInRequest","Admin")">Move in</a>
-                                    <a class="dropdown-item" href="@Url.Action("MoveoutRequest","Admin")">Move out</a>
-                                    <a class="dropdown-item" href="@Url.Action("ReconnectionRequest","Admin")">Reconncection Request</a>
+                                    <a class="dropdown-item" href="@Url.Action("MoveInRequest", "Admin")">Move in</a>
+                                    <a class="dropdown-item" href="@Url.Action("MoveoutRequest", "Admin")">Move out</a>
+                                    <a class="dropdown-item" href="@Url.Action("ReconnectionRequest", "Admin")">Reconncection Request</a>
                                 </div>
                         </li>
                         <li class="nav-item">
                             <div class="input-group">
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">PAYMENT</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="./SubmitPaymentProof.html">Submit Payment Proof</a>
-                                    <a class="dropdown-item" href="@Url.Action("TransactionHistory")">Transaction History</a>
-                                    <a class="dropdown-item" href="./StatementofAccount.html">Statement of Account</a>
-                                    <a class="dropdown-item" href="./PaymentReceipt.html">Bill/Payment Receipt</a>
+                                    <a class="dropdown-item" href="@Url.Action("SubmitPaymentProof", "Admin")">Submit Payment Proof</a>
+                                    <a class="dropdown-item" href="@Url.Action("TransactionHistory", "Admin")">Transaction History</a>
+                                    <a class="dropdown-item" href="@Url.Action("StatementofAccount", "Admin")">Statement of Account</a>
+                                    <a class="dropdown-item" href="@Url.Action("PaymentsReceipt", "Admin")">Bill/Payment Receipt</a>
                                 </div>
                         </li>
                         <li class="nav-item">
@@ -100,7 +100,7 @@
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">CUSTOMER SUPPORT</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="#">Bill Explanation</a>
-                                    <a class="dropdown-item" href="./Complaint.html">Complaint</a>
+                                    <a class="dropdown-item" href="@Url.Action("Complaint", "Admin")">Complaint</a>
 
                                 </div>
                         </li>
@@ -108,24 +108,24 @@
                             <div class="input-group">
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">MANAGE PROFILE</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="@Url.Action("ChangePasswordRequest","Admin")">Change Password</a>
-                                    <a class="dropdown-item" href="@Url.Action("UpdateDocuments","Admin")">Update Documents</a>
+                                    <a class="dropdown-item" href="@Url.Action("ChangePasswordRequest", "Admin")">Change Password</a>
+                                    <a class="dropdown-item" href="@Url.Action("UpdateDocuments", "Admin")">Update Documents</a>
                                 </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-2" href="@Url.Action("Logout","Admin")" style="color: #092f57;">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a>
+                            <a class="nav-link mx-2" href="@Url.Action("Logout", "Admin")" style="color: #092f57;">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-        <main role="main">
-            @RenderBody()
-        </main>
+    <main role="main">
+        @RenderBody()
+    </main>
 
-  
-     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script> *@
     <script src="/js/bootstrapjs/bootstrap.bundle.js"></script>
