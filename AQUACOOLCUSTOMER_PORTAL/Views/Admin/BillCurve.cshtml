@@ -1,6 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<AQUACOOLCUSTOMER_PORTAL.DTO.AxPayments>
+@using AQUACOOLCUSTOMER_PORTAL.DTO
 @{
 }
 <!-- Chart.js CDN -->
@@ -33,30 +32,54 @@
         margin-bottom: 10px;
     }
 </style>
-
+<h4 style="text-align:center; margin-top: 20px;"> Bill Curve</h4>
+<div class="input-group mb-3" style="width: 30%;
+    margin-left: 50px;
+    margin-top: 60px;">
+    <input type="hidden" name="selectedContract" id="selectedContractID" value="@ViewBag.SelectedContractEAG" />
+    <select class="form-control  rounded-pill" required placeholder="Select" name="EAG" style="border: 1px solid #8FD2F0;" id="EAGContractDropdown">
+        <option value="">Select a contract</option>
+        @{
+            foreach (var item in (List<ContractIDs>)ViewBag.ContractsList)
+            {
+                <option value="@item.ID">@item.Name</option>
+            }
+        }
+    </select>
+</div>
 <div class="charts-wrapper">
     <div class="chart-container">
-        <h4>Energy Consumption</h4>
+        <h6>Energy Consumption</h6>
         <canvas id="energyChart"></canvas>
     </div>
 
     <div class="chart-container">
-        <h4>Bill Consumption</h4>
+        <h6>Bill Consumption</h6>
         <canvas id="billChart"></canvas>
     </div>
 </div>
 <script>
     $(document).ready(function () {
-        loadEnergyConsumption();
-        loadBillConsumption();
+         document.getElementById("EAGContractDropdown").addEventListener("change", function () {
+        var selectedValue = this.value;
+        if (selectedValue) {
+            // Reload the page with the selected contractId as query parameter
+            //window.location.href = "?contractId=" + encodeURIComponent(selectedValue);
+             loadEnergyConsumption(selectedValue);
+            loadBillConsumption(selectedValue);
+        }
+    });
+         loadEnergyConsumption("");
+            loadBillConsumption("");
     });
 
     let chart1;
     let chart2;
 
-    function loadEnergyConsumption() {
+    function loadEnergyConsumption(contractId) {
+        
         $.ajax({
-            url: '/Admin/GetEnergyConsumption',
+            url: '/Admin/GetEnergyConsumption'+"?contractId=" + encodeURIComponent(contractId),
             method: 'GET',
             success: function (res) {
                 let maxValue = Math.max(...res.data);
@@ -111,9 +134,9 @@
         });
     }
 
-    function loadBillConsumption() {
+    function loadBillConsumption(contractId) {
         $.ajax({
-            url: '/Admin/GetBillConsumption',
+            url: '/Admin/GetBillConsumption'+"?contractId=" + encodeURIComponent(contractId),
             method: 'GET',
             success: function (res) {
                 let maxValue = Math.max(...res.data);
@@ -165,4 +188,5 @@
             }
         });
     }
+     
 </script>

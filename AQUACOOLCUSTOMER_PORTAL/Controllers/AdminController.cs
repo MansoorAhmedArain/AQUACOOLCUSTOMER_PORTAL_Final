@@ -1626,20 +1626,51 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
         public IActionResult BillCurve(string contractId = "")
         {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            var contracts = _service.getCustContAsync(userId, true).Result;
+            if (contracts.Length == 0)
+            {
+                ViewBag.ContractsList = new List<ContractIDs>();
+                ViewBag.SelectedContractEAG = "N/A";
+                ViewBag.SelectedContractDueDate = "N/A";
+                ViewBag.SelectedContractAmount = "N/A";
+                return View(new List<AxPayments>());
+            }
+            if (contractId == "")
+            {
+                contractId = contracts[0].ContractID; //"EAG-032457";
+
+            }
+            var contractsListData = LoadContractsForSelection(userId).Result;
+            ViewBag.ContractsList = contractsListData;
+            ViewBag.SelectedContractEAG = contractId;
             return View();
         }
         [HttpGet]
-        public JsonResult GetEnergyConsumption()
+        public JsonResult GetEnergyConsumption(string contractId)
         {
-           
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            
+            var contracts = _service.getCustContAsync(userId, true).Result;
+            if (string.IsNullOrWhiteSpace(contractId))
+            {
+                contractId = contracts[0].ContractID;
+
+            }
             string GetMonthName(int month)
             {
                 return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(month);
             }
-
+            //"EAG-065556"
 
             var fetchData = new List<ConsumptionData>();
-            var energyConsumptionsData = _service.getCustEnergyConsumptionAsync("EAG-065556").Result;
+            var energyConsumptionsData = _service.getCustEnergyConsumptionAsync(contractId).Result;
 
             foreach (var item in energyConsumptionsData)
             {
@@ -1669,30 +1700,24 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetBillConsumption()
+        public JsonResult GetBillConsumption(string contractId)
         {
-            //    var data = new[]
-            //    {
-            //    new { Period = "Apr 2023", Amount = 350 },
-            //    new { Period = "May 2023", Amount = 400 },
-            //    new { Period = "Jun 2023", Amount = 500 },
-            //    new { Period = "Jul 2023", Amount = 200 },
-            //    new { Period = "Aug 2023", Amount = 300 },
-            //    new { Period = "Sep 2023", Amount = 450 },
-            //    new { Period = "Oct 2023", Amount = 700 },
-            //    new { Period = "Nov 2023", Amount = 850 },
-            //    new { Period = "Dec 2023", Amount = 800 },
-            //    new { Period = "Jan 2024", Amount = 750 },
-            //    new { Period = "Feb 2024", Amount = 720 },
-            //    new { Period = "Mar 2024", Amount = 780 }
-            //};
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
 
+            var contracts = _service.getCustContAsync(userId, true).Result;
+            if (string.IsNullOrWhiteSpace(contractId))
+            {
+                contractId = contracts[0].ContractID;
+
+            }
+            
             string GetMonthName(int month)
             {
                 return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(month);
             }
 
-            var billingConsumptionsData = _service.getCustBillConsumptionAsync("EAG-065556").Result;
+            var billingConsumptionsData = _service.getCustBillConsumptionAsync(contractId).Result;
             var fetchData = new List<ConsumptionData>();
             foreach (var item in billingConsumptionsData)
             {
