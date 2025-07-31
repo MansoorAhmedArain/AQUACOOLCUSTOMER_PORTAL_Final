@@ -319,6 +319,14 @@ namespace ServiceReference1
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.SDRefundBanksList[]> GetSDRefundBanksListAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/ticketEscalationCheck", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> ticketEscalationCheckAsync(string _ticketid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/ticketEscalation", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> ticketEscalationAsync(string _ticketid, string _userInput);
+        
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/CreateComplainTicket", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> CreateComplainTicketAsync(string _propertyId, string _ticketSubType, string _subTicket, string _comments);
@@ -3688,6 +3696,16 @@ namespace ServiceReference1
         public System.Threading.Tasks.Task<ServiceReference1.SDRefundBanksList[]> GetSDRefundBanksListAsync()
         {
             return base.Channel.GetSDRefundBanksListAsync();
+        }
+        
+        public System.Threading.Tasks.Task<string> ticketEscalationCheckAsync(string _ticketid)
+        {
+            return base.Channel.ticketEscalationCheckAsync(_ticketid);
+        }
+        
+        public System.Threading.Tasks.Task<string> ticketEscalationAsync(string _ticketid, string _userInput)
+        {
+            return base.Channel.ticketEscalationAsync(_ticketid, _userInput);
         }
         
         public System.Threading.Tasks.Task<string> CreateComplainTicketAsync(string _propertyId, string _ticketSubType, string _subTicket, string _comments)

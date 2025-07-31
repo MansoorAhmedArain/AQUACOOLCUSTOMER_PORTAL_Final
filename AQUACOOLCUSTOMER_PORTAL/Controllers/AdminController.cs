@@ -1749,9 +1749,19 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult EsclateTicket(string ticketId)
+        {
+            var resp = _service.ticketEscalationCheckAsync(ticketId).Result;
+            return Json(new { success = true, result = resp });
+        }
 
-
-
+        [HttpPost]
+        public JsonResult UserDecison(string ticketId, string userInput)
+        {
+            var resp = _service.ticketEscalationAsync(ticketId, userInput).Result;
+            return Json(new { success = true, result = resp });
+        }
         /// <summary>
         /// 
         /// </summary>

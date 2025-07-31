@@ -95,20 +95,32 @@
                                     <td>@item.Type</td>
                                     <td>@item.Status</td>
                                     <td>
-                                        @if (item.Status == "Completed")
-                                        {
-                                            <a href="#">Esclate</a>
-                                        }
-                                        else
-                                        {
-                                            <span>-</span>
-                                        }
+                                       
+                                       <button class="btn btn-outline-primary" onclick="escalateTicket('@item.ComplaintID')" >Esclate</button>
+                                        
                                     </td>
                                 </tr>
                             }
                            
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="escalationModal" tabindex="-1" aria-labelledby="escalationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-3">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="escalationModalLabel">Ticket Escalation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="escalationModalBody">
+                    <!-- Dynamic content here -->
+                </div>
+                <div class="modal-footer" id="esclationModalFooeter">
+                    @* <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Close</button> *@
                 </div>
             </div>
         </div>
@@ -205,5 +217,74 @@
                 $('#complainSubTypeDropdown').empty().append($('<option>').val('').text('Select Sub Type'));
             }
         });
+         
+      
     });
+      function escalateTicket(ticketId) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/EsclateTicket', // Change this if your controller name is different
+            data: { ticketId: ticketId },
+            success: function (response) {
+                if (response.success) {
+                    
+                    if(response.result == "False"){
+                         $('#escalationModalBody').html(`<strong>Response:</strong> Your Ticket is in process.`);
+                    }
+                    else if(response.result == "True"){
+
+                         $('#esclationModalFooeter').html(`
+                            <button type="button" id='approveBtn' class="btn btn-secondary rounded-pill" onclick="escalateTicketDecison('${ticketId}','True')"  data-bs-dismiss="modal">Approve</button>
+                             <button type="button" id='rejectBtn' class="btn btn-secondary rounded-pill" onclick="escalateTicketDecison('${ticketId}','False')" data-bs-dismiss="modal">Reject</button>
+                         `);
+                    }
+                    else{
+                        $('#escalationModalBody').html(`<strong>Response:</strong> ${ response.result}`);
+                    }
+                    
+                } else {
+                    $('#escalationModalBody').html("Failed to escalate ticket.");
+                }
+                var modal = new bootstrap.Modal(document.getElementById('escalationModal'));
+                modal.show();
+            },
+            error: function () {
+                $('#escalationModalBody').html("An error occurred while escalating the ticket.");
+                var modal = new bootstrap.Modal(document.getElementById('escalationModal'));
+                modal.show();
+            }
+        });
+    }
+     function escalateTicketDecison(ticketId,userInput) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/UserDecison', // Change this if your controller name is different
+            data: { ticketId: ticketId, userInput: userInput },
+            success: function (response) {
+                if (response.success) {
+
+                    if(response.result == "False"){
+                         $('#escalationModalBody').html(`<strong>Response:</strong> Your Ticket is in process.`);
+                    }
+                    else{
+                        $('#escalationModalBody').html(`<strong>Response:</strong> ${ response.result}`);
+                         $('#approveBtn').hide();
+                          $('#rejectBtn').hide();
+                    }
+
+                } else {
+                    $('#escalationModalBody').html("Failed to escalate ticket.");
+                }
+                var modal = new bootstrap.Modal(document.getElementById('escalationModal'));
+                modal.show();
+            },
+            error: function () {
+                $('#escalationModalBody').html("An error occurred while escalating the ticket.");
+                var modal = new bootstrap.Modal(document.getElementById('escalationModal'));
+                modal.show();
+            }
+        });
+    }
 </script>

@@ -72,7 +72,7 @@ $(document).ready(function () {
                     $('#unitNumbersDropdown').append('<option value="' + unit.PropertyID + '">' + unit.Unit + '</option>');
                 });
 
-                var pdfFilePath = '/EUA/MAG-000001.pdf';
+                var pdfFilePath = '/EUA/' + selectedProject + '.pdf';//'/EUA/MAG-000001.pdf';
                 $('#pdfViewer').attr('src', pdfFilePath).show();
                 $('#downloadButton').attr('href', pdfFilePath).attr('download', 'Agreement.pdf').show();
                 

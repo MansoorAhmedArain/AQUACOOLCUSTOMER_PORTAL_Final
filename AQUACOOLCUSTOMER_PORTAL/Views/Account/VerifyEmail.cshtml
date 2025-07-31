@@ -2,4 +2,88 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "VerifyEmail";
+    Layout = null;
 }
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/images/fevicon.png" type="">
+
+    <title> Customer Login </title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/Accountinfo/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/Accountinfo/responsive.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light shadow">
+            <div class="container-fluid">
+                <a href="@Url.Action("Index", "Home")"><img class="logo-style ms-5" src="/images/Logo.png" alt=""> </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="bg-container d-none d-md-flex">
+            <div class="left-box">
+                <img src="/images/BG5.jpg" class="rounded-start rounded-pill img-style" alt="">
+            </div>
+            <div class="right-box py-5">
+                <div style=" white-space: nowrap;">
+
+                    <p class="mt-4" style="color: #03213d; font-size: 20px;">Congratulations, your customer ID <br> has been generated.</p>
+                    <button type="button" class="btn rounded-pill btn-style1">C-XXXX</button>
+
+                    <p class="mt-5" style="color: #03213d; font-size: 20px;">Please proceed with <br> Move in Request to the property.</p>
+                    <a type="button" class="btn rounded-pill btn-style1">Move in Request</a>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="/js/Custom.js"></script>
+    <script src="/js/Custom2.js"></script>
+    <script src="/js/bootstrapjs/bootstrap.bundle.js"></script>
+    <script src="https://kit.fontawesome.com/c5b8d1d3fa.js" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
+

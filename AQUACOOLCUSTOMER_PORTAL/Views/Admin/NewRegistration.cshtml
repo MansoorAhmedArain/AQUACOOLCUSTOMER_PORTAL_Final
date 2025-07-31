@@ -8,6 +8,8 @@
     var tde = docs.FirstOrDefault(x => x.FileName.ToLower().StartsWith("titledeed"));
     var ten = docs.FirstOrDefault(x => x.FileName.ToLower().StartsWith("tenancy"));
     var oth = docs.FirstOrDefault(x => x.FileName.ToLower().StartsWith("otherdocuments"));
+    var trdlicense = docs.FirstOrDefault(x => x.FileName.ToLower().StartsWith("tradelicense"));
+    var poAttorney = docs.FirstOrDefault(x => x.FileName.ToLower().StartsWith("attoryney"));
     var showStatus = "Verified";
 }
 
@@ -61,8 +63,9 @@
     <div class="bg-container d-none d-md-flex">
         <div class="left-box "><img src="/images/BG16.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
         <div class="right-box pt-4">
+            @Html.Partial("_Messages")
             <div class="icon-text h4">
-                @Html.Partial("_Messages")
+               
                 <span style="white-space: nowrap;">Move in Request</span>
             </div>
 
@@ -151,7 +154,7 @@
                             {
                             <tr>
                                 <td>Passport</td>
-                               @if (eid == null || eid.Status != showStatus)
+                                    @if (pas?.Status == null) //|| pas.Status != showStatus
                                 {
                                     <td>@ViewBag.CustomerType</td>
                                     <td>
@@ -161,7 +164,7 @@
                                                min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
                                     </td>
                                     <td>
-                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                            <input type="file" id="passport" name="passport" data-doc="passport"
                                                class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
                                         @if (pas != null && pas.Status == "Change")
                                         {
@@ -171,7 +174,7 @@
                                 }
                                 else
                                 {
-                                    <td class="status"><strong>Emirates Id is @eid.Status</strong></td>
+                                        <td class="status"><strong>Emirates Id is @pas.Status</strong></td>
                                 }
                             </tr>
                             }
@@ -192,7 +195,7 @@
                                                min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
                                     </td>
                                     <td>
-                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                        <input type="file" id="visa" name="visa" data-doc="visa"
                                                class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
                                         @if (vis != null && vis.Status == "Change")
                                         {
@@ -223,7 +226,7 @@
                                                min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
                                     </td>
                                     <td>
-                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                            <input type="file" id="tenancy" name="tenancy" data-doc="tenancy"
                                                class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
                                         @if (ten != null && ten.Status == "Change")
                                         {
@@ -275,7 +278,7 @@
                                                min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
                                     </td>
                                     <td>
-                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                            <input type="file" id="titledeed" name="titledeed" data-doc="titledeed"
                                                class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
                                         @if (tde != null && tde.Status == "Change")
                                         {
@@ -296,7 +299,7 @@
                             {
                             <tr>
                                 <td>Trade License</td>
-                                @if (eid == null || eid.Status != showStatus)
+                                    @if (trdlicense == null || trdlicense.Status != showStatus)
                                 {
                                     <td>@ViewBag.CustomerType</td>
                                     <td>
@@ -306,9 +309,9 @@
                                                min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
                                     </td>
                                     <td>
-                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                            <input type="file" id="tradelicense" name="tradelicense" data-doc="tradelicense"
                                                class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
-                                        @if (eid != null && eid.Status == "Change")
+                                            @if (trdlicense != null && trdlicense.Status == "Change")
                                         {
                                             <span><strong style="color:red;">Please re upload the document</strong></span>
                                         }
@@ -316,7 +319,7 @@
                                 }
                                 else
                                 {
-                                    <td class="status"><strong>Emirates Id is @eid.Status</strong></td>
+                                    <td class="status"><strong>Emirates Id is @trdlicense.Status</strong></td>
                                 }
                             </tr>
                             }
@@ -327,7 +330,7 @@
                             {
                             <tr>
                                 <td>Power of Attorney</td>
-                               @if (eid == null || eid.Status != showStatus)
+                                    @if (poAttorney == null || poAttorney.Status != showStatus)
                                 {
                                     <td>@ViewBag.CustomerType</td>
                                     <td>
@@ -337,18 +340,17 @@
                                                min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
                                     </td>
                                     <td>
-                                        <input type="file" id="emiratesid" name="emiratesid" data-doc="emiratesid"
+                                            <input type="file" id="attoryney" name="attoryney" data-doc="attoryney"
                                                class="fileUpload" accept=".pdf, .jpg, .jpeg, .png" multiple />
-                                        @if (eid != null && eid.Status == "Change")
-                                        {
-                                            <span><strong style="color:red;">Please re upload the document</strong></span>
-                                        }
+                                            @if (poAttorney != null && poAttorney.Status == "Change")
+                                                {
+                                                    <span><strong style="color:red;">Please re upload the document</strong></span>
+                                                }
                                     </td>
-                                       
                                 }
                                 else
                                 {
-                                    <td class="status"><strong>Emirates Id is @eid.Status</strong></td>
+                                        <td class="status"><strong>Emirates Id is @poAttorney.Status</strong></td>
                                 }
                             </tr>
                             }
