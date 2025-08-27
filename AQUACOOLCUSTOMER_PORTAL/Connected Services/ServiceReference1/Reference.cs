@@ -16,6 +16,10 @@ namespace ServiceReference1
     public interface Service1Soap
     {
         
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getLastPaymentDate", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<string> getLastPaymentDateAsync(string _contractid);
+        
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/test", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> testAsync(string strCode);
@@ -35,6 +39,10 @@ namespace ServiceReference1
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetProjects", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.Projects[]> GetProjectsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getProjectsofCustomer", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.Projects[]> getProjectsofCustomerAsync(string _customerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetInvoices", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -367,6 +375,10 @@ namespace ServiceReference1
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.SubTypes[]> getComplainSubtypeAsync(string _complainType);
         
+        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/ticketStepsInfo", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ServiceReference1.ComplaintTicketSteps> ticketStepsInfoAsync(string _ticketid);
+        
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/GetComplainTicketHistory", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.ComplaintHistory[]> GetComplainTicketHistoryAsync(string _property);
@@ -406,10 +418,6 @@ namespace ServiceReference1
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getCustBillConsumption", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustBillConsumptionAsync(string _contractid);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="AQC AX/getLastPaymentDate", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Threading.Tasks.Task<string> getLastPaymentDateAsync(string _contractid);
     }
     
     /// <remarks/>
@@ -544,6 +552,46 @@ namespace ServiceReference1
             set
             {
                 this.statusField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="AQC AX")]
+    public partial class ComplaintTicketSteps
+    {
+        
+        private string stageField;
+        
+        private string commentsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Stage
+        {
+            get
+            {
+                return this.stageField;
+            }
+            set
+            {
+                this.stageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Comments
+        {
+            get
+            {
+                return this.commentsField;
+            }
+            set
+            {
+                this.commentsField = value;
             }
         }
     }
@@ -3335,6 +3383,11 @@ namespace ServiceReference1
         {
         }
         
+        public System.Threading.Tasks.Task<string> getLastPaymentDateAsync(string _contractid)
+        {
+            return base.Channel.getLastPaymentDateAsync(_contractid);
+        }
+        
         public System.Threading.Tasks.Task<string> testAsync(string strCode)
         {
             return base.Channel.testAsync(strCode);
@@ -3358,6 +3411,11 @@ namespace ServiceReference1
         public System.Threading.Tasks.Task<ServiceReference1.Projects[]> GetProjectsAsync()
         {
             return base.Channel.GetProjectsAsync();
+        }
+        
+        public System.Threading.Tasks.Task<ServiceReference1.Projects[]> getProjectsofCustomerAsync(string _customerID)
+        {
+            return base.Channel.getProjectsofCustomerAsync(_customerID);
         }
         
         public System.Threading.Tasks.Task<ServiceReference1.GetInvoices[]> GetInvoicesAsync(string _custacc, string _contract)
@@ -3758,6 +3816,11 @@ namespace ServiceReference1
             return base.Channel.getComplainSubtypeAsync(_complainType);
         }
         
+        public System.Threading.Tasks.Task<ServiceReference1.ComplaintTicketSteps> ticketStepsInfoAsync(string _ticketid)
+        {
+            return base.Channel.ticketStepsInfoAsync(_ticketid);
+        }
+        
         public System.Threading.Tasks.Task<ServiceReference1.ComplaintHistory[]> GetComplainTicketHistoryAsync(string _property)
         {
             return base.Channel.GetComplainTicketHistoryAsync(_property);
@@ -3806,11 +3869,6 @@ namespace ServiceReference1
         public System.Threading.Tasks.Task<ServiceReference1.Consumption[]> getCustBillConsumptionAsync(string _contractid)
         {
             return base.Channel.getCustBillConsumptionAsync(_contractid);
-        }
-        
-        public System.Threading.Tasks.Task<string> getLastPaymentDateAsync(string _contractid)
-        {
-            return base.Channel.getLastPaymentDateAsync(_contractid);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

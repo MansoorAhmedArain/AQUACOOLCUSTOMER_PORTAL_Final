@@ -10,6 +10,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.DTO
         }
         public SubTypes[] SubTypes { get; set; } = new SubTypes[0];
         public Complaint Complaint { get; set; }
-        public ComplaintHistory[] ComplaintHistory { get; set; } = new ComplaintHistory[0];
+        public List<ModifiedComplaintHistory> ComplaintHistory { get; set; } = new List<ModifiedComplaintHistory>();
+        public ComplaintTicketSteps ComplaintTicketSteps { get; set; } 
     }
 }

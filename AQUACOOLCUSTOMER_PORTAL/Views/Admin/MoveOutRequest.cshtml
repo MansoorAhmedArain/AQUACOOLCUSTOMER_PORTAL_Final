@@ -63,6 +63,14 @@
                     </div>
 
                     <div class="mt-2 input-style">
+                        <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select a Contract</span>
+                        <div class="input-group">
+                            <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
+                            <select asp-for="ContractId" class="form-control rounded-start rounded-pill"  id="contractDropDown" required style="border: 1px solid #8FD2F0;" asp-items="@(new SelectList((List<SelectListItem>)ViewBag.ActiveContracts, "Value", "Text"))">
+                                <option value="">Select a Contract</option>
+                            </select>
+                        </div>
+
                         <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Project Selection</span>
                         <div class="input-group">
                             <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
@@ -79,13 +87,13 @@
 
                         </div>
 
-                        <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select a Contract</span>
+                        @* <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select a Contract</span>
                         <div class="input-group">
                             <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
                             <select asp-for="ContractId" class="form-control rounded-start rounded-pill" required style="border: 1px solid #8FD2F0;" asp-items="@(new SelectList((List<SelectListItem>)ViewBag.ActiveContracts, "Value", "Text"))">
                                 <option value="">Select a Contract</option>
                             </select>
-                        </div>
+                        </div> *@
 
                         <div class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select Move Out Date</div>
                         <div class="input-group">
@@ -283,4 +291,4 @@
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="~/js/site.js"></script>
+<script src="~/js/moveout.js"></script>

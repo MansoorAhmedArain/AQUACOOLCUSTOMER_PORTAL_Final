@@ -82,7 +82,9 @@
                             <tr>
                                 <th>Complaint ID</th>
                                 <th>Type</th>
+                                <th>Stage</th>
                                 <th>Status</th>
+                                <th>Comments</th>
                                 <th>Action</th>
 
                             </tr>
@@ -93,7 +95,9 @@
                                 <tr>
                                     <td>@item.ComplaintID</td>
                                     <td>@item.Type</td>
+                                    <td>@item.Stage</td>
                                     <td>@item.Status</td>
+                                    <td>@item.Comments</td>
                                     <td>
                                        
                                        <button class="btn btn-outline-primary" onclick="escalateTicket('@item.ComplaintID')" >Esclate</button>

@@ -94,7 +94,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
                 ViewBag.Status = file;
             }
-            Projects[] projects = await LoadProjectSelection();
+            Projects[] projects = await LoadAllProjectList();
             // ViewBag.Projects = projects;
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
@@ -126,7 +126,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 ModelState.AddModelError("Agreement", "Please Accept the End User Agreement");
             }
-            Projects[] projects = await LoadProjectSelection();
+            Projects[] projects = await LoadAllProjectList();
             ViewBag.Projects = projects;
             if (!ModelState.IsValid)
             {
@@ -205,6 +205,43 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var json = JsonConvert.SerializeObject(units);
             return json;
         }
+        
+        [HttpGet]
+        public async Task<string> LoadUnitsFromContract(string contractId)
+        {
+            var defaultProps = new CustContracts[] {
+                        new CustContracts
+                        {
+                        }
+                    };
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+               
+                return JsonConvert.SerializeObject(defaultProps);
+            }
+            var contracts = await _service.getCustContAsync(userId, true);
+            foreach (var item in contracts)
+            {
+                if (item.ContractID == contractId)
+                {
+                    var projectProperties = new CustContracts[] {
+                        new CustContracts
+                        {
+                            UnitName = item.UnitName,
+                            PropertyId = item.PropertyId,
+                            ProjectName = item.ProjectName,
+                            MainAgreement = item.MainAgreement
+                        }
+                    };
+                    return JsonConvert.SerializeObject(projectProperties);
+                     
+                }
+            }
+            return JsonConvert.SerializeObject(defaultProps);
+
+        }
 
 
 
@@ -212,7 +249,13 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         /// Get the list of the projects from ax
         /// </summary>
         /// <returns></returns>
-        private async Task<Projects[]> LoadProjectSelection()
+        private async Task<Projects[]> LoadProjectSelection(string userId)
+        {
+           // var projects = await _service.GetProjectsAsync();
+            var projects = await _service.getProjectsofCustomerAsync(userId);
+            return projects;
+        }
+        private async Task<Projects[]> LoadAllProjectList()
         {
             var projects = await _service.GetProjectsAsync();
             return projects;
@@ -242,7 +285,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
-            var projects = await LoadProjectSelection();
+            var projects = await LoadProjectSelection(userId);
 
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
@@ -270,7 +313,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
-            var projects = await LoadProjectSelection();
+            var projects = await LoadProjectSelection(userId);
 
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
@@ -882,7 +925,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
-            Projects[] projects = await LoadProjectSelection();
+            Projects[] projects = await LoadProjectSelection(userId);
             ViewBag.Projects = projects;
             ViewBag.BankNameList = Getbanks();
             ViewBag.ActiveContracts = GetActiveContracts(userId);
@@ -908,7 +951,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectToAction("index", "Home");
             }
-            Projects[] projects = await LoadProjectSelection();
+            Projects[] projects = await LoadProjectSelection(userId);
             ViewBag.Projects = projects;
             ViewBag.BankNameList = Getbanks();
             ViewBag.ActiveContracts = GetActiveContracts(userId);
@@ -1908,6 +1951,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             }
             var complainTypes = _service.GetrequestIDAsync().Result;
             var contracts = _service.getCustContAsync(userId, true).Result;
+            
             if (contracts.Length > 0)
             {
                 var complaintHistory = _service.GetComplainTicketHistoryAsync(contracts[0].PropertyId).Result;
@@ -1915,12 +1959,30 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 {
                     complaintHistory = new ComplaintHistory[0];
                 }
-                ViewBag.SuccessMessage = "";
+                
+                var modifiedByTicketsList = new List<ModifiedComplaintHistory>();
+                foreach (var item in complaintHistory)
+                {
+                    var getStagesData = _service.ticketStepsInfoAsync(item.ComplaintID).Result;
+                    if (getStagesData ==  null)
+                    {
+                        getStagesData = new ComplaintTicketSteps();
+                    }
+                    modifiedByTicketsList.Add(new ModifiedComplaintHistory
+                    {
+                        ComplaintID = item.ComplaintID,
+                        Type = item.Type,
+                        Status = item.Status,
+                        Stage = getStagesData.Stage,
+                        Comments = getStagesData.Comments
+                    });
+                }
+                    ViewBag.SuccessMessage = "";
                 var viewModal = new ComplaintViewModal()
                 {
                     Complaint = new Complaint(),
                     SubTypes = complainTypes,
-                    ComplaintHistory = complaintHistory
+                    ComplaintHistory = modifiedByTicketsList
                 };
                 return View(viewModal);
             }
@@ -1929,7 +1991,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 Complaint = new Complaint(),
                 SubTypes = complainTypes,
-                ComplaintHistory = new ComplaintHistory[0]
+                ComplaintHistory = new List<ModifiedComplaintHistory>()
             };
 
             return View(viewModal1);
@@ -1967,11 +2029,29 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 complaintHistory = new ComplaintHistory[0];
             }
+
+            var modifiedByTicketsList = new List<ModifiedComplaintHistory>();
+            foreach (var item in complaintHistory)
+            {
+                var getStagesData = _service.ticketStepsInfoAsync(item.ComplaintID).Result;
+                if (getStagesData == null)
+                {
+                    getStagesData = new ComplaintTicketSteps();
+                }
+                modifiedByTicketsList.Add(new ModifiedComplaintHistory
+                {
+                    ComplaintID = item.ComplaintID,
+                    Type = item.Type,
+                    Status = item.Status,
+                    Stage = getStagesData.Stage,
+                    Comments = getStagesData.Comments
+                });
+            }
             var viewModal = new ComplaintViewModal()
             {
                 SubTypes = complainTypes,
                 Complaint = complaint,
-                ComplaintHistory = complaintHistory
+                ComplaintHistory = modifiedByTicketsList
             };
             // }
             return View(viewModal);
@@ -2041,7 +2121,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
-            var projects = await LoadProjectSelection();
+            var projects = await LoadProjectSelection(userId);
 
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;
@@ -2067,7 +2147,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
-            var projects = await LoadProjectSelection();
+            var projects = await LoadProjectSelection(userId);
 
             // var units = LoadUnitSelection("test");
             ViewBag.Projects = projects;

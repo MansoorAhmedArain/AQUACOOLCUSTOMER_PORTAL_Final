@@ -25,12 +25,11 @@
                     <a class="dropdown-item" href="#">Another action</a>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
-            </div> *@
+             </div> *@
                 <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
                 <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown">
                     <option value="">Select a project</option>
                     @{
-                        <option value="">project</option>
                         foreach (var project in (Projects[])ViewBag.projects)
                         {
                             <option value="@project.Id">@project.Name</option>
@@ -55,7 +54,7 @@
 
                 <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">Invoice Number</div>
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control rounded-pill" required name="Invoice" style="border: 1px solid #8FD2F0;">
+                    <input type="text" class="form-control rounded-pill"  name="Invoice" style="border: 1px solid #8FD2F0;">
                 </div>
 
 
@@ -85,6 +84,7 @@
                     <input type="file" name="file" class="form-control"  required />
                     <button type="submit" class="btn rounded-pill btn-style mt-3">Submit</button>
                 </div>
+            </div>
         </form>
        
     </div>

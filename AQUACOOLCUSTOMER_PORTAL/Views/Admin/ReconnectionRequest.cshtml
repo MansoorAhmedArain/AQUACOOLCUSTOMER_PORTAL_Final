@@ -18,7 +18,7 @@
                 <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown">
                     <option value="">Select a project</option>
                     @{
-                        <option value="">project</option>
+                        
                         foreach (var project in (Projects[])ViewBag.projects)
                         {
                             <option value="@project.Id">@project.Name</option>

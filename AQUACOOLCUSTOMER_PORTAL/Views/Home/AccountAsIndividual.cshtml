@@ -131,7 +131,7 @@
                             <select class="form-control rounded-start rounded-pill" placeholder="Select" required name="Nationality" style="border: 1px solid #8FD2F0;" id="Nationality">
                                 <option value="">Select a request Id</option>
                                 @{
-                                    <option value="">project</option>
+                                    // <option value="">project</option>
                                     foreach (var item in (List<SelectListItem>)ViewBag.Countries)
                                     {
                                         <option value="@item.Value">@item.Text</option>
