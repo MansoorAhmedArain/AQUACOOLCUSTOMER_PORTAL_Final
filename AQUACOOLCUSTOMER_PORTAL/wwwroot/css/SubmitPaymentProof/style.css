@@ -44,9 +44,8 @@ body{
     
 }
 
-.img-style{
-    width: 475px;
-    height: 85vh;
+.img-style {
+    width: 470px;
 }
 
 .right-box{
@@ -95,53 +94,3 @@ body{
 
 /*Background Design End  */
 
-
-/* Mobile Design */
-
-.mb-container{
-    height: calc(100% - 100px);
-    width: 100%;
-}
-
-.mbimage-style{
-    width: 100vw;
-    height: 88vh;
-    background-image: url(/images/Stock\ BG11\ Image.jpg); 
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.box{
-    height: 85vh;
-    width: 55vw;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    flex-direction: column;
-}
-
-
-
-.heading i{
-    font-weight: bold;
-}
-
-.mbinput-style{
-    width: 45vw;
-}
-
-.mbbtn-style{
-    background-color: #3ec529;
-    color: white;
-    width: 100%;
-    text-wrap: nowrap;
-}
-
-
-
-/* Model Design End */

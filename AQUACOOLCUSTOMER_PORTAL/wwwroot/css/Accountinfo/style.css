@@ -38,20 +38,19 @@ body {
 
 
 .left-box {
-    height: calc(100% - 100px);
+    height: 100%;
     width: 30%;
     display: flex;
 }
 
 .img-style {
-    height: 625px;
     width: 460px;
 }
 
 .right-box {
-    height: calc(100% - 100px);
+    height: 100%;
     width: 70%;
-    padding: 80px 270px;
+    padding: 15px 270px;
 }
 
 .input-style i {
@@ -67,15 +66,8 @@ body {
         margin-right: 10px;
     }
 
-
-
-.icon-image {
-    width: 25px;
-}
-
 .input-style {
-    height: 70vh;
-    width: 29vw;
+    width: 28vw;
 }
 
 .btn-container {
@@ -109,12 +101,6 @@ body {
     color: white;
 }
 
-.btn-style1:hover, .btn-style1:active {
-    background-color: #3ec529;
-    border-right: 1px solid #42ad31;
-    color: white;
-}
-
 .backbtn-style:hover, .backbtn-style:active {
     background-color: #9b9a9a;
     border-right: 1px solid #8d8989;
@@ -124,115 +110,3 @@ body {
 
 /*Background Design End  */
 
-
-/* Mobile Design */
-
-.mb-container {
-    height: calc(100% - 100px);
-    width: 100%;
-}
-
-.mbimage-style {
-    width: 100vw;
-    height: 88vh;
-    background-image: url(/images/Stock\ BG4\ Image.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.mbimage-style1 {
-    width: 100vw;
-    height: 88vh;
-    background-image: url(/images/Stock\ BG5\ Image.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.box {
-    height: 85vh;
-    width: 60vw;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.mb-progress {
-    position: relative;
-    top: 40px;
-}
-
-.mbstep-container {
-    position: relative;
-    top: 40px;
-}
-
-
-
-.heading i {
-    font-weight: bold;
-}
-
-.heading h3 {
-    font-weight: bold;
-}
-
-
-
-.mbinput-style {
-    width: 45vw;
-}
-
-.mbbtn-style {
-    background-color: #44D62C;
-    color: white;
-    width: 100%;
-}
-
-.mbcust-btn {
-    background-color: #033059;
-    color: white;
-    width: 100%;
-}
-
-
-/* Model Design End */
-
-
-.progress {
-    height: 3px;
-    width: 30vw;
-}
-
-
-
-.step-container {
-    position: relative;
-    text-align: center;
-    transform: translateY(-43%);
-    width: 30vw;
-}
-
-.step-circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #fff;
-    border: 2px solid #44D62C;
-    line-height: 30px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    cursor: pointer; /* Added cursor pointer */
-}

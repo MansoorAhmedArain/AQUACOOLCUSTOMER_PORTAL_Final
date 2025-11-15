@@ -1,163 +1,69 @@
-@media (max-width: 991px) {
+/* ===== Desktop Defaults (keep as-is) ===== */
 
-    .navbar-nav{
-          width: 40%;
-     }
-  
-    .logo-style{
-      width: 12vw;
-     
+/* ===== Mobile Responsive ===== */
+@media (max-width: 980px) {
+    .img-style {
+        border-radius: 0 !important;
+        width: 100% !important;
+        height: 100vh;
+        object-fit: cover;
     }
-   .left-box{
-       height: 100%;
-       width: 25%;
-   }
-   
-   .img-style{
-       width: 350px;
-       height: 595px;
-   }
-   
-   
-   .right-box{
-      height: 100%;
-      width: 75%;
-     
-   }
-  
-   .input-style{
-    width: 35vw;
-  }
-  
-  .progress{
-    width: 36vw;
+
+    .navbar {
+        height: auto;
+        justify-content: center !important; /* centers navbar content */
+    }
+
+        .navbar .container-fluid {
+            display: flex;
+            justify-content: center; /* centers the logo inside the container */
+        }
+
+    .logo-style {
+        margin: 0 !important;
+        width: 20vw;
+    }
+
+    .navbar-nav {
+        width: 60%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .bg-container {
+        position: relative;
+        flex-direction: column;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .left-box {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .right-box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(4px);
+        padding: 20px;
+    }
+
+    .input-style input,
+    .input-style select {
+        height: 35px;
+        font-size: 10px;
+    }
+    .input-style{
+        width: 75vw;
+    }
+
 }
- 
- .step-container {
-    width: 36vw;
- }
-    .step-2 footer {
-        font-size: 13px;
-    }
-
-    .step-2 p {
-        font-size: 15px;
-    }
-  
-  }
-  
-  @media (max-width: 767px) {
-    
-    .navbar{
-      height: 80px;
-      width: 100%;
-  }
-  
-  
-  .mbinput-style{
-    width: 45vw;
-  }
-
-  .progress{
-    width: 44vw;
-  }
- 
-  .step-container {
-    width: 44vw;
-  }
-  
-  }
-  
-  
-  @media (max-width: 600px) {
-  
-    .logo-style{
-      width: 12vmax;
-    }
-  .box{
-      height: 85vh;
-      width: 60vw;
-  }
-  
-  .mbinput-style{
-    width: 50vw;
-  }
-
-  .progress{
-    width: 50vw;
-  }
- 
-  .step-container {
-    width: 50vw;
-  }
-  }
-  
-  
-  @media (max-width: 500px) {
-  
-    .box{
-        height: 85vh;
-        width: 65vw;
-    }
-   
-    .mbinput-style{
-      width: 60vw;
-    }
-
-    .progress{
-      width: 58vw;
-    }
-   
-    .step-container {
-      width: 58vw;
-    }
-  }
-    
-  @media (max-width: 420px) {
-    .box{
-      height: 85vh;
-      width: 85vw;
-  }
-  
-  .mbinput-style{
-    width: 80vw;
-   
-  }
-
-  .mb-progress{
-    position: relative;
-    top: 55px;
-  }
-  
-  .mbstep-container{
-    position: relative;
-    top: 55px;
-  }
-
-  .progress{
-    width: 78vw;
-  }
- 
-  .step-container {
-    width: 78vw;
-  }
- 
-  }
-  
-  @media (max-width: 360px) {
-    .box{
-      height: 87vh;
-      width: 95vw;
-  }
-  
-  
-  }
-    
-  @media (max-width: 250px) {
-    body{
-      display: none;
-    }
-  }
-  
-  
-  

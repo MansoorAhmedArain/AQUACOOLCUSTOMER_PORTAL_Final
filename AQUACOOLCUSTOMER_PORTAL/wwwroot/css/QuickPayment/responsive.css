@@ -1,129 +1,136 @@
-@media (max-width: 991px) {
+@media (max-width: 1020px) {
+    .img-style {
+        border-radius: 0 !important;
+        width: 100% !important;
+        height: 100vh;
+        object-fit: cover;
+    }
 
-  .navbar-nav{
-        background-color:white;
-        width: 40%;
-        opacity: 1;
-        transform: translate(-2px, -1px);
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
-   }
+    .navbar {
+        height: auto;
+        justify-content: center !important; /* centers navbar content */
+    }
 
-  .logo-style{
-    width: 12vw;
-   
-  }
- .left-box{
-     height: 100%;
-     width: 20%;
- }
- 
- .img-style{
-     width: 350px;
-     height: 575px;
- }
- 
- 
- .right-box{
-    height: 100%;
-    width: 80%;
-    padding: 80px 270px;
- 
- }
- .form-style{
-  width: 30vw;
+    .navbar .container-fluid {
+        display: flex;
+        justify-content: center; /* centers the logo inside the container */
+    }
+
+    .logo-style {
+        margin: 0 !important;
+        width: 13vw;
+    }
+
+    .navbar-nav {
+        width: 60%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .bg-container {
+        position: relative;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .left-box {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .right-box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(4px);
+        padding: 20px;
+    }
+
+    .form-style {
+        width: 80%;
+
+    }
+
+    .modal-dialog {
+        max-width: 95% !important;
+        margin: 1rem auto !important;
+    }
+
+    .modal-content {
+        width: 100% !important;
+        padding: 1rem !important;
+    }
+
+    .modal-body {
+        flex-direction: column !important;
+        flex-wrap: wrap !important;
+        text-wrap: wrap !important;
+        align-items: center;
+    }
+
+    .modal-leftbox,
+    .md-container {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .modal-leftbox {
+        margin-bottom: 1rem !important;
+    }
+
+    .modal-rightbox {
+        width: 100% !important;
+        height: auto !important;
+        margin: 1rem 0 !important;
+        padding: 1rem !important;
+    }
+
+    .modal-style {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    .modal-btn {
+        width: 100% !important;
+        font-size: 2vw !important;
+    }
+
+    .payment-text {
+        margin-left: 0 !important;
+    }
+
+    .form-text,
+    .mdform-style,
+    .text-style small {
+        font-size: 2vw !important;
+    }
+
+    .input-group input {
+        font-size: 2vw !important;
+    }
+
+    .agree-text label {
+        font-size: 2vw !important;
+    }
+
+    .input-col input {
+        height: 60% !important; /* reduce height */
+    }
+
+    .input-group {
+        flex-direction: column !important; /* stack inputs vertically on small screens */
+    }
+    /* Ensure modal scrolls on very small phones */
+    .modal-content {
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+    }
 }
-.btn-style{
-   background-color: #44D62C;
-   color: white;
-   width: 30vw;
-}
-}
-
-@media (max-width: 767px) {
-  
-  .navbar{
-    height: 80px;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-}
-}
-
-
-@media (max-width: 600px) {
-
-.box{
-    height: 60vh;
-    width: 45vw;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    flex-direction: column;
-}
-
-.logo-style{
-  width: 12vmax;
-}
-.heading i{
-  font-weight: bold;
-  max-width: 2%;
-}
-
-.heading h3{
-  font-weight: bold;
-  max-width: 2%;
-}
-
-.mbform-style{
-   max-width: 30vw;
-}
-
-
-
-}
-
-
-@media (max-width: 500px) {
-
-  .box{
-      height: 58vh;
-      width: 50vw;
-      background-color: white;
-      display: flex;
-      align-items: center;
-      justify-content:center;
-      flex-direction: column;
-  }
-  .mbform-style{
-    max-width: 50vw;
- }
- 
-
-}
-  
-@media (max-width: 400px) {
-  .box{
-      height: 58vh;
-      width: 75vw;
-      background-color: white;
-      display: flex;
-      align-items: center;
-      justify-content:center;
-      flex-direction: column;
-  }
-  .mbform-style{
-    max-width: 50vw;
- }
- 
-
- 
-}
-  
-@media (max-width: 250px) {
-  body{
-    display: none;
-  }
-}
-
-

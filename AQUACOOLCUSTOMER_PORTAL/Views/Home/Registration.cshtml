@@ -48,46 +48,23 @@
         <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light shadow">
             <div class="container-fluid">
                 <a href="@Url.Action("Index","Home")"><img class="logo-style ms-5" src="/images/Logo.png" alt=""> </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto rounded">
-                       @*  <li class="nav-item">
-                            <a class="nav-link mx-2" href="/Dashboard.html" style="color: #092f57;">DASHBOARD</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2" href="/Request.html" style="color: #092f57;">REQUEST</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2" href="#" style="color: #092f57;">PAYMENT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2" href="#" style="color: #092f57;">CUSTOMER SUPPORT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2" href="#" style="color: #092f57;">MANAGE PROFILE</a>
-                        </li> *@
-                        @* <li class="nav-item">
-                            <a class="nav-link mx-2" href="#" style="color: #092f57;">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a>
-                        </li> *@
-                    </ul>
-                </div>
             </div>
         </nav>
     </header>
 
     <main>
-        <div class="bg-container d-none d-md-flex">
+        <div class="bg-container d-md-flex">
             <div class="left-box "><img src="/images/BG3.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
             <div class="right-box">
-                <form role="form" method="get" action="@Url.Action("AccountInfo","Home")">
+
                     <div class="icon-text h3" style="font-weight: bolder;">
                         <img src="~/Icons/User-Name.png" alt="" class="icon-image">
                         <span>Create New Account</span>
                     </div>
+              
                     <div class="mt-5 input-style">
+                       <form role="form" method="get" action="@Url.Action("AccountInfo", "Home")">
                         <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Customer Type</div>
                         <div class="input-group mb-3">
                             <span class="input-group-text rounded-pill rounded-end" style="background-color: #033059;">
@@ -107,43 +84,10 @@
 
                         <input type="submit" id="submitButton" class="btn rounded-pill btn-style my-4" value="Next"/>
                         <p id="warningMessage" style="color:red; display:none">Please select an option before proceeding.</p>
+                    </form>
                     </div>
-                </form>
             </div>
         </div>
-
-        <!--Mobile design-->
-        <div class="mb-container d-md-none">
-            <div class="mbimage-style ">
-                <div class="box rounded shadow-lg">
-                    <div class="icon-text h3" style="font-weight: bolder;">
-                        <img src="./Icons/User-Name.png" alt="" class="icon-image">
-                        <span>Create New Account</span>
-                    </div>
-                    <div class="mt-5 mbinput-style">
-                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Customer Type</div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text rounded-pill rounded-end" style="background-color: #033059;">
-                                <img src="~/Icons/Company.png" alt="Company" class="icon-style" id="icon-img">
-                            </span>
-                            <select name="regType" id="options" class="form-control rounded-pill rounded-start" style="border: 1px solid #8FD2F0;" onchange="changeIcon()">
-                                <option value="" selected>-- Select Registration Type --</option>
-                                <option value="Company">Company</option>
-                                <option value="Individual">Individual</option>
-                            </select>
-                        </div>
-
-                        @* <div class="input-group mb-3">
-                            <span class="input-group-text rounded-pill rounded-end" style="background-color: #033059;"><i class="fa-solid fa-user " style="color: white;"></i></span>
-                            <input type="text" class="form-control rounded-start rounded-pill" placeholder="Individual" style="border: 1px solid #8FD2F0;">
-                        </div> *@
-
-                        <a href="/Home/Accountinfo" class="btn rounded-pill btn-style my-4">Next</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </main>
 
     <script>

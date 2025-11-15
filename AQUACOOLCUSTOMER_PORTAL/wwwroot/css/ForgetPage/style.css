@@ -1,25 +1,25 @@
-body{
-   font-family: 'Roboto';
-   height: 100%;
-   width: 100%;
+body {
+    font-family: 'Roboto';
+    height: 100%;
+    width: 100%;
 }
 
 
-.logo-style{
+.logo-style {
     width: 9vmax;
 }
 
 /* Header Navbar */
 
-.navbar{
+.navbar {
     height: 100px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
 
-.navbar-nav{
-    background-color:white;
+.navbar-nav {
+    background-color: white;
 }
 
 /* Header Navbar End */
@@ -28,30 +28,29 @@ body{
 
 /* Background Design */
 
-.bg-container{
+.bg-container {
     height: calc(100% - 100px);
     width: 100%;
     position: absolute;
     display: flex;
     flex-wrap: wrap;
 }
-  
-  
-.left-box{
+
+
+.left-box {
     height: 100%;
     width: 30%;
     display: flex;
-    
 }
 
-.img-style{
+.img-style {
     width: 460px;
 }
 
-.right-box{
-   height: 100%;
-   width: 70%;
-   padding: 80px 270px;
+.right-box {
+    height: 100%;
+    width: 70%;
+    padding: 80px 270px;
 }
 
 
@@ -59,89 +58,32 @@ body{
     display: inline;
     text-wrap: nowrap;
 }
-  
-.icon-text i {
-    margin-right: 10px;
-}
-  
 
+    .icon-text i {
+        margin-right: 10px;
+    }
 
-.input-style{
-    width: 28vw;
-}
-
-.icon-image{
+.icon-image {
     width: 25px;
 }
 
+.input-style {
+    width: 28vw;
+}
 
-.forget-btn{
+
+
+.forget-btn {
     background-color: #033059;
     color: white;
     width: 100%;
 }
 
-.forget-btn:hover, .forget-btn:active {
-    background-color: #04417a;
-    border-right: 1px solid #04417a;
-    color: white;
- 
-}
+    .forget-btn:hover, .forget-btn:active {
+        background-color: #04417a;
+        border-right: 1px solid #04417a;
+        color: white;
+    }
 
 /*Background Design End  */
 
-
-/* Mobile Design */
-
-.mb-container{
-    height: calc(100% - 100px);
-    width: 100%;
-}
-
-.mbimage-style{
-    width: 100vw;
-    height: 88vh;
-    background-image: url(/images/Stock\ BG2\ Image.jpg); 
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.box{
-    height: 70vh;
-    width: 50vw;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    flex-direction: column;
-}
-
-
-
-.heading i{
-    font-weight: bold;
-}
-
-.heading h3{
-    font-weight: bold;
-}
-
-
-
-.mbinput-style{
-    width: 45vw;
-}
-
-
-.mbforget-btn{
-    background-color: #033059;
-    color: white;
-    width: 100%;
-}
-
-
-/* Model Design End */

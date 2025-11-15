@@ -46,13 +46,54 @@ body{
 
 .img-style{
     width: 475px;
-    height: 85vh;
 }
 
 .right-box{
    height: 100%;
    width: 70%;
    padding: 80px 270px;
+}
+
+.right-box .table-wrapper {
+   width: 100%;
+   max-height: 23vh; /* scrollable height */
+   overflow-y: auto;
+   overflow-x: auto; /* hide horizontal scrollbar */
+}
+.right-box .table-wrapper table {
+    width: 100%; /* make table fit container */
+    display: table; /* reset display */
+}
+
+table {
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #009ADE;
+    color: white;
+}
+
+th, td {
+    padding: 5px;
+    border: 1px solid #ddd;
+    font-size: 70%;
+    text-align: center;
+}
+
+th {
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+td:first-child {
+    font-weight: bolder;
 }
 
 .icon-image{
@@ -91,63 +132,12 @@ body{
     color: white;
 }
 
-    .btn-style:hover, .btn-style:active {
-        background-color: #04417a;
-        border-right: 1px solid #42ad31;
-        color: white;
-    }
+.btn-style:hover, .btn-style:active {
+    background-color: #04417a;
+    border-right: 1px solid #42ad31;
+    color: white;
+}
  
 
 
 /*Background Design End  */
-
-
-/* Mobile Design */
-
-.mb-container{
-    height: calc(100% - 100px);
-    width: 100%;
-}
-
-.mbimage-style{
-    width: 100vw;
-    height: 88vh;
-    background-image: url(/images/Stock\ BG12\ Image.jpg); 
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.box{
-    height: 85vh;
-    width: 55vw;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    flex-direction: column;
-}
-
-
-
-.heading i{
-    font-weight: bold;
-}
-
-.mbinput-style{
-    width: 45vw;
-}
-
-.mbbtn-style{
-    background-color: #3ec529;
-    color: white;
-    width: 100%;
-    text-wrap: nowrap;
-}
-
-
-
-/* Model Design End */

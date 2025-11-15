@@ -3,80 +3,109 @@
 @{
     ViewData["Title"] = "Complaint";
 }
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/fevicon.png" type="">
+
+    <title>Complaint</title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/Complaint//style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/Complaint/responsive.css" rel="stylesheet" />
+
+</head>
+
 <main>
-    <div class="bg-container d-none d-md-flex">
+    <div class="bg-container d-md-flex">
         <div class="left-box "><img src="/images/Stock BG13 Image.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
         <div class="right-box pt-3">
             <div class="icon-text h4">
                 <span>Complaint</span>
             </div>
-            <form method="post" action="@Url.Action("Complaint","Admin")">
-                <div class="input-style mt-3">
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Complain Ticket Type</div>
-                    <div class="input-group mb-2">
-                        <select class="form-control  rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" name="SubType" id="complainTypeDropdown">
-                            <option value=""> -- Select a complain type -- </option>
-                            @{
+                <div class="input-style mt-3 mb-3">
+                      <form method="post" action="@Url.Action("Complaint","Admin")">
+                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Complain Ticket Type</div>
+                        <div class="input-group mb-2">
+                            <select class="form-control  rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" name="SubType" id="complainTypeDropdown">
+                                <option value=""> -- Select a complain type -- </option>
+                                @{
 
-                                foreach (var subTypes in Model.SubTypes)
-                                {
-                                    <option value="@subTypes.RequestID">@subTypes.Description</option>
+                                    foreach (var subTypes in Model.SubTypes)
+                                    {
+                                        <option value="@subTypes.RequestID">@subTypes.Description</option>
+                                    }
                                 }
-                            }
-                        </select>
-                    </div>
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Complain Ticket SubType</div>
-                    <div class="input-group mb-2">
-                        <select class="form-control  rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" name="TicketType" id="complainSubTypeDropdown">
-                            <option value=""> -- Select a complain type -- </option>
+                            </select>
+                        </div>
+                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Complain Ticket SubType</div>
+                        <div class="input-group mb-2">
+                            <select class="form-control  rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;" name="TicketType" id="complainSubTypeDropdown">
+                                <option value=""> -- Select a complain type -- </option>
                            
-                        </select>
-                    </div>
-                    <div class="ms-3" id="labelHighbil" style="color: #03213d; font-size: small; font-weight: bolder;">High Bill - Invoice Number</div>
-                    <div class="input-group mb-2" >
-                        <input type="text" class="form-control rounded-pill" id="HighBillInvoiceNo" name="HighBillInvoiceNo" style="border: 1px solid #8FD2F0;">
-                    </div>
+                            </select>
+                        </div>
+                        <div class="ms-3" id="labelHighbil" style="color: #03213d; font-size: small; font-weight: bolder;">High Bill - Invoice Number</div>
+                        <div class="input-group mb-2" >
+                            <input type="text" class="form-control rounded-pill" id="HighBillInvoiceNo" name="HighBillInvoiceNo" style="border: 1px solid #8FD2F0;">
+                        </div>
 
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Comment</div>
-                    <div class="input-group">
-                        <input class="form-control comment-style" name="Comments"  required/>
-                    </div>
+                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Comment</div>
+                        <div class="input-group">
+                            <input class="form-control comment-style" name="Comments"  required/>
+                        </div>
 
-                    @*  <div class="ms-3 mt-1" style="color: #03213d; font-size: small; font-weight: bolder;">Low Bill - Invoice Number</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" name="LowBillInvoiceNo"  style="border: 1px solid #8FD2F0;">
-                    </div>
+                        @*  <div class="ms-3 mt-1" style="color: #03213d; font-size: small; font-weight: bolder;">Low Bill - Invoice Number</div>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control rounded-pill" name="LowBillInvoiceNo"  style="border: 1px solid #8FD2F0;">
+                        </div>
 
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Comment</div>
-                    <div class="input-group">
-                        <input class="form-control comment-style" name="Comments2" />
-                    </div> *@
+                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Comment</div>
+                        <div class="input-group">
+                            <input class="form-control comment-style" name="Comments2" />
+                        </div> *@
 
-                    <div class="ms-3 mt-1" style="color: #03213d; font-size: small; font-weight: bolder; display:none">Bill Not Recieved - Email Address</div>
-                    <div class="input-group mb-2" style="display:none">
-                        <input type="email" class="form-control rounded-pill" name="Email" style="border: 1px solid #8FD2F0;" />
-                    </div>
+                        <div class="ms-3 mt-1" style="color: #03213d; font-size: small; font-weight: bolder; display:none">Bill Not Recieved - Email Address</div>
+                        <div class="input-group mb-2" style="display:none">
+                            <input type="email" class="form-control rounded-pill" name="Email" style="border: 1px solid #8FD2F0;" />
+                        </div>
 
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;display:none">Online Payment not Reflecting - Date of Payment</div>
-                    <div class="input-group">
-                        <span class="input-group-text rounded-pill rounded-end" style="display:none"><img src="./Icons/Date.png" alt="" class="icon-image"></span>
-                        <input type="date" class="form-control rounded-start rounded-pill" name="DateOfPayment" placeholder="Fri 15 November 2024" style="border: 1px solid #8FD2F0; display:none">
-                        <span style="color:red"> @ViewBag.SuccessMessage</span>
-                    </div>
-                    <div class="mt-3">
-                        <input type="submit" class="btn rounded-pill btn-style" value="Submit"/>
-                    </div>
-
+                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;display:none">Online Payment not Reflecting - Date of Payment</div>
+                        <div class="input-group">
+                            <span class="input-group-text rounded-pill rounded-end" style="display:none"><img src="./Icons/Date.png" alt="" class="icon-image"></span>
+                            <input type="date" class="form-control rounded-start rounded-pill" name="DateOfPayment" placeholder="Fri 15 November 2024" style="border: 1px solid #8FD2F0; display:none">
+                            <span style="color:red"> @ViewBag.SuccessMessage</span>
+                        </div>
+                        <div class="mt-3">
+                            <input type="submit" class="btn rounded-pill btn-style" value="Submit"/>
+                        </div>
+                    </form>
                 </div>
-            </form>
-            <hr />
-            <div class="icon-text h4">
+          
+            <div class="icon-text h5">
                 <span style="white-space: nowrap;">Complaint History</span>
             </div>
-            <div class="mt-3 input-style">
-
-                <div class="table-container">
-
+            <div class="input-style">
+                <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
@@ -99,13 +128,10 @@
                                     <td>@item.Status</td>
                                     <td>@item.Comments</td>
                                     <td>
-                                       
                                        <button class="btn btn-outline-primary" onclick="escalateTicket('@item.ComplaintID')" >Esclate</button>
-                                        
                                     </td>
                                 </tr>
                             }
-                           
                         </tbody>
                     </table>
                 </div>
@@ -129,53 +155,6 @@
             </div>
         </div>
     </div>
-
-    <!--Mobile design-->
-    <div class="mb-container d-md-none">
-        <div class="mbimage-style ">
-            <div class="box rounded shadow-lg">
-                <div class="h4 pt-1 mt-1" style="font-weight: bolder;">Complaint</div>
-
-                <div class="mbinput-style">
-
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">High Bill - Invoice Number</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Comment</div>
-                    <div class="input-group">
-                        <input class="form-control comment-style"></input>
-                    </div>
-
-                    <div class="ms-3 mt-1" style="color: #03213d; font-size: small; font-weight: bolder;">Low Bill - Invoice Number</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Comment</div>
-                    <div class="input-group">
-                        <input class="form-control comment-style"></input>
-                    </div>
-
-                    <div class="ms-3 mt-1" style="color: #03213d; font-size: small; font-weight: bolder;">Bill Not Recieved - Email Address</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Online Payment not Reflecting - Date of Payment</div>
-                    <div class="input-group">
-                        <span class="input-group-text rounded-pill rounded-end"><img src="./Icons/Date.png" alt="" class="icon-image"></span>
-                        <input type="text" class="form-control rounded-start rounded-pill" placeholder="Fri 15 November 2024" style="border: 1px solid #8FD2F0;">
-                    </div>
-                    <div class="mt-3">
-                        <a href="#" class="btn rounded-pill btn-style">Submit</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </main>
 <a href="~/lib/jquery/dist/jquery.min.map">~/lib/jquery/dist/jquery.min.map</a>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

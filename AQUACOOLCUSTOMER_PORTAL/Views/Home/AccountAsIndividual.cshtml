@@ -42,12 +42,7 @@
         <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light shadow">
             <div class="container-fluid">
                 <a href="@Url.Action("Index", "Home")"><img class="logo-style ms-5" src="/images/Logo.png" alt=""> </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
+               
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav ms-auto rounded">
                         @*  <li class="nav-item">
@@ -77,11 +72,11 @@
     </header>
 
     <main>
-        <div class="bg-container d-none d-md-flex">
+        <div class="bg-container d-md-flex">
             <div class="left-box">
-                <img src="/images/BG5.jpg" class="rounded-start rounded-pill img-style" alt="">
+                <img src="/images/BG4 .jpg" class="rounded-start rounded-pill img-style" alt="">
             </div>
-            <div class="right-box py-5">
+            <div class="right-box">
                 <div aria-live="polite" aria-atomic="true" class="position-relative">
                     <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
                         @if (!string.IsNullOrWhiteSpace(Convert.ToString(TempData["Error"])))
@@ -181,165 +176,6 @@
 
             </div>
         </div>
-
-
-
-        <!--Mobile design-->
-        <div class="mb-container d-md-none">
-            <div class="mbimage-style1 ">
-                <div class="box rounded shadow-lg">
-                    <div class="custstep custstep-1">
-                        <!-- Step 1 form fields here -->
-                        <div class="mbinput-style">
-
-                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">First Name</span>
-                            <div class="input-group">
-                                <input type="text" placeholder="Required" name="First-name" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                            </div>
-
-                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Last Name</span>
-                            <div class="input-group">
-                                <input type="text" placeholder="Required" name="Last-number" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                            </div>
-
-                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Nationality</span>
-                            <div class="input-group">
-                                <input type="text" name="Nationality" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                            </div>
-
-                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Number</span>
-                            <div class="input-group">
-                                <input type="text" placeholder="Required" name="PassportNumber" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                            </div>
-
-                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Passport Expiry Date</span>
-                            <div class="input-group">
-                                <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" class="icon-image"></span>
-                                <input type="text" placeholder="9/5/2024" name="PassportExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
-                            </div>
-
-                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Email Address Primary</span>
-                            <div class="input-group">
-                                <input type="text" placeholder="Required" name="EmailAddress1" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                            </div>
-
-
-                            <div class="btn-container my-3">
-                                <button type="button" class="btn rounded-pill backbtn-style cust-prev-step">Back</button>
-                                <button type="button" class="btn rounded-pill btn-style cust-next-step">Next</button>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="custstep custstep-2">
-                        <!-- Step 2 form fields here -->
-
-                        <div class="mbinput-style">
-
-                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                Create your Password<span>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Required" name="Password" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                    </div>
-
-                                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                        Confirm your Password<span>
-                                            <div class="input-group">
-                                                <input type="text" placeholder="Required" name="ConfirmPassword" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                            </div>
-
-                                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                                Primary Phone Number<span>
-                                                    <div class="input-group">
-                                                        <input type="text" placeholder="Required" name="MobileNumber1" required class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                                    </div>
-
-                                                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                                        Email Address Secondary<span>
-                                                            <div class="input-group">
-                                                                <input type="text" placeholder="Alternate Email Address" name="EmailAddress2" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                                            </div>
-
-                                                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                                                Secondary Phone Number<span>
-                                                                    <div class="input-group">
-                                                                        <input type="text" name="MobileNumber2" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                                                    </div>
-
-                                                                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">
-                                                                        Residency Status<span>
-                                                                            <form>
-                                                                                <select name="Resident" required id="options" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                                                                    <option>-- Select Any Option -- </option>
-                                                                                    <option>Resident</option>
-                                                                                    <option>Non Resident</option>
-                                                                                </select>
-                                                                            </form>
-
-                                                                            <div class="btn-container my-3">
-                                                                                <button type="button" class="btn rounded-pill backbtn-style cust-prev-step">Back</button>
-                                                                                <button type="button" class="btn rounded-pill btn-style cust-next-step">Next</button>
-                                                                            </div>
-                        </div>
-                    </div>
-                    <div class="custstep custstep-3">
-                        <!-- Step 3 form fields here -->
-
-                        <div class="mbinput-style">
-
-                            <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirates Id Number<span>
-                                    <div class="input-group">
-                                        <input type="text" name="IdNumber" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                    </div>
-
-                                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirates Id Expiry Date</span>
-                                    <div class="input-group">
-                                        <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" class="icon-image"></span>
-                                        <input type="text" placeholder="mm/dd/yy" name="IdExpiryDate" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
-                                    </div>
-
-                                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Address</span>
-                                    <div class="input-group">
-                                        <input type="text" name="Address" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                    </div>
-
-                                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Emirate</span>
-                                    <div class="input-group">
-                                        <input type="text" name="Emirate" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                    </div>
-
-                                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">P.O. Box</span>
-                                    <div class="input-group">
-                                        <input type="text" name="PoBox" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                                    </div>
-
-                                    <div class="btn-container my-3">
-                                        <button type="button" class="btn rounded-pill backbtn-style cust-prev-step">Back</button>
-                                        <button type="button" class="btn rounded-pill btn-style cust-next-step">Next</button>
-                                    </div>
-                        </div>
-                    </div>
-                    <div class="custstep custstep-4 mt-5 pt-5">
-                        <!-- Step 4 form fields here -->
-                        <p style="color: #03213d; font-weight: bold;">Please check your email for verification link</p>
-                        <div class="ms-3" style="color: #03213d; font-size: small;">Press the click here button for verify</div>
-                        <button type="button" class="btn rounded-pill btn-style1 cust-next-step">Click here</button>
-                        <footer class="pt-5 mt-5 ms-2" style="color: #03213d;">Please close this window. <br> You will be resumed from the resumption link</footer>
-                    </div>
-
-                    <div class="custstep custstep-5">
-                        <!-- Step 5 form fields here -->
-                        <p class="mt-4" style="color: #03213d; font-size: 20px;">Congratulations, your customer ID <br> has been generated.</p>
-                        <button type="button" class="btn rounded-pill btn-style1 cust-next-step">C-XXXX</button>
-
-                        <p class="mt-5" style="color: #03213d; font-size: 20px;">Please proceed with <br> Move in Request to the property.</p>
-                        <a type="button" class="btn rounded-pill btn-style1">Move in Request</a>
-
-                    </div>
-                </div>
 
     </main>
 

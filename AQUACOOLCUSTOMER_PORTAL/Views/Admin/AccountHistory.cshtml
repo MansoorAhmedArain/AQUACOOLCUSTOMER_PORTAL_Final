@@ -2,43 +2,72 @@
 @{
     ViewData["Title"] = "AccountHistory";
 }
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/fevicon.png" type="">
+
+    <title> Account History </title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/AccountHistory/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/AccountHistory/responsive.css" rel="stylesheet" />
+
+</head>
+
 <main>
-    <div class="bg-container d-none d-md-flex">
-        <div class="left-box "><img src="/images/BG3.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
-        <div class="right-box pt-4 rightGrid">
-            <div class="icon-text h4">
+    <div class="bg-container d-md-flex">
+        <div class="left-box "><img src="/images/BG17.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+        <div class="right-box pt-3">
+            <div class="h4">
                 <span style="white-space: nowrap;">Account History</span>
             </div>
-            <div class="mt-3 input-style">
-
-                <div class="table-container">
-
-                    <table>
-                        <thead>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Contact ID</th>
+                            <th>Status</th>
+                            <th>Project</th>
+                            <th>Outstanding Amount</th>
+                            <th>Payment</th>
+                            <th>Security Deposit Amount</th>
+                            <th>Last Payment Date</th>
+                        </tr>
+                    </thead>
+                    @foreach (var m in Model)
+                    {
+                        <tbody>
                             <tr>
-                                <th>Contact ID</th>
-                                <th>Status</th>
-                                <th>Project</th>
-                                <th>Outstanding Amount</th>
-                                <th>Payment</th>
-                                <th>Security Deposit Amount</th>
-                                <th>Last Payment Date</th>
+                                @* <td>@Html.ActionLink(m.ContractID, "Invoices", new { contractId = m.ContractID })</td> *@
+                                <td>@m.ContractID</td>
+                                <td>@m.Status</td>
+                                <td>@m.Project</td>
+                                <td>@m.Balance</td>
+                                <td>@Html.ActionLink("Pay", "QuickPayment", "Home", new { contractId = m.ContractID, outstandingBalance = m.Balance })</td>
+                                <td>@m.SecurityDeposit</td>
+                                <td>@m.LastPaymentDate</td>
                             </tr>
-                        </thead>
-                        @foreach (var m in Model)
-                        {
-                            <tbody>
-                                <tr>
-                                    @* <td>@Html.ActionLink(m.ContractID, "Invoices", new { contractId = m.ContractID })</td> *@
-                                    <td>@m.ContractID</td>
-                                    <td>@m.Status</td>
-                                    <td>@m.Project</td>
-                                    <td>@m.Balance</td>
-                                    <td>@Html.ActionLink("Pay", "QuickPayment","Home", new { contractId = m.ContractID, outstandingBalance = m.Balance })</td>
-                                    <td>@m.SecurityDeposit</td>
-                                    <td>@m.LastPaymentDate</td>
-                                </tr>
-                            
+
                             @* <td>@m.Unit - @m.CustomerType</td>
                            
                             <td>@m.Balance</td>
@@ -55,139 +84,11 @@
                             <td style="background-color: aliceblue">
                                     @Html.ActionLink("Pay", "Invoices", new { contractId = m.ContractID })
                             </td> *@
-                            </tbody>
-                        }
-                        </table>
-                </div>
+                        </tbody>
+                    }
+                </table>
             </div>
         </div>
     </div>
-
-    <!--Mobile design-->
-    <div class="mb-container d-md-none">
-        <div class="mbimage-style ">
-            <div class="box rounded shadow-lg">
-                <div class="h4 mt-5" style="font-weight: bolder;">Account History</div>
-                <div class="mbinput-style">
-
-                    <div class="mbtable-container">
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Contact ID</th>
-                                    <th>Status</th>
-                                    <th>Project</th>
-                                    <th>Outstanding Amount</th>
-                                    <th>Payment</th>
-                                    <th>Security Deposit Amount</th>
-                                    <th>Last Payment Date</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Payment Links</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 </main>

@@ -1,12 +1,41 @@
 ﻿@{
     ViewData["Title"] = "UpdateDocuments";
 }
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/fevicon.png" type="">
 
-<div class="bg-container d-none d-md-flex">
+    <title>Transaction History</title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/UpdateDocuments/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="~/css/UpdateDocuments/responsive.css" rel="stylesheet" />
+
+</head>
+<div class="bg-container d-md-flex">
     <div class="left-box "><img src="~/images/BG2.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
     <form class="right-box pt-4" method="post" action="@Url.Action("Uploads","Admin")" role="form" enctype="multipart/form-data">
         <input type="hidden" name="id" value="@ViewBag.tktID"/>
-        <div class="icon-text h5">Manage Profile <br></div>
             <div class="h3 mt-3 password-style" style="font-weight: bolder; text-wrap: nowrap; color: #092f57;">
                 <img src="~/Icons/Update-Document.png" alt="" style="width:50px">
                 <span>Update Documents</span>
@@ -44,64 +73,10 @@
                 <div class="mt-4">
                     <input type="file" name="file" class="form-control"/>
 
-                    <a href="#" class="btn rounded-pill update-btn mb-3">Upload Document</a>
+                    <a href="#" class="btn rounded-pill update-btn mb-3 mt-3">Upload Document</a>
                     @* <a href="#" class="btn rounded-pill btn-style">Submit</a> *@
-                <input type="submit" class="btn rounded-pill btn-style" />
+                    <input type="submit" class="btn rounded-pill btn-style" />
                 </div>
             </div>
         </form>
 </div>
-
-<!--Mobile design-->
-<div class="mb-container d-md-none">
-    <div class="mbimage-style ">
-         <form class="box rounded shadow-lg" method="post" action="@Url.Action("Admin","UpdateDocuments")" role="form">
-            <div class="icon-text h5 pt-1">Manage Profile <br></div>
-
-            <div class="h3 mt-1 update-style" style="font-weight: bolder; text-wrap: nowrap; color: #092f57;">
-                <i class="fa-regular fa-file"></i>
-                <span>Update Documents</span>
-            </div>
-            <div class="mbinput-style mt-5">
-                <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Select the Documents to Upload</span>
-                <div class="input-group">
-                        <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                        <select class="form-control rounded-start rounded-pill" placeholder="Owner" style="border: 1px solid #8FD2F0;">
-                            <option value="" selected="selected">Select Option</option>
-                            <option value="1">Emarates Id</option>
-                            <option value="2">Passport Copy</option>
-                            <option value="3">Visa Copy</option>
-                            <option value="4">Upload Tenancy Contract or Ejari Certificate</option>
-                            <option value="5">Upload Title Deed</option>
-                            <option value="6">Upload Other Documents</option>
-                        </select>
-                </div>
-
-                <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">Type Applicable</div>
-                <div class="input-group mb-2">
-                        <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                        <select name="Type" class="form-control rounded-start rounded-pill" placeholder="Tenant (individual or company)" style="border: 1px solid #8FD2F0;">
-                            <option value="" selected="selected">Tenant (individual or company)"</option>
-                            <option value="Owner">Owner</option>
-                            <option value="Tenant">Tenant</option>
-                        </select>
-                </div>
-
-
-                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Expire Date</div>
-                <div class="input-group">
-                        <span class="input-group-text rounded-pill rounded-end"><img src="~/Icons/Date.png" alt="" style="width:25px"></span>
-                    <input type="text" class="form-control rounded-start rounded-pill" placeholder="2024 November 15 Fri" style="border: 1px solid #8FD2F0;">
-                </div>
-
-
-                <div class="mt-4">
-                    <a href="#" class="btn rounded-pill update-btn mb-3">Update Document</a>
-                    <a href="#" class="btn rounded-pill btn-style">Submit</a>
-                </div>
-            </div>
-        </form>
-      
-    </div>
-</div>
-

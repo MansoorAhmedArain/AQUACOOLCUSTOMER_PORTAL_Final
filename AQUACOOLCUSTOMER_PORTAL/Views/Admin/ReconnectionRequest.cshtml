@@ -4,104 +4,89 @@
 @{
     ViewData["Title"] = "ReconnectionRequest";
 }
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/fevicon.png" type="">
 
-    <div class="bg-container d-none d-md-flex">
+    <title>Reconnection Request</title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/ReconnectionRequest/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/ReconnectionRequest/responsive.css" rel="stylesheet" />
+
+</head>
+
+    <div class="bg-container d-md-flex">
         <div class="left-box "><img src="/images/BG10.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
         <div class="right-box pt-4">
-        @Html.Partial("_Messages")
-            <form method="post" action="@Url.Action("ReconnectionRequest","Admin")">
+            @Html.Partial("_Messages")
                 <div class="icon-text h4">
                 <span>Create Reconnection Request</span>
                 </div>
-                <div class="mt-5 input-style">
+             <div class="mt-5 input-style">
+                <form method="post" action="@Url.Action("ReconnectionRequest","Admin")">
                     <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
-                <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown">
-                    <option value="">Select a project</option>
-                    @{
-                        
-                        foreach (var project in (Projects[])ViewBag.projects)
-                        {
-                            <option value="@project.Id">@project.Name</option>
-                        }
-                    }
-                </select>
-                    <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
-                    <div class="input-group mb-2">
-
-                    <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" name="EAG" id="contractDropdown">
-                        <option value="">Select a contract</option>
+                    <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" id="projectDropdown">
+                        <option value="">Select a project</option>
                         @{
-                            foreach (var item in Model.ContractIDs)
+                        
+                            foreach (var project in (Projects[])ViewBag.projects)
                             {
-                                <option value="@item.ID">@item.Name</option>
+                                <option value="@project.Id">@project.Name</option>
                             }
                         }
                     </select>
-                    </div>
+                        <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
+                        <div class="input-group mb-2">
 
-
-                <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;" readonly="readonly">Disconnection Ticket ID</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" id="disconnectionID" readonly style="border: 1px solid #8FD2F0;">
-                    </div>
-
-
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Outstanding Balance</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" name="Balance" id="balance" readonly="readonly" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-                <span style="color: blue">@ViewBag.Message</span>
-                    <input type="submit" class="btn rounded-pill btn-style mt-3" id="submitBtn" value="Submit" />
-                <a href="@Url.Action("AccountHistory","Admin")" class="btn rounded-pill btn-style mt-3">Pay Now</a>
-
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!--Mobile design-->
-    <div class="mb-container d-md-none">
-        <div class="mbimage-style ">
-            <div class="box rounded shadow-lg">
-                <div class="h5 mb-5" style="font-weight: bolder; text-wrap: nowrap;">Create Recconection Request</div>
-
-                <div class="mbinput-style">
-
-                    <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
-                    <div class="input-group">
-                        <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                        <input type="text" class="form-control rounded-start rounded-pill" placeholder="Select" style="border: 1px solid #8FD2F0;">
-                        <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                        <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" name="EAG" id="contractDropdown">
+                            <option value="">Select a contract</option>
+                            @{
+                                foreach (var item in Model.ContractIDs)
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            }
+                        </select>
                         </div>
-                    </div>
 
 
-                    <div class="ms-3 mt-2" style="color: #03213d; font-size: small; font-weight: bolder;">EAG</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
+                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;" readonly="readonly">Disconnection Ticket ID</div>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control rounded-pill" id="disconnectionID" readonly style="border: 1px solid #8FD2F0;">
+                        </div>
 
 
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Disconnection Ticket ID</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
+                        <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Outstanding Balance</div>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control rounded-pill" name="Balance" id="balance" readonly="readonly" style="border: 1px solid #8FD2F0;">
+                        </div>
 
-
-                    <div class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Outstanding Balance</div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control rounded-pill" style="border: 1px solid #8FD2F0;">
-                    </div>
-
-
-                    <a href="#" class="btn rounded-pill btn-style mt-3">Submit</a>
-                    <a href="#" class="btn rounded-pill btn-style mt-3">Pay Now</a>
-                </div>
-            </div>
+                    <span style="color: blue">@ViewBag.Message</span>
+                        <input type="submit" class="btn rounded-pill btn-style mt-3" id="submitBtn" value="Submit" />
+                    <a href="@Url.Action("AccountHistory","Admin")" class="btn rounded-pill btn-style mt-3">Pay Now</a>
+                </form>
+             </div>
         </div>
     </div>
 

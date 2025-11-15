@@ -1,25 +1,25 @@
-body{
-   font-family: 'Roboto';
-   height: 100%;
-   width: 100%;
+body {
+    font-family: 'Roboto';
+    height: 100%;
+    width: 100%;
 }
 
 
-.logo-style{
+.logo-style {
     width: 9vmax;
 }
 
 /* Header Navbar */
 
-.navbar{
+.navbar {
     height: 100px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
 
-.navbar-nav{
-    background-color:white;
+.navbar-nav {
+    background-color: white;
 }
 
 /* Header Navbar End */
@@ -28,30 +28,29 @@ body{
 
 /* Background Design */
 
-.bg-container{
+.bg-container {
     height: calc(100% - 100px);
     width: 100%;
     position: absolute;
     display: flex;
     flex-wrap: wrap;
 }
-  
-  
-.left-box{
+
+
+.left-box {
     height: 100%;
     width: 30%;
     display: flex;
-    
 }
 
-.img-style{
+.img-style {
     width: 470px;
 }
 
-.right-box{
-   height: 100%;
-   width: 70%;
-   padding: 80px 270px;
+.right-box {
+    height: 100%;
+    width: 70%;
+    padding: 80px 270px;
 }
 
 
@@ -59,14 +58,25 @@ body{
     display: inline;
     text-wrap: nowrap;
 }
-  
-.icon-text i {
-    margin-right: 10px;
-}
-  
 
-.input-style{
+    .icon-text i {
+        margin-right: 10px;
+    }
+
+
+.input-style {
     width: 28vw;
+}
+
+.icon-image {
+    width: 25px;
+}
+
+
+.btn-style {
+    width: 100%;
+    background-color: #033059;
+    color: white;
 }
 
 .btnnext-style {
@@ -75,77 +85,109 @@ body{
     color: white;
 }
 
-    .btnnext-style:hover, .btnnext-style:active {
-        background-color: #3ec529;
-        border-right: 1px solid #42ad31;
-        color: white;
-    }
-
-.btn-style{
-    width: 100%;
-    background-color: #033059;
+.btnnext-style:hover, .btnnext-style:active {
+    background-color: #3ec529;
+    border-right: 1px solid #42ad31;
     color: white;
-   
 }
 
 .btn-style:hover, .btn-style:active {
     background-color: #04417a;
     border-right: 1px solid #04417a;
     color: white;
- 
 }
- 
+
 
 
 /*Background Design End  */
 
-
-/* Mobile Design */
-
-.mb-container{
-    height: calc(100% - 100px);
-    width: 100%;
-}
-
-.mbimage-style{
-    width: 100vw;
-    height: 88vh;
-    background-image: url(/images/Stock\ BG11\ Image.jpg); 
-    background-repeat: no-repeat;
-    background-size: cover;
+.noc-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: row-reverse;
 }
 
-.box{
-    height: 85vh;
-    width: 55vw;
+.upload-card {
+    width: 60%;
+    border: 2px solid #003366;
+    border-radius: 12px;
     background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 10px;
     display: flex;
-    align-items: center;
-    justify-content:center;
     flex-direction: column;
 }
 
-
-
-.heading i{
-    font-weight: bold;
+.upload-card p {
+    font-size: 14px;
+    color: #333;
 }
 
-.mbinput-style{
-    width: 45vw;
+.upload-card p strong {
+    color: #003366;
 }
 
-.mbbtn-style{
-    background-color: #03213d;
+.upload-button {
+    background-color: #003366;
     color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
     width: 100%;
-    text-wrap: nowrap;
 }
 
+.upload-button:hover {
+    background-color: #002244;
+}
 
+input[type="file"] {
+    display: none;
+}
 
-/* Model Design End */
+.BankInfo {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dim background */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px 25px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease;
+    overflow-y: auto;
+    max-height: 85vh;
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

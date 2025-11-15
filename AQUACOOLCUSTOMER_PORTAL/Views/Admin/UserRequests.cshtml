@@ -3,181 +3,103 @@
 @{
     ViewData["Title"] = "UserRequests";
 }
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/fevicon.png" type="">
+
+    <title>Request Summary </title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/AccountHistory//style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/AccountHistory/responsive.css" rel="stylesheet" />
+
+</head>
 
 <main>
-    <div class="bg-container d-none d-md-flex">
-        <div class="left-box" style="width:25% !important;"><img src="/images/BG7.jpg" class="rounded-start rounded-pill img-style" alt="" style="width: 370px;"></div>
-        <div class="pt-4">
-            <div class="icon-text h4">
+    <div class="bg-container d-md-flex">
+        <div class="left-box"><img src="/images/BG7.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+        <div class="right-box">
+            <div class="h4">
                 <span style="white-space: nowrap;">Pending Registration Requests</span>
             </div>
-            <div class="mt-3 input-style">
-                <div class="table-container mt-4" style="margin-left: 25px;">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            @* <th>Ticket ID</th> *@
+                            <th>Project</th>
+                            <th>Unit</th>
+                            <th>Type</th>
+                            <th>Status of Req.</th>
+                            <th>Created At</th>
+                            <th>Last Action <br />Created By Customer <br />Service</th>
+                            <th>Remarks</th>
+                            <th>Action for Customer</th>
+                            @* <th>Ticket Type</th> *@
 
-                    <table style="" class="table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Request ID</th>
-                                @* <th>Ticket ID</th> *@
-                                <th>Project</th>
-                                <th>Unit</th>
-                                <th>Type</th>
-                                <th>Status of Req.</th>
-                                <th>Created At</th>
-                                <th>Last Action <br />Created By Customer <br />Service</th>
-                                <th>Remarks</th>
-                                <th>Action for Customer</th>
-                                @* <th>Ticket Type</th> *@
-                               
-                            </tr>
-                        </thead>
-                        @foreach (var tickets in Model)
-                        {
-                            <tbody>
-                                <tr>
-                                    <td style="word-wrap: break-word">@tickets.RequestId</td>
-                                   @*  <td>@tickets.TicketID</td> *@
-                                    <td style="overflow-x:auto;column-width: 160px;">@tickets.ProjectName</td>
-                                    <td>@tickets.Unit</td>
-                                    <td>@tickets.MoveInType</td>
-                                    <td>@tickets.Status</td>
-                                    <td>
-                                        @if (DateTime.Parse(tickets.DateTimeAccepted).Year > 2000)
-                                        {
-                                            <span>@(DateTime.Parse(tickets.DateTimeAccepted).ToString("D"))</span>
-                                        }
-                                        else
-                                        {
-                                            <span>-</span>
-                                        }
-                                        @* @tickets.DateTimeAccepted *@</td>
-                                    <td>
-                                        @if (tickets.Status.ToLower() == "not submitted" || tickets.Status.ToLower() == "pending under customer")
-                                        {
-                                            @Html.ActionLink("Upload Files", "NewRegistration", new { Id = tickets.RequestId, type= tickets.MoveInType })
-                                        }
-                                    </td>
-                                    <td>-</td>
-                                    <td>
-                                       @*  <a href="#">Complete this Req. </a> *@
-                                        @if (tickets.Status.ToLower() == "not submitted" || tickets.Status.ToLower() == "pending under customer")
-                                        {
-                                           <span>Complete this req</span>
-                                        }
-                                        </td>
-                                  @*   <td>-</td> *@
-                                </tr>
-                            </tbody>
-                        }
-
-
-                    </table>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-
-    <!--Mobile design-->
-    <div class="mb-container d-md-none">
-        <div class="mbimage-style ">
-            <div class="box rounded shadow-lg">
-                <div class="h4 mt-5" style="font-weight: bolder;">Transaction History</div>
-                <div class="mbinput-style">
-
-                    <div style="color: #03213d; font-size: small;">You have no outstanding bills</div>
-                    <div style="color: #03213d; font-size: small; font-weight: bolder;">Balance & Latest Bills</div>
-
-                    <table class="mt-2">
+                        </tr>
+                    </thead>
+                    @foreach (var tickets in Model)
+                    {
                         <tbody>
                             <tr>
-                                <td class="table-row">AED 0,000 <br><span style=" font-size: 10px; color: #888;">Balance Due</span></td>
-                                <td class="table-row">AED 20,000 <br><span style=" font-size: 10px; color: #888;">Latest Bill</span></td>
-                                <td class="table-row">25th Jan 2024 <br><span style=" font-size: 10px; color: #888;">Due Date</span></td>
+                                <td style="word-wrap: break-word">@tickets.RequestId</td>
+                                @*  <td>@tickets.TicketID</td> *@
+                                <td style="overflow-x:auto;column-width: 160px;">@tickets.ProjectName</td>
+                                <td>@tickets.Unit</td>
+                                <td>@tickets.MoveInType</td>
+                                <td>@tickets.Status</td>
+                                <td>
+                                    @if (DateTime.Parse(tickets.DateTimeAccepted).Year > 2000)
+                                    {
+                                        <span>@(DateTime.Parse(tickets.DateTimeAccepted).ToString("D"))</span>
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                    @* @tickets.DateTimeAccepted *@</td>
+                                <td>
+                                    @if (tickets.Status.ToLower() == "not submitted" || tickets.Status.ToLower() == "pending under customer")
+                                    {
+                                        @Html.ActionLink("Upload Files", "NewRegistration", new { Id = tickets.RequestId, type = tickets.MoveInType })
+                                    }
+                                </td>
+                                <td>-</td>
+                                <td>
+                                    @*  <a href="#">Complete this Req. </a> *@
+                                    @if (tickets.Status.ToLower() == "not submitted" || tickets.Status.ToLower() == "pending under customer")
+                                    {
+                                        <span>Complete this req</span>
+                                    }
+                                </td>
+                                @*   <td>-</td> *@
                             </tr>
                         </tbody>
-                    </table>
-
-                    <div class="table-container mt-4">
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                     }
+                </table>
             </div>
         </div>
     </div>
-
-
 </main>

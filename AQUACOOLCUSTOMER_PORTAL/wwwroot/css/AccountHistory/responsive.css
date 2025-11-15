@@ -1,144 +1,68 @@
+@media (max-width: 980px) {
+    .bg-container {
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+    }
 
-@media (max-width: 1270px) {
+    .left-box {
+        width: 100%;
+        height: 45%;
+    }
 
-th, td {
-  font-size: 0.6vw;
+    .img-style {
+        border-radius: 0 !important;
+        width: 100% !important;
+        height: 100vh;
+        object-fit: cover;
+    }
+
+    .logo-style {
+        margin: 0 !important;
+    }
+
+    .right-box {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(4px);
+        padding: 20px 10px;
+        overflow-y: auto;
+    }
+
+    .h4 {
+        font-size: 4.2vw;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    table {
+        margin: 20px;
+    }
+
+    th, td {
+        font-size: 50%;
+    }
+
+    .navbar {
+        height: auto;
+    }
+
+    .navbar-nav {
+        width: 60%;
+        background-color: white;
+        text-align: center;
+    }
+
+    .logo-style {
+        width: 20vw;
+    }
 }
-}
-
-@media (max-width: 1030px) {
-
-  th, td {
-    font-size: 0.57vw;
-  }
-  }
-  
-
-@media (max-width: 991px) {
-
-  .navbar-nav{
-        width: 40%;
-   }
-
-  .logo-style{
-    width: 12vw;
-  }
- .left-box{
-     height: 100%;
-     width: 25%;
- }
- 
- .img-style{
-     width: 350px;
-     height: 575px;
- }
- 
- 
- .right-box{
-    height: 100%;
-    width: 75%;
-   
- }
-
- th, td {
-  font-size: 0.5vw;
-}
-
-}
-@media (max-width: 840px) {
-  
-  th, td {
-    font-size: 0.4vw;
-  }
-}
-
-
-@media (max-width: 767px) {
-  
-  .navbar{
-    height: 80px;
-    width: 100%;
-}
-
-.mbinput-style{
-  width: 45vw;
-}
-
-th, td {
-  font-size: 0.5vw;
-}
-
-}
-
-
-
-@media (max-width: 600px) {
-  .box{
-    height: 85vh;
-    width: 60vw;
-}
-
-
-  .logo-style{
-    width: 12vmax;
-  }
-
-.mbinput-style{
-  width: 50vw;
-}
-
-
-}
-
-
-@media (max-width: 500px) {
-
-  .box{
-    height: 85vh;
-    width: 70vw;
-
-}
-
-  .mbinput-style{
-    width: 60vw;
-  }
-
-}
-  
-@media (max-width: 420px) {
- 
-  .box{
-    height: 85vh;
-    width: 75vw;
-}
-
-
-.mbinput-style{
-  width: 80vw;
-  padding: 20px;
-}
-
- 
-}
-
-@media (max-width: 360px) {
-  .box{
-    height: 88vh;
-    width: 75vw;
-  
-}
-
-.mbinput-style{
-  width: 80vw;
-  padding: 20px;
-}
-
-}
-  
-@media (max-width: 250px) {
-  body{
-    display: none;
-  }
-}
-
-

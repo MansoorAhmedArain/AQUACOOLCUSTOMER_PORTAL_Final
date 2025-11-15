@@ -2,6 +2,38 @@
 @using AQUACOOLCUSTOMER_PORTAL.DTO
 @{
 }
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/fevicon.png" type="">
+
+    <title>Bill Curve</title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/MoveinRequest/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/MoveinRequest/responsive.css" rel="stylesheet" />
+
+</head>
+
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -15,9 +47,8 @@
         justify-content: center;
         gap: 40px;
         flex-wrap: wrap;
-        margin-top: 90px;
+        margin-top: 50px;
     }
-
     .chart-container {
         width: 45%;
         text-align: center;
@@ -31,13 +62,40 @@
     h4 {
         margin-bottom: 10px;
     }
+    /* Responsive for mobile screens */
+    @@media screen and (max-width: 980px) {
+        .charts-wrapper{
+        flex-direction: column;
+        align-items: center; /* center charts */
+        gap: 20px;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .input-group {
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+   
+        h4, h6 {
+            text-align: center; /* headings centered */
+        }
+        /* ↓↓↓ Add this block ↓↓↓ */
+        select.form-control {
+            font-size: 2vw !important; /* smaller font for mobile */
+        }
+        
+    }
+ 
 </style>
 <h4 style="text-align:center; margin-top: 20px;"> Bill Curve</h4>
-<div class="input-group mb-3" style="width: 30%;
-    margin-left: 50px;
-    margin-top: 60px;">
+<div class="input-group mb-3" style="width: 30%; margin-left: auto; margin-right: auto;">
     <input type="hidden" name="selectedContract" id="selectedContractID" value="@ViewBag.SelectedContractEAG" />
-    <select class="form-control  rounded-pill" required placeholder="Select" name="EAG" style="border: 1px solid #8FD2F0;" id="EAGContractDropdown">
+    <select class="form-control rounded-pill" required placeholder="Select" name="EAG" style="border: 1px solid #8FD2F0;" id="EAGContractDropdown">
         <option value="">Select a contract</option>
         @{
             foreach (var item in (List<ContractIDs>)ViewBag.ContractsList)

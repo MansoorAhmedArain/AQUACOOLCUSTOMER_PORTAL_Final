@@ -42,10 +42,6 @@
         <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light shadow">
             <div class="container-fluid">
                 <a href="@Url.Action("Index","Home")"><img class="logo-style ms-5" src="/images/Logo.png" alt=""> </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav ms-auto rounded">
                         @* <li class="nav-item">
@@ -73,50 +69,26 @@
     </header>
 
     <main>
-        <div class="bg-container d-none d-md-flex">
-            <div class="left-box "><img src="/images/BG1.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+        <div class="bg-container d-md-flex">
+            <div class="left-box"><img src="/images/BG1.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
             <div class="right-box">
                 <div class="icon-text h3" style="font-weight: bolder;">
-                        <img src="~/Icons/Quick-Payment.png" class="icon-style"></img>
+                        <img src="~/Icons/Quick-Payment.png" class="icon-style"/>
                     <span>Quick Payment</span>
                 </div>
                 <form class="form-style mt-5">
                     <div class="form-group">
                         <small class="form-text ps-3" style="color : #092f57">EAG Number</small>
-                        <input  required class="form-control rounded-pill f1" value="@ViewBag.ContractIdBag">
+                        <input required class="form-control rounded-pill f1" value="@ViewBag.ContractIdBag">
                     </div>
-                    <div class="form-group" style="display:none">
+                    <div class="form-group">
                         <small class="form-text ps-3" style="color: #092f57;">Amount</small>
-                        <input  type="number"  class="form-control rounded-pill f2" value="@ViewBag.OutstandingBalance">
+                        <input type="number"  class="form-control rounded-pill f2" value="@ViewBag.OutstandingBalance">
                     </div>
                     <a href="#myModal" class="btn rounded-pill btn-style my-4" id="btnPay" data-bs-toggle="modal">Next</a>
                 </form>
             </div>
         </div>
-
-        <!--Mobile design-->
-        <div class="mb-container d-md-none">
-            <div class="mbimage-style">
-                <div class="box rounded shadow-lg">
-                    <div class="icon-text h3" style="font-weight: bolder;">
-                            <img src="~/Icons/Quick-Payment.png" class="icon-style"></img>
-                        <span>Quick Payment</span>
-                    </div>
-                    <form class="mbform-style m-4">
-                        <div class="form-group">
-                            <small class="form-text ps-3" style="color : #092f57">EAG Number</small>
-                            <input required class="form-control rounded-pill f1" value="@ViewBag.ContractIdBag">
-                        </div>
-                        <div class="form-group" style="display:none">
-                            <small class="form-text ps-3" style="color: #092f57;">Amount</small>
-                            <input required type="number" class="form-control rounded-pill f2" value="@ViewBag.OutstandingBalance">
-                        </div>
-                        <a href="#myModal" class="btn rounded-pill mbbtn-style my-4" data-bs-toggle="modal">Next</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-
 
         <!-- Modal HTML -->
         <div id="myModal" class="modal fade">
@@ -148,54 +120,43 @@
                             </form>
                         </div>
                        
-                        <div class="container">
-                            
+                        <div class="md-container">
                             <form method="post" action="@Url.Action("Pay","Admin")">
                                 <div class="modal-rightbox rounded mx-5 mt-4 mb-2  p-3">
-                                    <label for="number" style=" text-indent: 16px;">
-                                        <strong class="text-style">
-                                            <small>Amount Due</small>
-                                            <small>Pay</small>
-                                        </strong>
-                                    </label>
-                                    <div class="input-group">
-                                        <input type="text" id="amountDue" class="form-control rounded-end rounded-pill" readonly style="border: 1px solid #8FD2F0;">
-                                        <input type="number" id="payAmount" required name="payAmount" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                                    <div class="input-row ">
+                                        <div class="input-col">
+                                            <small class="form-text">Amount Due</small>
+                                            <input type="number" class="form-control rounded-end rounded-pill" style="border: 1px solid #8FD2F0;">
+                                        </div>
+                                        <div class="input-col">
+                                            <small class="form-text">Pay</small>
+                                            <input type="number" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                                        </div>
                                     </div>
-                                    <div class="ms-3 mt-1">
-                                        <input type="checkbox" checked id="agree" name="interest" value="agree" />
-                                        <label for="agree"><strong><small>I agree to Payment Terms and Condition</small></strong></label>
+
+                                    <div class="mt-1 agree-text">
+                                        <input type="checkbox" id="agree" name="interest" value="agree" />
+                                        <label for="agree"><strong><small>I agree to Payment Terms and Conditions</small></strong></label>
                                     </div>
                                     <input type="submit" class="btn rounded-pill modal-btn mt-2" value="Pay Now" />
                                    @*  <a href="#" class="btn rounded-pill modal-btn mt-2">Pay Now</a> *@
                                 </div>
                             </form>
-                            <div class="row mx-5">
-                                <p style="color: #03213d;"><strong><small>Payments Terms and Condition</strong></small></p>
+
+                            <div class="row mx-5 payment-text">
+                                <p style="color: #03213d;"><strong><small>Payments Terms and Conditions</small></strong></p>
                                 <ul class="bullets">
-                                    <li>
-                                        <strong>To avoid late payment changes, customer should pay their dues before due date.</strong>
-                                    </li>
-                                    <li>
-                                        <strong>
-                                            Any credit card, debit card or bank account information provided by customer <br>
-                                            should be true, correct and complete.
-                                        </strong>
-                                    </li>
-                                    <li>
-                                        <strong>
-                                            Customer will pay the changes including applicable taxes.
-                                        </strong>
-                                    </li>
+                                    <li><strong>To avoid late payment charges, customer should pay their dues before due date.</strong></li>
+                                    <li><strong>Any credit card, debit card or bank account information provided by customer should be true, correct and complete.</strong></li>
+                                    <li><strong>Customer will pay the charges including applicable taxes.</strong></li>
                                 </ul>
                             </div>
-                        </div>
-                            </div>
-                    </div>
-            </div>
+                         </div>
+                   </div>
+             </div>
         </div>
-        </div>
-    </main>
+     </div>
+  </main>
     
     <script src="/js/bootstrapjs/bootstrap.bundle.js"></script>
     <script src="https://kit.fontawesome.com/c5b8d1d3fa.js" crossorigin="anonymous"></script>

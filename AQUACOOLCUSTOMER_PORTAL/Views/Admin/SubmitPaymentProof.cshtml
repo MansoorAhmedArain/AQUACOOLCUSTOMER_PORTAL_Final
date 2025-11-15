@@ -4,17 +4,46 @@
 @{
     ViewData["Title"] = "SubmitPaymentProof";
 }
-<link href="~/css/submitpaymentproof/style.css" rel="stylesheet" />
-<link href="~/css/submitpaymentproof/responsive.css" rel="stylesheet" />
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/fevicon.png" type="">
 
-<div class="bg-container d-none d-md-flex">
+    <title>Submit Payment Proof</title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrapcss/bootstrap.min.css" />
+
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/submitpaymentproof/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="~/css/submitpaymentproof/responsive.css" rel="stylesheet" />
+
+</head>
+
+<div class="bg-container d-md-flex">
     <div class="left-box "><img src="/images/BG10.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
     <div class="right-box pt-4">
         <div class="icon-text h4">
             <span>Submit Payment Proof</span>
         </div>
         <form action="@Url.Action("SubmitPaymentProof","Admin")" method="post" enctype="multipart/form-data">
-            <div class="mt-5 input-style">
+            <div class="mt-4 input-style">
                 @Html.Partial("_Messages")
                 @*   <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">Project Selection</span>
              <div class="input-group">
@@ -40,7 +69,7 @@
                 <span class="ms-3" style="color: #03213d; font-size: small; font-weight: bolder;">EAG Selection</span>
                 <div class="input-group">
                     <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"></span>
-                    <select class="form-control  rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" name="EAG" id="contractDropdown">
+                    <select class="form-control rounded-start rounded-pill" required placeholder="Select" style="border: 1px solid #8FD2F0;" name="EAG" id="contractDropdown">
                         <option value="">Select a contract</option>
                         @{
                             foreach (var item in Model.ContractIDs)
@@ -86,13 +115,9 @@
                 </div>
             </div>
         </form>
-       
     </div>
 </div>
 
-<!--Mobile design-->
-<div class="mb-container d-md-none">
-</div>
 <script>
     // Get all payment method checkboxes
     const checkboxes = document.querySelectorAll('.payment-method');
