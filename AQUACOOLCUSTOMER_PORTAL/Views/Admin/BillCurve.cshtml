@@ -166,7 +166,7 @@
                     data: {
                         labels: res.labels,
                         datasets: [{
-                            label: `AED`,
+                            label: `RTH`,
                             data: res.data,
                             backgroundColor: 'rgba(54, 162, 235, 0.6)',
                             borderColor: 'rgba(54, 162, 235, 1)',
@@ -181,7 +181,7 @@
                                 max: roundedMax,
                                 ticks: {
                                     callback: function (value) {
-                                        return `AED ${value.toLocaleString()}`;
+                                        return `${value.toLocaleString()} RTH`;
                                     }
                                 }
                             }
