@@ -1,7 +1,7 @@
 {
   "ExtendedData": {
     "inputs": [
-      "http://10.12.16.11/AQCAX/service1.asmx"
+      "http://10.12.14.21/AQCNew/service1.asmx" //"http://10.12.16.11/AQCAX/service1.asmx"
     ],
     "collectionTypes": [
       "System.Array",

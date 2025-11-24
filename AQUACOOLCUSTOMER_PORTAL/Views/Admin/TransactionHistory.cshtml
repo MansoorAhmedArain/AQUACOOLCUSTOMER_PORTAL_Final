@@ -89,7 +89,7 @@
                                     <td>
                                         @if(string.IsNullOrEmpty(item.TransNumberDescription))
                                         {
-                                            <a href="@Url.Action("getpaymentReceiptPDF", "admin", new{contract = @ViewBag.SelectedContractEAG, date = item.Date.ToShortDateString() })" style="text-decoration:none; color:#009ADE"><i class='fas fa-receipt' style="font-size:18px; color:#009ADE"></i></a>
+                                            <a href="@Url.Action("getpaymentReceiptPDF", "admin", new{contract = @ViewBag.SelectedContractEAG, date = item.Date.ToShortDateString() })" style="text-decoration:none; color:#009ADE">download@* <i class='fas fa-receipt' style="font-size:18px; color:#009ADE"></i> *@</a>
                                         }
                                         else
                                         {

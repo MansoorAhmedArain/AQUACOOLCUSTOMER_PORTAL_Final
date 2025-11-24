@@ -42,143 +42,183 @@
     <div class="left-box">
         <img src="~/images/Stock BG11 Image.jpg" class="rounded-start rounded-pill img-style" alt="" />
     </div>
-    <div class="right-box pt-4">
-           @Html.Partial("_Messages")
-            <div class="icon-text h4">
-                <span>Create Move Out Request</span>
+    <div class="right-box">
+        <div class="noc-wrapper position-absolute"
+             style="top: 30px; right: 130px; z-index: 10;">
+            <div class="upload-card text-center" style="width:180px;">
+                <p class="mb-1" style="font-size:13px;">Attach the NOC from the owner.</p>
+                <label for="NOCFile" class="upload-button">Attach NOC</label>
+                <input type="file" id="NOCFile" name="NOCFile" accept=".pdf,.doc,.docx,.jpg,.png" />
+                <div id="nocError" style="color:red; display:none;">Please attach the NOC file.</div>
             </div>
-            <div class="mt-2 input-style">
-                <form asp-action="MoveOutRequest" asp-controller="Admin" method="post" enctype="multipart/form-data">
-                    <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select a Contract</span>
-                    <div class="input-group">
-                        <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
-                        <select asp-for="ContractId" class="form-control rounded-start rounded-pill" id="contractDropDown" required style="border: 1px solid #8FD2F0;" asp-items="@(new SelectList((List<SelectListItem>)ViewBag.ActiveContracts, "Value", "Text"))">
-                            <option value="">Select a Contract</option>
-                        </select>
-                    </div>
+        </div>
 
-                    <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Project Selection</span>
-                    <div class="input-group">
-                        <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
-                        <select asp-for="ProjectId" id="projectDropdown" class="form-control rounded-start rounded-pill" required style="border:1px solid #8FD2F0;" asp-items="@(new SelectList((IEnumerable<Projects>)ViewBag.Projects, "Id", "Name"))">
-                            <option value="">Select a project</option>
-                        </select>
-                    </div>
+        @Html.Partial("_Messages")
 
-                    <div class="ms-3 mt-2" style="color:#03213d; font-size:small; font-weight:bolder;">Unit Number</div>
-                    <div class="input-group mb-2">
-                        <select type="text" class="form-control rounded-pill" name="UnitNumber" id="unitNumbersDropdown" style="background-color: #cff2c9;">
-                            @* <option value="value">text</option> *@
-                        </select>
+        <div class="icon-text h4">
+            <span>Create Move Out Request</span>
+        </div>
 
-                    </div>
+        <div class="input-style">
+            <form asp-action="MoveOutRequest" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select a Contract</span>
+                <div class="input-group">
+                    <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
+                    <select asp-for="ContractId" class="form-control rounded-start rounded-pill" id="contractDropDown" required style="border: 1px solid #8FD2F0;" asp-items="@(new SelectList((List<SelectListItem>)ViewBag.ActiveContracts, "Value", "Text"))">
+                        <option value="">Select a Contract</option>
+                    </select>
+                </div>
 
-                    @* <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select a Contract</span>
-                                <div class="input-group">
-                                    <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
-                                    <select asp-for="ContractId" class="form-control rounded-start rounded-pill" required style="border: 1px solid #8FD2F0;" asp-items="@(new SelectList((List<SelectListItem>)ViewBag.ActiveContracts, "Value", "Text"))">
-                                        <option value="">Select a Contract</option>
-                                    </select>
-                                </div> *@
+                <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Project Selection</span>
+                <div class="input-group">
+                    <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
+                    <select asp-for="ProjectId" id="projectDropdown" class="form-control rounded-start rounded-pill" required style="border:1px solid #8FD2F0;" asp-items="@(new SelectList((IEnumerable<Projects>)ViewBag.Projects, "Id", "Name"))">
+                        <option value="">Select a project</option>
+                    </select>
+                </div>
 
-                    <div class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select Move Out Date</div>
-                    <div class="input-group">
-                        <span class="input-group-text rounded-pill rounded-end">
-                            <img src="~/Icons/Date.png" alt="" style="width:25px;" />
-                        </span>
-                        <input asp-for="MoveOutDate" type="date" class="form-control rounded-start rounded-pill" required style="border:1px solid #8FD2F0;" />
-                    </div>
-                    <div class="ms-3 mb-3" style="color:#48b4e6; font-size:small; font-weight:500;">(Note: On the move out date the service will be disconnected)</div>
+                <div class="ms-3 " style="color:#03213d; font-size:small; font-weight:bolder;">Unit Number</div>
+                <div class="input-group mb-2">
+                    <select type="text" class="form-control rounded-pill" name="UnitNumber" id="unitNumbersDropdown" style="background-color: #cff2c9;">
+                        @* <option value="value">text</option> *@
+                    </select>
 
-                    <div class="ms-3" style="color:#03213d; font-size:small; font-weight:bold;">How do you want your refund processed through?</div>
-                    <span class="form-check form-check-inline mt-1 ms-3">
-                        <input style="border: 1px solid #8FD2F0;" type="checkbox" checked class="form-check-input  refund-option" name="Cheque" id="Cheque">
-                        <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="Cheque">Cheque</label>
-                    </span>
+                </div>
 
-                    <div class="form-check form-check-inline mt-1 ms-5">
-                        <input style="border: 1px solid #8FD2F0;" type="checkbox" name="bank" class="form-check-input  refund-option" id="BankTransfer">
-                        <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="BankTransfer">Bank Transfer</label>
-                    </div>
-
-                
-                    <div class="BankInfo" id="bankInfoPopup">
-                        <div class="popup-content">
-                            <span class="btn" id="closeBankInfo">&times;</span>
-                            <h6 class="text-center" style="color:#03213d; font-weight:bold;">Bank Transfer Details</h6>
-
-                            <div class="input-group mb-3">
-                                <span class="input-group-text rounded-pill rounded-end" style="color:#03213d; font-size:x-small; font-weight:bolder; width:80px;">Bank Name</span>
-                                <select asp-for="ShortName" class="form-control rounded-start rounded-pill" style="border:1px solid #8FD2F0;" asp-items="@(new SelectList((List<SelectListItem>)ViewBag.BankNameList, "Value", "Text"))">
-                                    <option value="">Select a bank</option>
+                @* <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select a Contract</span>
+                            <div class="input-group">
+                                <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
+                                <select asp-for="ContractId" class="form-control rounded-start rounded-pill" required style="border: 1px solid #8FD2F0;" asp-items="@(new SelectList((List<SelectListItem>)ViewBag.ActiveContracts, "Value", "Text"))">
+                                    <option value="">Select a Contract</option>
                                 </select>
-                            </div>
+                            </div> *@
 
-                            <div class="input-group mb-3">
-                                <span class="input-group-text rounded-pill rounded-end" style="color:#03213d; font-size:x-small; font-weight:bolder; width:80px;">IBAN</span>
-                                <input asp-for="IBanNo" class="form-control rounded-start rounded-pill" maxlength="25" style="border:1px solid #8FD2F0;" />
-                            </div>
+                <div class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select Move Out Date</div>
+                <div class="input-group">
+                    <span class="input-group-text rounded-pill rounded-end">
+                        <img src="~/Icons/Date.png" alt="" style="width:25px;" />
+                    </span>
+                    <input asp-for="MoveOutDate" type="date" class="form-control rounded-start rounded-pill" required style="border:1px solid #8FD2F0;" />
+                </div>
+                <div class="ms-3" style="color:#48b4e6; font-size:small; font-weight:500;">(Note: On the move out date the service will be disconnected)</div>
 
-                            <div class="input-group mb-3">
-                                <span class="input-group-text rounded-pill rounded-end" style="color:#03213d; font-size:x-small; font-weight:bolder;">Account No.</span>
-                                <input asp-for="AccountNumber" class="form-control rounded-start rounded-pill" maxlength="20" style="border:1px solid #8FD2F0;" />
-                            </div>
+                <div class="ms-3" style="color:#03213d; font-size:small; font-weight:bold;">How do you want your refund processed through?</div>
+                <span class="form-check form-check-inline ms-3">
+                    <input style="border: 1px solid #8FD2F0;" type="checkbox" checked class="form-check-input  refund-option" name="Cheque" id="Cheque">
+                    <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="Cheque">Cheque</label>
+                </span>
 
-                            <div class="input-group mb-3">
-                                <span class="input-group-text rounded-pill rounded-end" style="color:#03213d; font-size:x-small; font-weight:bolder;">Swift No.</span>
-                                <input asp-for="SwiftNo" class="form-control rounded-start rounded-pill" style="border:1px solid #8FD2F0;" />
-                            </div>
+                <div class="form-check form-check-inline mt-1 ms-5">
+                    <input style="border: 1px solid #8FD2F0;" type="checkbox" name="bank" class="form-check-input  refund-option" id="BankTransfer">
+                    <label style="color: #03213d; font-size: small; font-weight: bolder;" class="form-check-label" for="BankTransfer">Bank Transfer</label>
+                </div>
 
-                            <div class="input-group mb-3">
-                                @if (!(bool)ViewBag.OTPReady)
-                                {
-                                    <input asp-for="OTP" class="form-control rounded-start rounded-pill" placeholder="Please enter 6 digit OTP" disabled autocomplete="off" style="border:1px solid #8FD2F0;" />
-                                    <button type="submit" name="submitButton" value="getotp" class="btn rounded-pill btnnext-style" style="margin-top:15px;">Get OTP</button>
-                                }
-                                else
-                                {
-                                    <input asp-for="OTP" class="form-control rounded-start rounded-pill" placeholder="Please enter 6 digit OTP" autocomplete="off" style="border:1px solid #8FD2F0;" />
-                                    <button type="submit" name="submitButton" value="validate" style="margin-top:5px" class="btn rounded-pill btnnext-style">Validate OTP</button>
-                                    <button type="submit" name="submitButton" value="resendotp" style="margin-top:5px" class="btn rounded-pill btnnext-style">Resend OTP</button>
-                                }
-                            </div>
-                        </div>
+                <div class="BankInfo">
+                    <div class="input-group mb-1">
+                        <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">Bank Name</span>
+                        <select asp-for="ShortName" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;" asp-items="@(new SelectList((List<SelectListItem>)ViewBag.BankNameList, "Value", "Text"))">
+                            <option value="">Select a bank</option>
+                        </select>
                     </div>
 
-                    <div class="noc-container">
-                        <div class="upload-card mt-2">
-                            <p>Attach the NOC from the owner.</p>
-                            <label for="NOCFile" class="upload-button">Attach NOC</label>
-                            <input type="file" id="NOCFile" name="NOCFile" accept=".pdf,.doc,.docx,.jpg,.png" />
-                        </div>
-                        <div id="nocError" style="color:red; display:none;">Please attach the NOC file.</div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">IBAN</span>
+                        <input asp-for="IBanNo" class="form-control rounded-start rounded-pill" maxlength="25" style="border:1px solid #8FD2F0;" />
                     </div>
+
+                    <div class="input-group mb-1">
+                        <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder;">Account No.</span>
+                        <input asp-for="AccountNumber" class="form-control rounded-start rounded-pill" maxlength="20" style="border:1px solid #8FD2F0;" />
+                    </div>
+
+                    <div class="input-group mb-1">
+                        <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder;">Swift No.</span>
+                        <input asp-for="SwiftNo" class="form-control rounded-start rounded-pill" style="border:1px solid #8FD2F0;" />
+                    </div>
+
+                    <div class="d-flex align-items-center mb-1" style="gap:10px; width:100%;">
+                        @if (!(bool)ViewBag.OTPReady)
+                        {
+                            <input asp-for="OTP"
+                                   class="form-control rounded-pill"
+                                   placeholder="Please enter 6 digit OTP"
+                                   disabled autocomplete="off"
+                                   style="border: 1px solid #8FD2F0;" />
+
+                            <button type="submit"
+                                    name="submitButton"
+                                    value="getotp"
+                                    class="btn rounded-pill btnnext-style">
+                                Get OTP
+                            </button>
+                        }
+                        else
+                        {
+                            <input asp-for="OTP"
+                                   class="form-control rounded-pill"
+                                   placeholder="Please enter 6 digit OTP"
+                                   autocomplete="off"
+                                   style="border: 1px solid #8FD2F0;" />
+
+                            <button type="submit"
+                                    name="submitButton"
+                                    value="validate"
+                                    class="btn rounded-pill btnnext-style">
+                                Validate OTP
+                            </button>
+
+                            <button type="submit"
+                                    name="submitButton"
+                                    value="resendotp"
+                                    class="btn rounded-pill btnnext-style">
+                                Resend OTP
+                            </button>
+                        }
+                    </div>
+                </div>
+                <input type="submit" class="btn rounded-pill btnnext-style" id="submitButton" name="submitButton" value="Submit" />
             </form>
-            <input type="submit" class="btn rounded-pill btnnext-style mt-2" id="submitButton" name="submitButton" value="Submit" />
-            </div>
+        </div>
     </div>
 </div>
 
 <script>
     const checkboxes = document.querySelectorAll('.refund-option');
-    const bankInfoPopup = document.getElementById('bankInfoPopup');
-    const closeBankInfo = document.getElementById('closeBankInfo');
+    const bankInfoDiv = document.querySelector('.BankInfo');
+    const submitButton = document.querySelector('#submitButton');
+    const nextButton = document.querySelector('#nextButton');
 
     checkboxes.forEach(cb => {
         cb.addEventListener('change', function () {
-            if (this.id === 'BankTransfer' && this.checked) {
-                checkboxes.forEach(other => { if (other !== this) other.checked = false; });
-                bankInfoPopup.style.display = 'flex';
+            if (this.checked) {
+                // Uncheck other checkboxes
+                checkboxes.forEach(other => {
+                    if (other !== this) {
+                        other.checked = false;
+                    }
+                });
+
+                // Show/hide BankInfo
+                if (this.id === 'BankTransfer') {
+                    bankInfoDiv.style.display = 'block';
+                    //submitButton.style.display = 'none';
+                    submitButton.value = 'Next'; // set to "Next"
+
+                } else {
+                    bankInfoDiv.style.display = 'none';
+                    submitButton.style.display = 'block';
+                    submitButton.value = 'Submit'; // set to "Submit"
+                }
             } else {
-                bankInfoPopup.style.display = 'none';
+                // If unchecking the current option, hide BankInfo as well
+                bankInfoDiv.style.display = 'none';
+                submitButton.style.display = 'block';
             }
         });
     });
 
-    closeBankInfo.addEventListener('click', () => {
-        bankInfoPopup.style.display = 'none';
-        document.getElementById('BankTransfer').checked = false;
-    });
+    // Optional: Hide BankInfo by default
+    bankInfoDiv.style.display = 'none';
 
     // error for file
     document.querySelector('form').addEventListener('submit', function (e) {
@@ -193,7 +233,6 @@
             errorDiv.style.display = 'none'; // Hide error if file is selected
         }
     });
-
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

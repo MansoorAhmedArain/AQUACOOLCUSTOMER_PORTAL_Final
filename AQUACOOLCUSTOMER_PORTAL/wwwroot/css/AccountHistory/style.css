@@ -50,12 +50,11 @@ body {
 .right-box {
     height: 100%;
     width: 70%;
-    padding-top: 20px;
-    padding-left: 18vw;
+    padding: 80px 230px;
 }
 
 .right-box .table-wrapper {
-    width: 100%;
+    width: 48vw;
     max-height: 70vh; /* scrollable height */
     overflow-y: auto;
     overflow-x: auto; /* hide horizontal scrollbar */
@@ -82,6 +81,7 @@ th, td {
     border: 1px solid #ddd;
     font-size: 70%;
     text-align: center;
+    white-space: nowrap;
 }
 
 th {

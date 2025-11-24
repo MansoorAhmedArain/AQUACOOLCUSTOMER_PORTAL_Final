@@ -81,7 +81,7 @@
                         <small class="form-text ps-3" style="color : #092f57">EAG Number</small>
                         <input required class="form-control rounded-pill f1" value="@ViewBag.ContractIdBag">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display:none">
                         <small class="form-text ps-3" style="color: #092f57;">Amount</small>
                         <input type="number"  class="form-control rounded-pill f2" value="@ViewBag.OutstandingBalance">
                     </div>
@@ -126,16 +126,16 @@
                                     <div class="input-row ">
                                         <div class="input-col">
                                             <small class="form-text">Amount Due</small>
-                                            <input type="number" class="form-control rounded-end rounded-pill" style="border: 1px solid #8FD2F0;">
+                                            <input type="text" id="amountDue" readonly class="form-control rounded-end rounded-pill" style="border: 1px solid #8FD2F0;">
                                         </div>
                                         <div class="input-col">
                                             <small class="form-text">Pay</small>
-                                            <input type="number" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
+                                            <input type="number" id="payAmount" required name="payAmount" class="form-control rounded-start rounded-pill" style="border: 1px solid #8FD2F0;">
                                         </div>
                                     </div>
 
                                     <div class="mt-1 agree-text">
-                                        <input type="checkbox" id="agree" name="interest" value="agree" />
+                                        <input type="checkbox" checked id="agree" name="interest" value="agree" />
                                         <label for="agree"><strong><small>I agree to Payment Terms and Conditions</small></strong></label>
                                     </div>
                                     <input type="submit" class="btn rounded-pill modal-btn mt-2" value="Pay Now" />

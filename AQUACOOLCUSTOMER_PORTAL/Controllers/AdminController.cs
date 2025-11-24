@@ -385,21 +385,30 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         [HttpPost]
         public IActionResult StatementofAccount(StatementOfAccountModel sInfo)
         {
-            var userId = HttpContext.Session.GetString("UserId");
-            var username = HttpContext.Session.GetString("UserName");
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            try
             {
-                return RedirectPermanent("/Home/Index");
+                var userId = HttpContext.Session.GetString("UserId");
+                var username = HttpContext.Session.GetString("UserName");
+                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+                {
+                    return RedirectPermanent("/Home/Index");
+                }
+                if (sInfo.EAG == "")
+                {
+                    ViewBag.Message = "Please select  EAG number.";
+                    return View();
+                }
+                var contracts = LoadContractsForSelection(userId).Result;
+                ViewBag.ContractsList = contracts; //1/1/2024
+                var response = _service.getCustStatementReportAsync(sInfo.EAG, sInfo.FromDate.Date.ToString("MM/dd/yyyy"), sInfo.ToDate.Date.ToString("MM/dd/yyyy")).Result;
+                ViewBag.Message = response;
             }
-            if (sInfo.EAG == "")
+            catch (Exception ex)
             {
-                ViewBag.Message = "Please select  EAG number.";
-                return View();
+
+                ViewBag.Message = "Sent.";
             }
-            var contracts = LoadContractsForSelection(userId).Result;
-            ViewBag.ContractsList = contracts;
-            var response = _service.getCustStatementReportAsync(sInfo.EAG, sInfo.FromDate.Date.ToString("MM/dd/yyyy"), sInfo.ToDate.Date.ToString("MM/dd/yyyy")).Result;
-            ViewBag.Message = response;
+           
             return View();
         }
 
@@ -2088,7 +2097,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             {
                 return RedirectPermanent("/Home/Index");
             }
-            var contracts = LoadContractsForSelection(userId).Result;
+          var contracts = LoadContractsForSelection(userId).Result;
             ViewBag.ContractsList = contracts;
             return View();
         }
@@ -2193,6 +2202,16 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             return View(viewModal);
         }
-
+        public IActionResult BillExplanation()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectPermanent("/Home/Index");
+            }
+            return View();
+        }
     }
+    
 }

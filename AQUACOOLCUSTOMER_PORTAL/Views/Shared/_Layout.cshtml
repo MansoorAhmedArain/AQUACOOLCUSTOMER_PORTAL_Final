@@ -22,9 +22,9 @@
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
 
-@*     <link href="~/css/ReconnectionRequest/style.css" rel="stylesheet" />
+    <link href="~/css/ReconnectionRequest/style.css" rel="stylesheet" />
     <link href="~/css/ReconnectionRequest/responsive.css" rel="stylesheet" />
-
+    @*
     <link href="~/css/StatementofAccount/style.css" rel="stylesheet" />
     <link href="~/css/StatementofAccount/responsive.css" rel="stylesheet" />
 
@@ -91,7 +91,7 @@
                             <div class="input-group">
                                 <a class="input-group-text dropdown-toggle nav-link mx-2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" style="color: #092f57; cursor: pointer;">CUSTOMER SUPPORT</a>
                                 <div class="dropdown-menu shadow-lg " style="border: 1px solid #8FD2F0;" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Bill Explanation</a>
+                                    <a class="dropdown-item" href="@Url.Action("billexplanation", "Admin")">Bill Explanation</a>
                                     <a class="dropdown-item" href="@Url.Action("Complaint", "Admin")">Complaint</a>
 
                                 </div>

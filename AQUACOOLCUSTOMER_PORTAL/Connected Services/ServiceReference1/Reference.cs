@@ -3914,11 +3914,11 @@ namespace ServiceReference1
         {
             if ((endpointConfiguration == EndpointConfiguration.Service1Soap))
             {
-                return new System.ServiceModel.EndpointAddress("http://10.12.16.11/AQCAX/service1.asmx");
+                return new System.ServiceModel.EndpointAddress("http://10.12.14.21/AQCNew/service1.asmx");
             }
             if ((endpointConfiguration == EndpointConfiguration.Service1Soap12))
             {
-                return new System.ServiceModel.EndpointAddress("http://10.12.16.11/AQCAX/service1.asmx");
+                return new System.ServiceModel.EndpointAddress("http://10.12.14.21/AQCNew/service1.asmx");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }

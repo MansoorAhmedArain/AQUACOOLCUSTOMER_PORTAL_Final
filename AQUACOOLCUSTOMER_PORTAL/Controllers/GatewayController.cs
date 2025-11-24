@@ -87,8 +87,14 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             try
             {
                 var client = new HttpClient();
+#if DEBUG
                 var request = new HttpRequestMessage(HttpMethod.Post, "https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token");
                 request.Headers.Add("Authorization", "Basic OWI5NTk4NzUtN2UzZi00NTFiLTlkOTEtOTExY2I4MTk2MWE3OmRlYzFmZDAwLTQ4NWMtNGM0OS1iZTlmLWIyYzNmODNkZmFlMA==");
+#else
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://api-gateway.ngenius-payments.com/identity/auth/access-token");
+                request.Headers.Add("Authorization", "Basic YzJjMDdhMGMtOGI5ZS00OGU0LWI0NjktYWM5M2E2MDkyZGRiOmFhMGVjNTI1LTI4YTctNDNiOS1hNTdiLTc0MTJmZWMyN2VjMA==");
+#endif
+
                 var content = new StringContent("", null, "application/vnd.ni-identity.v1+json");
                 request.Content = content;
                 var response = await client.SendAsync(request);
@@ -140,7 +146,12 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         {
             // string url = "https://api-gateway.ngenius-payments.com/transactions/outlets/e8a2bb33-73cb-4a98-b2f5-9bb6b0e9b683/orders"; // live
             //string url = "https://api-gateway.sandbox.ngenius-payments.com/transactions/outlets/4fbfb037-de3d-4956-b4ec-482418c01b57/orders";
+#if DEBUG
             string url = "https://api-gateway.sandbox.ngenius-payments.com/transactions/outlets/4fbfb037-de3d-4956-b4ec-482418c01b57/orders";
+#else
+            string url = "https://api-gateway.ngenius-payments.com/transactions/outlets/e8a2bb33-73cb-4a98-b2f5-9bb6b0e9b683/orders"; // live
+#endif
+
             string returnURL = "";
             string paymentLink = "";
 
@@ -214,7 +225,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             return paymentLink;
         }
-        #endregion
+#endregion
 
         #region VPC_DO
         
