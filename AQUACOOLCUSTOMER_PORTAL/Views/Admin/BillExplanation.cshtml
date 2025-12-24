@@ -61,7 +61,7 @@
         .close {
             position: absolute;
             right: 15px;
-            top: 10px;
+            top: -60px;
             font-size: 28px;
             color: blue;
             cursor: pointer;
@@ -99,9 +99,8 @@
             <div id="videoModal" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeVideo()">&times;</span>
-
                     <video id="popupVideo" controls>
-                        <source src="your-video.mp4" type="video/mp4">
+                        <source src="~/Videos/How-to-read- cooling-bill.mov" type="video/mp4">
                         Your browser does not support video playback.
                     </video>
                 </div>
@@ -119,7 +118,7 @@
             document.getElementById("videoModal").style.display = "flex";
         }
 
-        function closeVideo() {
+            function closeVideo() {
             let modal = document.getElementById("videoModal");
             let video = document.getElementById("popupVideo");
 

@@ -57,11 +57,17 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             string Paylink = "";
             bool IsSuccess = true;
             string url = "";
+
+#if DEBUG
             // Choose environment
             string baseUrl = "https://api-gateway.sandbox.ngenius-payments.com"; // Sandbox
-            // string baseUrl = "https://api-gateway.ngenius-payments.com"; // Live
-
             string requestUri = $"{baseUrl}/transactions/outlets/4fbfb037-de3d-4956-b4ec-482418c01b57/orders/{reference}";
+#else
+            string baseUrl = "https://api-gateway.ngenius-payments.com"; // Live
+            string requestUri = $"{baseUrl}/transactions/outlets/e8a2bb33-73cb-4a98-b2f5-9bb6b0e9b683/orders/{reference}";
+#endif
+
+
 
             // TLS & connection settings (still honored at the AppDomain level)
             ServicePointManager.Expect100Continue = true;
@@ -280,24 +286,21 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
         private string getAccessToken()
         {
-            //sandbox
-            // var client = new RestClient("https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token");
-            //request.AddHeader("Authorization", "Basic OWI5NTk4NzUtN2UzZi00NTFiLTlkOTEtOTExY2I4MTk2MWE3OmRlYzFmZDAwLTQ4NWMtNGM0OS1iZTlmLWIyYzNmODNkZmFlMA==");
-            //request.AddParameter("application/vnd.ni-identity.v1+json", "{\"realmName\":\"ni\"}", "application/vnd.ni-identity.v1+json", ParameterType.RequestBody);
-            //var  client = new HttpClient();
-
-            // //string url = "https://api-gateway.ngenius-payments.com/identity/auth/access-token"; // live
             string accessToken = string.Empty;
 
-            // // Request body
-            // var jsonBody = "{\"realmName\":\"networkinternational\"}";
-            // var content = new StringContent(jsonBody, Encoding.UTF8, "application/vnd.ni-identity.v1+json");
-
+#if DEBUG
+            // Choose environment
+            string authUrl = "https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token"; // Sandbox
+            string authorization = "Basic OWI5NTk4NzUtN2UzZi00NTFiLTlkOTEtOTExY2I4MTk2MWE3OmRlYzFmZDAwLTQ4NWMtNGM0OS1iZTlmLWIyYzNmODNkZmFlMA==";
+#else
+            string authUrl = "https://api-gateway.ngenius-payments.com/identity/auth/access-token"; // Live
+            string authorization = "Basic YzJjMDdhMGMtOGI5ZS00OGU0LWI0NjktYWM5M2E2MDkyZGRiOmFhMGVjNTI1LTI4YTctNDNiOS1hNTdiLTc0MTJmZWMyN2VjMA==";
+#endif
             try
             {
                 var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Post, "https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token");
-                request.Headers.Add("Authorization", "Basic OWI5NTk4NzUtN2UzZi00NTFiLTlkOTEtOTExY2I4MTk2MWE3OmRlYzFmZDAwLTQ4NWMtNGM0OS1iZTlmLWIyYzNmODNkZmFlMA==");
+                var request = new HttpRequestMessage(HttpMethod.Post, authUrl);
+                request.Headers.Add("Authorization", authorization);
                 var content = new StringContent("", null, "application/vnd.ni-identity.v1+json");
                 request.Content = content;
                 var response = client.SendAsync(request).Result;

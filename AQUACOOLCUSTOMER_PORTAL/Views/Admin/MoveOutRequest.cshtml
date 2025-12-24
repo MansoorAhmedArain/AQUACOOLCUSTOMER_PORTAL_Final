@@ -43,6 +43,7 @@
         <img src="~/images/Stock BG11 Image.jpg" class="rounded-start rounded-pill img-style" alt="" />
     </div>
     <div class="right-box">
+        <form asp-action="MoveOutRequest" asp-controller="Admin" method="post" enctype="multipart/form-data">
         <div class="noc-wrapper position-absolute"
              style="top: 30px; right: 130px; z-index: 10;">
             <div class="upload-card text-center" style="width:180px;">
@@ -60,7 +61,7 @@
         </div>
 
         <div class="input-style">
-            <form asp-action="MoveOutRequest" asp-controller="Admin" method="post" enctype="multipart/form-data">
+            @* <form asp-action="MoveOutRequest" asp-controller="Admin" method="post" enctype="multipart/form-data"> *@
                 <span class="ms-3" style="color:#03213d; font-size:small; font-weight:bolder;">Select a Contract</span>
                 <div class="input-group">
                     <span class="input-group-text rounded-end rounded-pill dropdown-toggle" data-bs-toggle="dropdown"></span>
@@ -123,7 +124,7 @@
 
                     <div class="input-group mb-1">
                         <span class="input-group-text rounded-pill rounded-end" style="color: #03213d; font-size: x-small; font-weight: bolder; width: 80px;">IBAN</span>
-                        <input asp-for="IBanNo" class="form-control rounded-start rounded-pill" maxlength="25" style="border:1px solid #8FD2F0;" />
+                        <input asp-for="IBanNo" id="IBanNo" class="form-control rounded-start rounded-pill" maxlength="25" style="border:1px solid #8FD2F0;" />
                     </div>
 
                     <div class="input-group mb-1">
@@ -177,17 +178,71 @@
                     </div>
                 </div>
                 <input type="submit" class="btn rounded-pill btnnext-style" id="submitButton" name="submitButton" value="Submit" />
-            </form>
+           @*  </form> *@
         </div>
+        </form>
     </div>
 </div>
-
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const checkboxes = document.querySelectorAll('.refund-option');
+        const bankInfoDiv = document.querySelector('.BankInfo');
+        const submitButton = document.getElementById('submitButton');
+        const ibanField = document.getElementById("IBanNo");
+        const bankTransferCheckbox = document.getElementById("BankTransfer");
+
+        // Default UI
+        bankInfoDiv.style.display = 'none';
+        submitButton.value = 'Submit';
+
+        // 1️⃣ Attach checkbox change handlers FIRST
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function () {
+
+                if (this.checked) {
+
+                    // Uncheck others
+                    checkboxes.forEach(other => {
+                        if (other !== this) other.checked = false;
+                    });
+
+                    if (this.id === 'BankTransfer') {
+                        bankInfoDiv.style.display = 'block';
+                        submitButton.value = 'Next';
+                    } else {
+                        bankInfoDiv.style.display = 'none';
+                        submitButton.value = 'Submit';
+                    }
+                }
+            });
+        });
+
+        // 2️⃣ THEN trigger click if IBAN exists
+        if (ibanField && ibanField.value.trim() !== "" && bankTransferCheckbox && !bankTransferCheckbox.checked) {
+            bankTransferCheckbox.click(); // 🔥 now works fully
+        }
+
+    });
+</script>
+
+
+
+
+@* <script>
     const checkboxes = document.querySelectorAll('.refund-option');
     const bankInfoDiv = document.querySelector('.BankInfo');
     const submitButton = document.querySelector('#submitButton');
     const nextButton = document.querySelector('#nextButton');
+   
+    document.addEventListener("DOMContentLoaded", function () {
+        const field = document.getElementById("IBanNo");   // text field
+    const bankCheckbox = document.getElementById("bankDetails"); // checkbox
 
+    if (field && bankCheckbox && field.value.trim() !== "") {
+        bankCheckbox.checked = true;
+    }
+});
     checkboxes.forEach(cb => {
         cb.addEventListener('change', function () {
             if (this.checked) {
@@ -233,7 +288,7 @@
             errorDiv.style.display = 'none'; // Hide error if file is selected
         }
     });
-</script>
+</script> *@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/moveout.js"></script>

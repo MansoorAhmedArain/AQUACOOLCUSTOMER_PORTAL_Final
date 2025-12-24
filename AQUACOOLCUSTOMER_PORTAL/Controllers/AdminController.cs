@@ -33,7 +33,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             return View();
         }
@@ -76,7 +77,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             if (!string.IsNullOrEmpty(Id))
             {
@@ -283,7 +285,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             var projects = await LoadProjectSelection(userId);
 
@@ -311,7 +314,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             var projects = await LoadProjectSelection(userId);
 
@@ -375,7 +379,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             var contracts = LoadContractsForSelection(userId).Result;
             ViewBag.ContractsList = contracts;
@@ -391,7 +396,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 var username = HttpContext.Session.GetString("UserName");
                 if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
                 {
-                    return RedirectPermanent("/Home/Index");
+                    HttpContext.Session.Clear();
+                    return RedirectToAction("index","Home");
                 }
                 if (sInfo.EAG == "")
                 {
@@ -495,13 +501,55 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         [HttpPost]
         public async Task<IActionResult> Uploads(IFormFile file, string id, string type, string expirydate, string isTicket = "no")
         {
+            var userId = HttpContext.Session.GetString("UserId");
+            var username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
+            {
+                return RedirectToAction("index", "Home");
+            }
+
             try
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    TempData["Error"] = "Registration does not exist";
-                    return RedirectToAction("UserProfile");
-                }
+                    if (file != null)
+                    {
+                        //foreach (IFormFile file in file)
+                        //{
+                        if (file != null && file.Length > 0)
+                        {
+                            var extension = Path.GetExtension(file.FileName);
+
+                            string fileName;
+                            if (!string.IsNullOrEmpty(expirydate))
+                            {
+                                var expDate = Convert.ToDateTime(expirydate);
+                                fileName = $"{type}-{expDate:dd-MMM-yyyy}{extension}";
+                            }
+                            else
+                            {
+                                fileName = $"{type}{extension}";
+                            }
+
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                file.CopyTo(memoryStream);
+                                var byteArray = memoryStream.ToArray();
+                                var data = Convert.ToBase64String(byteArray);
+
+                                // Assuming _client.attachAqcFiles is still valid in your context
+                                var a = await _service.attachAqcFilesOnCValueAsync(userId, fileName, data, isTicket);
+                                if (a.Contains("Error|"))
+                                {
+                                    TempData["Error"] = a;
+                                }
+                            }
+                        }
+                        //  }
+                    }
+                    //TempData["Error"] = "Registration does not exist";
+                    return RedirectToAction("index");
+                } // upload on CValue
 
                 if (id.ToLower().StartsWith("tkt"))
                     isTicket = "yes";
@@ -540,7 +588,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                         }
                     }
                     //  }
-                }
+                } // upload on registrationid
 
                 // return Json(new { success = true, type });
                 return RedirectToAction("NewRegistration", new { id = id });
@@ -932,7 +980,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             Projects[] projects = await LoadProjectSelection(userId);
             ViewBag.Projects = projects;
@@ -984,9 +1033,15 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
 
             string result = "";
 
+            if (CustomerType.ToLower() == "owner")
+            {
+                TempData["Error"] = "To close your account, the new property owner must apply for registration with Aquacool. Alternatively, please share a copy of the new Title Deed or MOU along with the new owner’s contact details by emailing customercare@aquacool.me";
+                return View(modal);
+            }
             if (CustomerType.ToLower() == "tenant")
             {
-                if (!_service.validateCustBankAcountAsync(account, modal.ContractId).Result && modal.Bank == "on")
+                var validation = _service.validateCustBankAcountAsync(account, modal.ContractId).Result;
+                if (!validation && modal.Bank == "on")
                 {
                     // return RedirectToAction("UpdateBankingDetails", new { ContractId = ContractID, moveType = modal.ContractId, customerType = CustomerType });
                     var bankDetails = new BankDetails()
@@ -1064,11 +1119,12 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                             if (output.Length == 1 && output[0].Contains("TKT"))
                             {
                                 var ticketId1 = _service.submitTicketMoveOutAsync(output[0], fileName, data).Result;
-                                TempData["Message"] = _service.attachAqcFilesAsync(output[0], "noc", data, "yes").Result;
+                                //TempData["Message"] = _service.attachAqcFilesAsync(output[0], "noc", data, "yes").Result;
                                 return View(modal);
                             }
                             var ticketId = _service.submitTicketMoveOutAsync(output[1], fileName, data).Result;
-                            TempData["Message"] = _service.attachAqcFilesAsync(ticketId, "noc", data, "yes").Result;
+                            //TempData["Message"] = _service.attachAqcFilesAsync(ticketId, "noc", data, "yes").Result;
+                            TempData["Message"] = output[1];
                             return View(modal);
                         }
                     }
@@ -1402,11 +1458,11 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                 errorMessage = "Account Number is required.";
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(bankDetails.SwiftNo))
-            {
-                errorMessage = "Swift Code is required.";
-                return false;
-            }
+            //if (string.IsNullOrWhiteSpace(bankDetails.SwiftNo))
+            //{
+            //    errorMessage = "Swift Code is required.";
+            //    return false;
+            //}
 
             errorMessage = null;
             return true;
@@ -1584,7 +1640,7 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
         #region User Profile
         public ActionResult UserProfile()
         {
-            return RedirectToAction("AccountHistory");
+            return RedirectToAction("index","Admin");
             var userId = HttpContext.Session.GetString("UserId");
             var username = HttpContext.Session.GetString("UserName");
             var cu = _service.getCustomerByUserIDAsync(username).Result;
@@ -1650,7 +1706,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             var complainTypes = _service.GetrequestIDAsync().Result;
             var contracts = _service.getCustContAsync(userId, true).Result;
@@ -1677,10 +1734,16 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             //                                    "MM/dd/yyyy hh:mm:ss tt",
             //                                    CultureInfo.InvariantCulture
             //                                );
-            ViewBag.SelectedContractDueDate = Convert.ToDateTime(latestBill[0].DueDate).ToShortDateString(); //dueDate.ToShortDateString();
-            //Convert.ToDateTime(latestBill[0].DueDate).ToShortDateString();
+            if (latestBill.Length > 0)
+            {
+                ViewBag.SelectedContractDueDate = Convert.ToDateTime(latestBill[0].DueDate).ToShortDateString(); //dueDate.ToShortDateString();
+                                                                                                                 //Convert.ToDateTime(latestBill[0].DueDate).ToShortDateString();
 
-            ViewBag.SelectedContractAmount = latestBill[0].Amount;
+                ViewBag.SelectedContractAmount = latestBill[0].Amount;
+                return View(result);
+            }
+            ViewBag.SelectedContractDueDate = "0";
+            ViewBag.SelectedContractAmount = "0.0";
             return View(result);
         }
         public IActionResult BillCurve(string contractId = "")
@@ -1689,7 +1752,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             var contracts = _service.getCustContAsync(userId, true).Result;
             if (contracts.Length == 0)
@@ -1963,7 +2027,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             var complainTypes = _service.GetrequestIDAsync().Result;
             var contracts = _service.getCustContAsync(userId, true).Result;
@@ -2029,7 +2094,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             //if (ModelState.IsValid)
             //{
@@ -2095,7 +2161,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
           var contracts = LoadContractsForSelection(userId).Result;
             ViewBag.ContractsList = contracts;
@@ -2109,7 +2176,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             if (string.IsNullOrWhiteSpace(paymentsReceipt.EAG))
             {
@@ -2135,7 +2203,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             var projects = await LoadProjectSelection(userId);
 
@@ -2161,7 +2230,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             var projects = await LoadProjectSelection(userId);
 
@@ -2195,6 +2265,17 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
                         var data = Convert.ToBase64String(byteArray);
 
                         var resp = _service.createPaymProofTicketAsync(form.EAG, form.Invoice, form.PaymentDate.ToString("dd-MMM-yyyy"), form.PaymentMethod, data).Result;
+                        if (!resp.Contains("TKT"))
+                        {
+                            TempData["Message"] = resp;
+                            return View(viewModal);
+                        }
+                        var a = await _service.attachAqcFilesAsync(resp, fileName, data, "yes");
+                        if (a.Contains("Error|"))
+                        {
+                            TempData["Error"] = a;
+                            return View(viewModal);
+                        }
                         TempData["Message"] = resp;
                     }
                 }
@@ -2208,7 +2289,8 @@ namespace AQUACOOLCUSTOMER_PORTAL.Controllers
             var username = HttpContext.Session.GetString("UserName");
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(userId))
             {
-                return RedirectPermanent("/Home/Index");
+                HttpContext.Session.Clear();
+                return RedirectToAction("index", "Home");
             }
             return View();
         }

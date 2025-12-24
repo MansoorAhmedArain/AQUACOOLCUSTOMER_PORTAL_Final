@@ -34,7 +34,14 @@
 </head>
 <div class="bg-container d-md-flex">
     <div class="left-box "><img src="~/images/BG2.jpg" class="rounded-start rounded-pill img-style" alt=""></div>
+    
     <form class="right-box pt-4" method="post" action="@Url.Action("Uploads","Admin")" role="form" enctype="multipart/form-data">
+        <div class="noc-wrapper position-absolute"
+             style="top: 30px; right: 130px; z-index: 10;">
+            <div class="upload-card text-center" style="width:180px;">
+                <img src="~/images/QRCode for SD REFUNDS TRANSFER FORM.png" width="230" height="230" />
+            </div>
+        </div>
         <input type="hidden" name="id" value="@ViewBag.tktID"/>
             <div class="h3 mt-3 password-style" style="font-weight: bolder; text-wrap: nowrap; color: #092f57;">
                 <img src="~/Icons/Update-Document.png" alt="" style="width:50px">

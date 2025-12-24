@@ -5,6 +5,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 // Add appsettings.json as the configuration source
 builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+builder.Services.AddDistributedMemoryCache(); // Required for session state
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(45); // Set custom timeout
+    options.Cookie.HttpOnly = true; // Make the session cookie inaccessible to client-side script
+    options.Cookie.IsEssential = true; // Make the session cookie essential for tracking
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,8 +27,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseSession();
+app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

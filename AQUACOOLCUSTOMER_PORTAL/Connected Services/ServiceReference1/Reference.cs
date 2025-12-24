@@ -229,7 +229,11 @@ namespace ServiceReference1
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/attachAqcFiles", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> attachAqcFilesAsync(string _reqid, string _type, string _file, string _isTicket);
-        
+
+        [System.ServiceModel.OperationContractAttribute(Action = "AQC AX/attachAqcFilesOnCValue", ReplyAction = "*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults = true)]
+        System.Threading.Tasks.Task<string> attachAqcFilesOnCValueAsync(string _userId, string _type, string _file, string _isTicket);
+
         [System.ServiceModel.OperationContractAttribute(Action="AQC AX/InsertPayment", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<string> InsertPaymentAsync(
@@ -3638,7 +3642,11 @@ namespace ServiceReference1
         {
             return base.Channel.attachAqcFilesAsync(_reqid, _type, _file, _isTicket);
         }
-        
+        public System.Threading.Tasks.Task<string> attachAqcFilesOnCValueAsync(string _userId, string _type, string _file, string _isTicket)
+        {
+            return base.Channel.attachAqcFilesOnCValueAsync(_userId, _type, _file, _isTicket);
+        }
+
         public System.Threading.Tasks.Task<string> InsertPaymentAsync(
                     string _Account, 
                     string _ContractID, 

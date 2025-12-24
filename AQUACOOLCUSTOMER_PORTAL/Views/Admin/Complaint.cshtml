@@ -128,7 +128,13 @@
                                     <td>@item.Status</td>
                                     <td>@item.Comments</td>
                                     <td>
-                                       <button class="btn btn-outline-primary" onclick="escalateTicket('@item.ComplaintID')" >Esclate</button>
+                                        @if (item.Status == "Completed"){
+                                        <span>-</span>
+                                        }
+                                        else{
+                                        <button class="btn btn-outline-primary" onclick="escalateTicket('@item.ComplaintID')">Esclate</button>
+                                        }
+                                      
                                     </td>
                                 </tr>
                             }
@@ -218,8 +224,8 @@
                     else if(response.result == "True"){
 
                          $('#esclationModalFooeter').html(`
-                            <button type="button" id='approveBtn' class="btn btn-secondary rounded-pill" onclick="escalateTicketDecison('${ticketId}','True')"  data-bs-dismiss="modal">Approve</button>
-                             <button type="button" id='rejectBtn' class="btn btn-secondary rounded-pill" onclick="escalateTicketDecison('${ticketId}','False')" data-bs-dismiss="modal">Reject</button>
+                            <button type="button" id='approveBtn' class="btn btn-secondary rounded-pill" onclick="escalateTicketDecison('${ticketId}','True')"  data-bs-dismiss="modal">No</button>
+                             <button type="button" id='rejectBtn' class="btn btn-secondary rounded-pill" onclick="escalateTicketDecison('${ticketId}','False')" data-bs-dismiss="modal">Yes</button>
                          `);
                     }
                     else{
